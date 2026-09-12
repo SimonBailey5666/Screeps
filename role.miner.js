@@ -15,15 +15,12 @@ var roleMiner = {
         if (creep.room.name !== creep.memory.work || atExit) {
 
             creep.moveTo(
-                Game.rooms[creep.memory.work].controller,
-                {
-                    visualizePathStyle: {
-                        stroke: '#ffaa00'
-                    },
-                    reusePath: PATH_TICK_RECALC
-                }
-            );
-
+                new RoomPosition(25, 25, creep.memory.work), {
+                visualizePathStyle: {
+                    stroke: '#ffaa00'
+                },
+                reusePath: PATH_TICK_RECALC
+        });
             return;
         }
 
