@@ -1,3 +1,6 @@
+//Room population settings
+//Home Room -> Work Room -> Room population
+
 const POPS = {
     W38S4: {
         harvester: {

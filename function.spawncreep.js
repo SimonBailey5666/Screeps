@@ -11,19 +11,23 @@ var spawncreep = {
             [ERR_INVALID_ARGS]: 'ERR_INVALID_ARGS',
             [ERR_RCL_NOT_ENOUGH]: 'ERR_RCL_NOT_ENOUGH',
         };
-    
+        var workroom = global.POPS[location.work];
+        var popSettings = workroom[srole];
         if(global.DEBUG_OUT){
             console.log('Attempting to spawn ' + srole + ' with ' + energy + ' energy');
         }
         
-        if(global.TEMPLATES[srole].minCost > energy){
+        if(popSettings.minCost > energy){
             if(global.DEBUG_OUT){
                 console.log('Cannot build ' + srole + ' not enough resources.');
             }
              return;
         }
-        if(energy>global.TEMPLATES[srole].maximumCost){
-            energy = global.TEMPLATES[srole].maximumCost;
+
+        //Only use all available energy if a maximum isnt specified in the pop settings
+        var workroom = global.POPS[location.work];
+        if(popSettings.maximumCost && energy>popSettings.maximumCost){
+            energy = popSettings.maximumCost;
         }
         var body = this.buildBody(global.TEMPLATES[srole].parts, energy)
         if(!body.includes(MOVE)){
