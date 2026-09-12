@@ -6,7 +6,7 @@ const POPS = {
         harvester: {
             minCost: 200,
             maximumCost: 400,
-            max: 6,
+            max: 0,
             spawnIf: room =>
                 !room.find(FIND_MY_CREEPS, {
                     filter: creep => creep.memory.role === "miner"
@@ -16,7 +16,7 @@ const POPS = {
         upgrader: {
             minCost: 550,
             maximumCost: 900,
-            max: 2,
+            max: 1,
             spawnIf: room => true
         },
 
@@ -28,7 +28,7 @@ const POPS = {
         },
 
         distributer: {
-            minCost: 400,
+            minCost: 500,
             maximumCost: 900,
             max: 1,
             spawnIf: room => {
@@ -61,21 +61,7 @@ const POPS = {
         miner: {
             minCost: 450,
             maximumCost: 800,
-            max: 2,
-            spawnIf: room => {
-                const harvesters = room.find(FIND_MY_CREEPS, {
-                    filter: creep => creep.memory.role === "harvester"
-                });
-
-                const miners = room.find(FIND_MY_CREEPS, {
-                    filter: creep => creep.memory.role === "miner"
-                });
-
-                return (
-                    harvesters.length >= POPS[room.name].harvester.max ||
-                    miners.length > 0
-                );
-            }
+            max: 2
         },
 
         hauler: {
@@ -143,7 +129,7 @@ const POPS = {
         defender: {
             minCost: 700,
             maximumCost: 700,
-            max: 8
+            max: 4
         }
     }
 };

@@ -12,17 +12,17 @@ class SpawnManager {
     }
 
     run() {
-
         if (this.spawn.spawning) {
             return ERR_BUSY;
         }
 
-        // Iterate over work rooms
+        // Build a list of all possible spawn candidates
+        const candidates = [];
+
         for (const workRoom in POPS) {
 
             const populations = POPS[workRoom];
 
-            // Iterate over roles for this work room
             for (const role in populations) {
 
                 const pop = populations[role];
@@ -35,53 +35,69 @@ class SpawnManager {
                     continue;
                 }
 
-                // Count role + home + work
-                const population = _.filter(
-                    Game.creeps,
-                    creep =>
-                        creep.memory.role === role &&
-                        creep.memory.home === this.home &&
-                        creep.memory.work === workRoom
-                ).length;
+                candidates.push({
+                    workRoom: workRoom,
+                    role: role,
+                    pop: pop,
+                    priority: template.priority
+                });
+            }
+        }
 
-                if (population >= pop.max) {
+        // Lower priority number = checked first
+        candidates.sort((a, b) => a.priority - b.priority);
+        // Check candidates in priority order
+        for (const candidate of candidates) {
+
+            const { workRoom, role, pop } = candidate;
+
+            // Count role + home + work
+            const population = _.filter(
+                Game.creeps,
+                creep =>
+                    creep.memory.role === role &&
+                    creep.memory.home === this.home &&
+                    creep.memory.work === workRoom
+            ).length;
+
+            if (population >= pop.max) {
+                continue;
+            }
+
+            // Get the work room
+            const workRoomObject = Game.rooms[workRoom];
+
+            if (pop.spawnIf) {
+
+                // Can't evaluate room-dependent conditions
+                // without vision
+                if (!workRoomObject) {
                     continue;
                 }
 
-                // Get the work room
-                const workRoomObject = Game.rooms[workRoom];
-
-                if (pop.spawnIf) {
-
-                    // Can't evaluate room-dependent conditions
-                    // without vision
-                    if (!workRoomObject) {
-                        continue;
-                    }
-
-                    if (!pop.spawnIf(workRoomObject)) {
-                        continue;
-                    }
+                if (!pop.spawnIf(workRoomObject)) {
+                    continue;
                 }
-
-                const result = spawncreep.workercreep(
-                    this.spawn,
-                    role,
-                    this.room.energyAvailable,
-                    {
-                        home: this.home,
-                        work: workRoom
-                    }
-                );
-
-                if (result === OK) {
-                    return OK;
+            }
+        
+            const result = spawncreep.workercreep(
+                this.spawn,
+                role,
+                this.room.energyAvailable,
+                {
+                    home: this.home,
+                    work: workRoom
                 }
+            );
+
+            if (result === OK) {
+                return OK;
             }
         }
 
         return ERR_NOT_FOUND;
     }
+
 }
 
 module.exports = SpawnManager;
