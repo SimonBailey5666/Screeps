@@ -3,124 +3,71 @@ var common = require('function.common');
 var roleDefender = {
 
     run: function(creep) {
-
-        /*
-         * =========================
-         * COMBAT
-         * =========================
-         */
-
-        // Acquire a target if we don't have one
-        if (!creep.memory.hostile) {
-
-            const hostile = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
-
-            if (hostile) {
-                creep.memory.hostile = hostile.id;
+        
+        if(!creep.memory.squad){
+            if(this.findSquad(creep.pos, creep.memory.work)){
+                creep.memory.squad = true;
+                creep.say('Moving!');
             }
         }
-
-        // We have a target
-        if (creep.memory.hostile) {
-
-            const hostile = Game.getObjectById(creep.memory.hostile);
-
-            // Target died / no longer exists
-            if (!hostile) {
-                delete creep.memory.hostile;
+        if(creep.memory.squad){
+            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
+                var moveres = creep.moveTo(new RoomPosition(28, 32, creep.memory.work));
+                if(moveres != OK){
+                    console.log(creep + ": can't move to room " + global.ERROR_MESSAGES[moveres]);
+                }
+                return;
             }
-            else {
-
-                // Target is in another room
-                if (hostile.pos.roomName !== creep.room.name) {
-
-                    creep.moveTo(hostile, {
-                        reusePath: 5
-                    });
-
+           
+            var closestHostile = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
+            if(closestHostile){
+                 console.log(closestHostile);
+            
+                var attackRes = creep.rangedAttack(closestHostile);
+                if (attackRes === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(closestHostile);
                 }
-                // Target is in our room
-                else {
-
-                    const result = creep.attack(hostile);
-
-                    if (result === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(hostile, {
-                            reusePath: 5
-                        });
-                    }
+                else if (attackRes !== OK) {
+                    console.log(creep.name +" can't attack enemy: " + ERROR_MESSAGES[attackRes], creep.getActiveBodyparts(RANGED_ATTACK));
                 }
-
                 return;
             }
         }
-
-
-        /*
-         * =========================
-         * SQUAD
-         * =========================
-         */
-
-        if (!creep.memory.inSquad) {
-
-            if (this.findSquad(
-                creep.memory.home,
-                creep.memory.work
-            )) {
-
-                creep.memory.inSquad = true;
-
-                if (
-                    creep.memory.working &&
-                    creep.carry.energy === 0
-                ) {
-                    creep.memory.working = false;
-                    creep.say('Moving out!');
-                }
-            }
-        }
-
-
-        /*
-         * =========================
-         * MOVE TO WORK ROOM
-         * =========================
-         */
-
-        if (
-            (!common.inWorkRoom(creep) ||
-            common.atExit(creep.pos)) &&
-            creep.memory.inSquad
-        ) {
-
-            creep.moveTo(
-                new RoomPosition(
-                    25,
-                    25,
-                    creep.memory.work
-                ),
-                {
-                    reusePath: 10
-                }
-            );
-        }
     },
-
-
     findSquad: function(home, work) {
-
-        const defenders = _.filter(
-            Game.creeps,
-            creep =>
-                creep.memory.role === 'defender' &&
-                creep.pos.roomName === home &&
-                creep.memory.work === work
-        ).length;
-
+        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work).length;
         return defenders >= 4;
     }
-
 };
 
 module.exports = roleDefender;
+
+/*
+var roleDefender = {
+
+    run: function(creep) {
+
+        if(!creep.memory.squad){
+            if(this.findSquad(creep.pos, creep.memory.work)){
+                creep.memory.squad = true;
+            }
+        }
+        if(creep.memory.squad){
+            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
+                creep.moveTo(new RoomPosition(25, 25, creep.memory.work));
+            }
+            else
+            {
+                var closestHostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+                if(creep.attack(closestHostile)===ERR_NOT_IN_RANGE ){
+                    creep.moveTo(closestHostile);
+                }
+            }
+        }
+    },
+
+    findSquad: function(home, work) {
+        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.room.name === home && creep.memory.work === work).length;
+        return defenders >= 4;
+    }
+};*/

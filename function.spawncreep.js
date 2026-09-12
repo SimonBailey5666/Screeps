@@ -48,10 +48,10 @@ var spawncreep = {
         body.reverse();
         
         var spawnRoom = spawn.room.name;
-        var newname = srole.charAt(0).toUpperCase() + srole.slice(1) + '-' + spawnRoom + '-' + Math.floor(1000 + Math.random() * 9000);
+        var newname = srole.charAt(0).toUpperCase() + srole.slice(1) + '-' + spawnRoom + '-' + Math.floor(100000 + Math.random() * 900000);
         var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: location.home, work: location.work}})
         if(result !== 0){
-            console.log('Cannot build ' + srole + '. Reason: ' + result);
+            console.log('Cannot build ' + srole + '. Reason: ' + ERR_NAMES[result]);
             return;
         }
         console.log('Successfully spawned: ' + newname);

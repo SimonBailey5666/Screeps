@@ -16,11 +16,11 @@ global.TEMPLATES = {
         priority: 3
     },
     distributer: {
-        parts: [1, 3, 3, 0, 0, 0, 0, 0],
+        parts: [0, 3, 3, 0, 0, 0, 0, 0],
         priority: 3
     },
     defender: {
-        parts: [0, 2, 0, 0, 1, 0, 0, 2],
+        parts: [0, 1, 0, 0, 1, 0, 0, 0],
         priority: 4
     },
     miner: {
@@ -31,6 +31,25 @@ global.TEMPLATES = {
         parts: [0, 1, 2, 0, 0, 0, 0, 0],
         priority: 2
     }
+};
+
+global.ERROR_MESSAGES = {
+    [OK]: 'Success',
+    [ERR_NOT_OWNER]: 'Not owner',
+    [ERR_NO_PATH]: 'No path',
+    [ERR_NAME_EXISTS]: 'Name exists',
+    [ERR_BUSY]: 'Busy',
+    [ERR_NOT_FOUND]: 'Not found',
+    [ERR_NOT_ENOUGH_RESOURCES]: 'Not enough resources',
+    [ERR_INVALID_TARGET]: 'Invalid target',
+    [ERR_FULL]: 'Full',
+    [ERR_NOT_IN_RANGE]: 'Not in range',
+    [ERR_INVALID_ARGS]: 'Invalid arguments',
+    [ERR_TIRED]: 'Tired',
+    [ERR_NO_BODYPART]: 'Missing required body part',
+    [ERR_NOT_ENOUGH_EXTENSIONS]: 'Not enough extensions',
+    [ERR_RCL_NOT_ENOUGH]: 'Room controller level too low',
+    [ERR_GCL_NOT_ENOUGH]: 'Global controller level too low'
 };
 
 //parts = [ WORK, MOVE, CARRY, ATTACK, RANGED_ATTACK, HEAL, CLAIM, TOUGH];

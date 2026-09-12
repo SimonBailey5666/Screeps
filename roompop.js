@@ -60,13 +60,13 @@ const POPS = {
 
         miner: {
             minCost: 450,
-            maximumCost: 800,
+            maximumCost: 600,
             max: 2
         },
 
         hauler: {
             minCost: 450,
-            maximumCost: 800,
+            maximumCost: 600,
             max: 2,
             spawnIf: room => {
                 const miners = room.find(FIND_MY_CREEPS, {
@@ -81,7 +81,7 @@ const POPS = {
     W38S5: {
         miner: {
             minCost: 450,
-            maximumCost: 800,
+            maximumCost: 600,
             max: 1
         },
 
@@ -99,7 +99,7 @@ const POPS = {
     W37S4: {
         miner: {
             minCost: 450,
-            maximumCost: 800,
+            maximumCost: 600,
             max: 1
         },
         hauler: {
@@ -127,9 +127,9 @@ const POPS = {
     },
     W39S3: {
         defender: {
-            minCost: 700,
-            maximumCost: 700,
-            max: 4
+            minCost: 800,
+            maximumCost: 800,
+            max: 0
         }
     }
 };

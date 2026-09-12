@@ -34,8 +34,12 @@ var roleBuilder = {
                     var targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax});
                     targets.sort((a,b) => a.hits - b.hits);
                     if(targets.length > 0) {
-                        if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+                        var result = creep.repair(targets[0]) 
+                        if(result == ERR_NOT_IN_RANGE) {
                             creep.moveTo(targets[0]);
+                        }
+                        else if(result !== OK){
+                            console.log(creep.name, "Can't repair: " + ERROR_MESSAGES[result]);
                         }
                     }
                     else

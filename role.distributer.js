@@ -37,8 +37,6 @@ var roleDistributor = {
                     visualizePathStyle: { stroke: '#ffffff' }
                 });
             }
-        } else {
-            roleUpgrader.run(creep);
         }
     }
 };
