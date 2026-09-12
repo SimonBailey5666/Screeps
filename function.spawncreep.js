@@ -25,10 +25,10 @@ var spawncreep = {
         }
 
         //Only use all available energy if a maximum isnt specified in the pop settings
-        var workroom = global.POPS[location.work];
         if(popSettings.maximumCost && energy>popSettings.maximumCost){
             energy = popSettings.maximumCost;
         }
+
         var body = this.buildBody(global.TEMPLATES[srole].parts, energy)
         if(!body.includes(MOVE)){
             if(global.DEBUG_OUT){

@@ -17,7 +17,7 @@ var roleHauler = {
         }
         
         if(!creep.memory.working) {
-            if(creep.room.name !== creep.memory.work || common.isAtExit(creep.pos)){
+            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
                     new RoomPosition(25, 25, creep.memory.work)
                 );
@@ -28,7 +28,7 @@ var roleHauler = {
             
         } 
         else {
-            if(creep.room.name !== creep.memory.home || common.isAtExit(creep.pos)){
+            if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
                     new RoomPosition(25, 25, creep.memory.home)
                 );

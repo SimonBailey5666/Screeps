@@ -8,8 +8,7 @@ var roleMiner = {
     /** @param {Creep} creep **/
     run: function(creep) {
         // Travel to work room
-        if (creep.room.name !== creep.memory.work || common.isAtExit(creep.pos)) {
-
+        if (!common.inWorkRoom(creep) || common.atExit(creep.pos)) {
             creep.moveTo(
                 new RoomPosition(25, 25, creep.memory.work), {
                 visualizePathStyle: {

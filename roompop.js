@@ -16,7 +16,7 @@ const POPS = {
         upgrader: {
             minCost: 550,
             maximumCost: 900,
-            max: 1,
+            max: 2,
             spawnIf: room => true
         },
 
@@ -136,7 +136,14 @@ const POPS = {
         hauler: {
             minCost: 450,
             maximumCost: 600,
-            max: 4
+            max: 3
+        }
+    },
+    W39S3: {
+        defender: {
+            minCost: 700,
+            maximumCost: 700,
+            max: 8
         }
     }
 };

@@ -1,4 +1,5 @@
 var collect = require('function.collect');
+var common = require('function.common');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = {
 
@@ -15,7 +16,7 @@ var roleBuilder = {
         }
 
         if(creep.memory.working) {
-            if(creep.room.name !== creep.memory.work || this.isAtExit(creep.pos)){
+            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
                     new RoomPosition(25, 25, creep.memory.work)
                 );
@@ -45,7 +46,7 @@ var roleBuilder = {
             }
         }
         else {
-            if(creep.room.name !== creep.memory.home || this.isAtExit(creep.pos)){
+            if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
                     new RoomPosition(25, 25, creep.memory.home)
                 );
@@ -65,9 +66,6 @@ var roleBuilder = {
                 }
             }
         }
-    },
-    isAtExit: function(pos) {
-        return pos.x === 0 || pos.x === 49 || pos.y === 0 || pos.y === 49 || pos.x === 1 || pos.x === 48 || pos.y === 1 || pos.y === 48;
     }
 };
 
