@@ -5,7 +5,7 @@ var roleDefender = {
     run: function(creep) {
         
         if(!creep.memory.squad){
-            if(this.findSquad(creep.pos, creep.memory.work)){
+            if(this.findSquad(creep.pos, creep.memory.work) || creep.memory.home === creep.memory.work){
                 creep.memory.squad = true;
                 creep.say('Moving!');
             }
@@ -18,56 +18,24 @@ var roleDefender = {
                 }
                 return;
             }
-           
-            var closestHostile = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
-            if(closestHostile){
-                 console.log(closestHostile);
             
-                var attackRes = creep.rangedAttack(closestHostile);
-                if (attackRes === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(closestHostile);
+            if(!common.attackClosest(creep, FIND_HOSTILE_CREEPS)){
+                if(!common.attackClosest(creep, FIND_HOSTILE_STRUCTURES, {filter: structure => structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_CONTAINER && structure.structureType !== STRUCTURE_CONTROLLER})){
+                    
+                    var rallyPoint = Game.flags[creep.room.name];
+                    if(rallyPoint){
+                        if(!creep.pos.inRangeTo(rallyPoint, 2)) {
+                            creep.moveTo(rallyPoint);
+                        }
+                    }
                 }
-                else if (attackRes !== OK) {
-                    console.log(creep.name +" can't attack enemy: " + ERROR_MESSAGES[attackRes], creep.getActiveBodyparts(RANGED_ATTACK));
-                }
-                return;
             }
         }
-    },
+    }, 
     findSquad: function(home, work) {
         const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work).length;
-        return defenders >= 4;
+        return defenders >= 2;
     }
 };
 
 module.exports = roleDefender;
-
-/*
-var roleDefender = {
-
-    run: function(creep) {
-
-        if(!creep.memory.squad){
-            if(this.findSquad(creep.pos, creep.memory.work)){
-                creep.memory.squad = true;
-            }
-        }
-        if(creep.memory.squad){
-            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
-                creep.moveTo(new RoomPosition(25, 25, creep.memory.work));
-            }
-            else
-            {
-                var closestHostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-                if(creep.attack(closestHostile)===ERR_NOT_IN_RANGE ){
-                    creep.moveTo(closestHostile);
-                }
-            }
-        }
-    },
-
-    findSquad: function(home, work) {
-        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.room.name === home && creep.memory.work === work).length;
-        return defenders >= 4;
-    }
-};*/

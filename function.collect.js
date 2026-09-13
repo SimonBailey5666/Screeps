@@ -27,8 +27,8 @@ var collect = {
 
         const storage = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return structure.structureType === STRUCTURE_CONTAINER &&
-                       structure.store.energy > 0;
+                return ((structure.structureType === STRUCTURE_CONTAINER &&
+                       structure.store.energy > 0) || (structure.structureType === STRUCTURE_STORAGE && structure.store.energy >0));
             }
         });
 

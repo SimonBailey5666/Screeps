@@ -1,5 +1,5 @@
 //Defines creep types and pop
-global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler"];
+global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler", "capturer"];
 
 //weighted parts
 global.TEMPLATES = {
@@ -30,6 +30,10 @@ global.TEMPLATES = {
     hauler: {
         parts: [0, 1, 2, 0, 0, 0, 0, 0],
         priority: 2
+    },
+    capturer: {
+        parts: [0, 1, 0, 0, 0, 0, 1, 0],
+        priority: 4
     }
 };
 

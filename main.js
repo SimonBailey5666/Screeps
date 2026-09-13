@@ -4,6 +4,14 @@ const SpawnManager = require("wrapper.spawnmanager");
 
 module.exports.loop = function () {
 
+    //Set spawn memory
+    if (!Memory.spawns) {
+        Memory.spawns = {};
+    }
+    if (!Memory.spawns['Spawn1']) {
+        Memory.spawns['Spawn1'] = {};
+    }
+
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
@@ -28,6 +36,18 @@ module.exports.loop = function () {
     
     const manager = new SpawnManager(Game.spawns['Spawn1']);
     manager.run();
+    
+    if(Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS).length >= 2){
+        if(!Memory.spawns['Spawn1'].hostilesDetected){
+            Memory.spawns['Spawn1'].hostilesDetected = Game.time;
+        } 
+        else if(Game.time -  Memory.spawns['Spawn1'].hostilesDetected >= 50){
+            Game.spawns['Spawn1'].room.controller.activateSafeMode();
+        } 
+    } 
+    else if(Memory.spawns['Spawn1'].hostilesDetected){
+        delete Memory.spawns['Spawn1'].hostilesDetected;
+    }
     
     if(Game.spawns['Spawn1'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];

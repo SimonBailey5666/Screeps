@@ -1,52 +1,27 @@
+const spawnRules = require("spawn.rules");
+
 //Room population settings
 //Home Room -> Work Room -> Room population
 
 const POPS = {
     W38S4: {
-        harvester: {
-            minCost: 200,
-            maximumCost: 400,
-            max: 0,
-            spawnIf: room =>
-                !room.find(FIND_MY_CREEPS, {
-                    filter: creep => creep.memory.role === "miner"
-                }).length
-        },
-
         upgrader: {
-            minCost: 550,
-            maximumCost: 900,
-            max: 1,
+            minCost: 700,
+            maximumCost: 1200,
+            max: 2,
             spawnIf: room => true
         },
 
         builder: {
-            minCost: 200,
-            maximumCost: 900,
-            max: 1,
-            spawnIf: room => true
+            minCost: 700,
+            maximumCost: 1000,
+            max: 2,
         },
 
         distributer: {
-            minCost: 500,
-            maximumCost: 900,
-            max: 1,
-            spawnIf: room => {
-                const containers = room.find(FIND_STRUCTURES, {
-                    filter: s =>
-                        s.structureType === STRUCTURE_CONTAINER &&
-                        s.store[RESOURCE_ENERGY] > 0
-                });
-
-                const needsEnergy = room.find(FIND_STRUCTURES, {
-                    filter: s =>
-                        (s.structureType === STRUCTURE_SPAWN ||
-                         s.structureType === STRUCTURE_EXTENSION) &&
-                        s.store.getFreeCapacity(RESOURCE_ENERGY) > 0
-                });
-
-                return containers.length > 0 && needsEnergy.length > 0;
-            }
+            minCost: 300,
+            maximumCost: 300,
+            max: 2,
         },
 
         defender: {
@@ -59,22 +34,18 @@ const POPS = {
         },
 
         miner: {
-            minCost: 450,
-            maximumCost: 600,
-            max: 2
+            minCost: 800,
+            maximumCost: 1000,
+            max: 2,
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner')
         },
 
         hauler: {
-            minCost: 450,
-            maximumCost: 600,
+            minCost: 800,
+            maximumCost: 1000,
             max: 2,
-            spawnIf: room => {
-                const miners = room.find(FIND_MY_CREEPS, {
-                    filter: creep => creep.memory.role === "miner"
-                });
-
-                return miners.length > 0;
-            }
+            spawnIf:  room => spawnRules.needsReplacement(room, 'hauler')
+            
         }
     },
 
@@ -82,53 +53,67 @@ const POPS = {
         miner: {
             minCost: 450,
             maximumCost: 600,
-            max: 1
+            max: 2,
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner')
         },
 
         hauler: {
             minCost: 450,
             maximumCost: 600,
-            max: 3
+            max: 4,
+            spawnIf: room => spawnRules.needsReplacement(room, 'hauler', 3)
         },
         builder: {
             minCost: 450,
             maximumCost: 600,
-            max: 1
+            max: 2,
+            spawnIf: spawnRules.needsBuilder
         }
     },
     W37S4: {
         miner: {
             minCost: 450,
             maximumCost: 600,
-            max: 1
+            max: 2,
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner')
         },
         hauler: {
             minCost: 450,
             maximumCost: 600,
-            max: 3
+            max: 4,
+            spawnIf: room => spawnRules.needsReplacement(room, 'hauler', 3)
         },
         builder: {
             minCost: 450,
             maximumCost: 600,
-            max: 1
+            max: 2,
+            spawnIf: spawnRules.needsBuilder
         }
     },
     W39S5: {
         miner: {
             minCost: 450,
             maximumCost: 800,
-            max: 1
+            max: 2,
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner', 1, 120)
         },
         hauler: {
             minCost: 450,
             maximumCost: 600,
-            max: 3
+            max: 5,
+            spawnIf: room => spawnRules.needsReplacement(room, 'hauler', 4)
+        },
+        builder: {
+            minCost: 600,
+            maximumCost: 600,
+            max: 2,
+            spawnIf: spawnRules.needsBuilder
         }
     },
-    W39S3: {
+    W37S5: {
         defender: {
-            minCost: 800,
-            maximumCost: 800,
+            minCost: 700,
+            maximumCost: 700,
             max: 0
         }
     }

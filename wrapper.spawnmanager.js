@@ -16,7 +16,6 @@ class SpawnManager {
             return ERR_BUSY;
         }
 
-        // Build a list of all possible spawn candidates
         const candidates = [];
 
         for (const workRoom in POPS) {
@@ -43,7 +42,8 @@ class SpawnManager {
                 });
             }
         }
-
+        
+        //TODO: fix this it's shit
         // Lower priority number = checked first
         candidates.sort((a, b) => a.priority - b.priority);
         // Check candidates in priority order
@@ -74,7 +74,13 @@ class SpawnManager {
                 if (!workRoomObject) {
                     continue;
                 }
-
+                if(global.DEBUG_OUT){
+                    console.log(
+                        "Evaluating spawnIf:",
+                        workRoom,
+                        typeof pop.spawnIf
+                    );
+                }
                 if (!pop.spawnIf(workRoomObject)) {
                     continue;
                 }

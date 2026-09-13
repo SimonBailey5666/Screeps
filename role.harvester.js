@@ -8,11 +8,9 @@ var roleHarvester = {
         
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
-            creep.say('🔄 Collect');
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
-            creep.say('Transfer');
         }
         
         if (!creep.memory.working) {

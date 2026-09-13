@@ -9,11 +9,9 @@ var roleHauler = {
     run: function(creep) {
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
-            creep.say('🔄 Pickup');
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
-            creep.say('Store');
         }
         
         if(!creep.memory.working) {
@@ -40,7 +38,8 @@ var roleHauler = {
                             structure.structureType == STRUCTURE_SPAWN ||
                             structure.structureType == STRUCTURE_TOWER) &&
                         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) || 
-                        ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity))
+                        ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
+                        ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
                 });
             
                 if (targets.length > 0) {
