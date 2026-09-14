@@ -28,11 +28,11 @@ const spawnRules = {
             return true;
         }
         return false;
-    },  //TODO: Needs improvement for multiroom spawning
+    },
     needsReplacement(tCreep, minimumAlive = 1, tickCount = 100) {
         
         const creeps = Object.values(Game.creeps).filter(creep =>creep.memory.work === tCreep.locations.work &&creep.memory.role === tCreep.role);
-        const qPopulation = _.filter(Memory.rooms['W38S4'].spawnQueue,creep => creep.role === tCreep.role && creep.locations.work === tCreep.locations.work).length;
+        const qPopulation = _.filter(Memory.rooms[tCreep.locations.home].spawnQueue,creep => creep.role === tCreep.role && creep.locations.work === tCreep.locations.work).length;
         // Not enough creeps alive
         
         if(creeps.length + qPopulation < minimumAlive){
