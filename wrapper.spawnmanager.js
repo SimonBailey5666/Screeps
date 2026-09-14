@@ -6,22 +6,17 @@ class SpawnManager {
     constructor(roomName) {
         this.roomName = roomName;
         this.room = Game.rooms[roomName];
-        this.spawn = this.room.find(FIND_MY_SPAWNS)[0];
-
         // All creeps currently belong to W38S4
         this.home = roomName;
     }
 
     run() {
-        if (this.spawn.spawning) {
-            return ERR_BUSY;
-        }
-
+        console.log("Checking room populations for room: " + this.roomName + ".");
         const candidates = [];
 
-        for (const workRoom in POPS) {
+        for (const workRoom in POPS[this.roomName]) {
 
-            const populations = POPS[workRoom];
+            const populations = POPS[this.roomName][workRoom];
 
             for (const role in populations) {
 
@@ -94,10 +89,15 @@ class SpawnManager {
             }
             //Add to queue
             var sCreep = {role: role, locations: {home: this.home, work: workRoom}};
+            console.log("Adding " + role + " creep to " + this.home + " build queue.");
             Memory.rooms[this.roomName].spawnQueue.push(sCreep);
         }
-
-        return ERR_NOT_FOUND;
+        if(Memory.rooms[this.roomName].spawnQueue.length > 0){
+            console.log("Finished checking population. Queue size: " + Memory.rooms[this.roomName].spawnQueue.length + " for room " + this.roomName + ".");
+        } 
+        else{
+            console.log("Finished checking population. No creeps queued for room " + this.roomName + ".");
+        }
     }
 
 }

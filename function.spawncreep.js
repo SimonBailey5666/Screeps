@@ -6,7 +6,7 @@ var spawncreep = {
             return;
         }
         const srole = Memory.rooms[roomName].spawnQueue[0].role;
-        const location = Memory.rooms[roomName].spawnQueue[0].locations.work;
+        const workRoom = Memory.rooms[roomName].spawnQueue[0].locations.work;
         var energy = Game.rooms[roomName].energyAvailable;
         
         //spawn, srole, energy, location
@@ -20,8 +20,8 @@ var spawncreep = {
             [ERR_RCL_NOT_ENOUGH]: 'ERR_RCL_NOT_ENOUGH',
         };
 
-        var workroom = global.POPS[location];
-        var popSettings = workroom[srole];
+        var workRoomPop = global.POPS[roomName][workRoom];
+        var popSettings = workRoomPop[srole];
         if(global.DEBUG_OUT){
             console.log('Attempting to spawn ' + srole + ' with ' + energy + ' energy');
         }
@@ -63,7 +63,7 @@ var spawncreep = {
                 return
             }
             
-            var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: roomName, work: location}})
+            var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: roomName, work: workRoom}})
             if(result !== 0){
                 console.log('Cannot build ' + srole + '. Reason: ' + ERR_NAMES[result]);
                 return;

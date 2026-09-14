@@ -34,6 +34,7 @@ const spawnRules = {
         const creeps = Object.values(Game.creeps).filter(creep =>creep.memory.work === room.name &&creep.memory.role === role);
         const qPopulation = _.filter(Memory.rooms['W38S4'].spawnQueue,creep => creep.role === role && creep.locations.work === room.name).length;
         // Not enough creeps alive
+        
         if(creeps.length + qPopulation < minimumAlive){
             return true;
         }

@@ -84,15 +84,23 @@ var collect = {
 
     },
     mine: function(creep) {
+        if (!creep.memory.target) {
+            const source = creep.pos.findClosestByRange(FIND_SOURCES);
 
-        var source = creep.pos.findClosestByRange(FIND_SOURCES);
+            if (!source) return;
+
+            creep.memory.target = source.id;
+        }
+
+        const source = Game.getObjectById(creep.memory.target);
 
         if (!source) {
+            delete creep.memory.target;
             return;
         }
-    
-        var result = creep.harvest(source);
-    
+
+        const result = creep.harvest(source);
+
         if (result === ERR_NOT_IN_RANGE) {
             creep.moveTo(source, {
                 visualizePathStyle: {
