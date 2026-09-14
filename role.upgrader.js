@@ -1,4 +1,5 @@
 var collect = require('function.collect');
+var common = require('function.common');
 
 var roleUpgrader = {
 
@@ -13,13 +14,8 @@ var roleUpgrader = {
         }
         
         if(!creep.memory.working) {
-            const hasEnergyStorage = creep.room.find(FIND_STRUCTURES, {
-                    filter: s =>
-                        s.structureType === STRUCTURE_CONTAINER &&
-                        s.store[RESOURCE_ENERGY] > 0
-            }).length > 0;
                 
-            if(hasEnergyStorage){
+            if(common.hasEnergyStorage(creep.room)){
                 collect.fromStorage(creep);
             } 
             else{

@@ -6,45 +6,45 @@ const spawnRules = require("spawn.rules");
 const POPS = {
     W38S4: {
         upgrader: {
-            minCost: 700,
-            maximumCost: 1200,
-            max: 2,
+            minCost: 500,
+            maximumCost: 600,
+            max: 1,
             spawnIf: room => true
         },
 
         builder: {
-            minCost: 700,
-            maximumCost: 1000,
-            max: 2,
+            minCost: 500,
+            maximumCost: 600,
+            max: 1,
+            spawnIf: spawnRules.needsBuilder
         },
 
         distributer: {
-            minCost: 300,
-            maximumCost: 300,
+            minCost: 700,
+            maximumCost: 900,
             max: 2,
+            spawnIf: spawnRules.needsReplacement
         },
 
         defender: {
             minCost: 400,
             maximumCost: 600,
             max: 5,
-            spawnIf: room => {
-                return room.find(FIND_HOSTILE_CREEPS).length > 0;
-            }
+            spawnIf: spawnRules.enemiesPresent
         },
 
         miner: {
-            minCost: 800,
-            maximumCost: 1000,
-            max: 2,
-            spawnIf: room => spawnRules.needsReplacement(room, 'miner')
+            minCost: 500,
+            maximumCost: 600,
+            max: 3,
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner', 2, 30)
         },
 
         hauler: {
-            minCost: 800,
-            maximumCost: 1000,
-            max: 2,
-            spawnIf:  room => spawnRules.needsReplacement(room, 'hauler')
+            minCost: 500,
+            maximumCost: 600,
+            max: 3,
+            spawnIf:  room => spawnRules.needsReplacement(room, 'hauler', 2, 30)
             
         }
     },
@@ -54,7 +54,7 @@ const POPS = {
             minCost: 450,
             maximumCost: 600,
             max: 2,
-            spawnIf: room => spawnRules.needsReplacement(room, 'miner')
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner', 1, 130)
         },
 
         hauler: {
@@ -80,8 +80,8 @@ const POPS = {
         hauler: {
             minCost: 450,
             maximumCost: 600,
-            max: 4,
-            spawnIf: room => spawnRules.needsReplacement(room, 'hauler', 3)
+            max: 3,
+            spawnIf: room => spawnRules.needsReplacement(room, 'hauler', 2)
         },
         builder: {
             minCost: 450,
@@ -95,7 +95,7 @@ const POPS = {
             minCost: 450,
             maximumCost: 800,
             max: 2,
-            spawnIf: room => spawnRules.needsReplacement(room, 'miner', 1, 120)
+            spawnIf: room => spawnRules.needsReplacement(room, 'miner', 1, 180)
         },
         hauler: {
             minCost: 450,

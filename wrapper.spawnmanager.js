@@ -3,12 +3,13 @@ const POPS = require("roompop");
 
 class SpawnManager {
 
-    constructor(spawn) {
-        this.spawn = spawn;
-        this.room = spawn.room;
+    constructor(roomName) {
+        this.roomName = roomName;
+        this.room = Game.rooms[roomName];
+        this.spawn = this.room.find(FIND_MY_SPAWNS)[0];
 
         // All creeps currently belong to W38S4
-        this.home = "W38S4";
+        this.home = roomName;
     }
 
     run() {
@@ -43,10 +44,7 @@ class SpawnManager {
             }
         }
         
-        //TODO: fix this it's shit
-        // Lower priority number = checked first
         candidates.sort((a, b) => a.priority - b.priority);
-        // Check candidates in priority order
         for (const candidate of candidates) {
 
             const { workRoom, role, pop } = candidate;
@@ -59,8 +57,17 @@ class SpawnManager {
                     creep.memory.home === this.home &&
                     creep.memory.work === workRoom
             ).length;
+            
+            //Check queue for any queued creeps
+            const qPopulation = _.filter(
+               Memory.rooms[this.roomName].spawnQueue,
+                creep =>
+                    creep.role === role &&
+                    creep.locations.home === this.home &&
+                    creep.locations.work === workRoom
+            ).length; 
 
-            if (population >= pop.max) {
+            if (population + qPopulation >= pop.max) {
                 continue;
             }
 
@@ -85,20 +92,9 @@ class SpawnManager {
                     continue;
                 }
             }
-        
-            const result = spawncreep.workercreep(
-                this.spawn,
-                role,
-                this.room.energyAvailable,
-                {
-                    home: this.home,
-                    work: workRoom
-                }
-            );
-
-            if (result === OK) {
-                return OK;
-            }
+            //Add to queue
+            var sCreep = {role: role, locations: {home: this.home, work: workRoom}};
+            Memory.rooms[this.roomName].spawnQueue.push(sCreep);
         }
 
         return ERR_NOT_FOUND;

@@ -8,7 +8,7 @@ var collect = {
         while(!creep.memory.target && sources.length)
         {
             var closest = creep.pos.findClosestByRange(sources);
-            if(closest.energy > 0){
+            if(closest && closest.energy > 0){
                 creep.memory.target = closest;
             }
             else{
@@ -31,7 +31,6 @@ var collect = {
                        structure.store.energy > 0) || (structure.structureType === STRUCTURE_STORAGE && structure.store.energy >0));
             }
         });
-
         if (!storage){
             console.log(creep.name+": no storage found!");
             return;

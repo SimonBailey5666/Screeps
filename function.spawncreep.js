@@ -1,7 +1,15 @@
 var spawncreep = {
     
-    workercreep: function(spawn, srole, energy, location){
+    workercreep: function(roomName){
         
+        if(!Memory.rooms[roomName].spawnQueue[0]){
+            return;
+        }
+        const srole = Memory.rooms[roomName].spawnQueue[0].role;
+        const location = Memory.rooms[roomName].spawnQueue[0].locations.work;
+        var energy = Game.rooms[roomName].energyAvailable;
+        
+        //spawn, srole, energy, location
         const ERR_NAMES = {
             [OK]: 'OK',
             [ERR_NOT_OWNER]: 'ERR_NOT_OWNER',
@@ -11,7 +19,8 @@ var spawncreep = {
             [ERR_INVALID_ARGS]: 'ERR_INVALID_ARGS',
             [ERR_RCL_NOT_ENOUGH]: 'ERR_RCL_NOT_ENOUGH',
         };
-        var workroom = global.POPS[location.work];
+
+        var workroom = global.POPS[location];
         var popSettings = workroom[srole];
         if(global.DEBUG_OUT){
             console.log('Attempting to spawn ' + srole + ' with ' + energy + ' energy');
@@ -46,15 +55,22 @@ var spawncreep = {
         
         body.sort();
         body.reverse();
+       
+        var newname = srole.charAt(0).toUpperCase() + srole.slice(1) + '-' + roomName + '-' + Math.floor(100000 + Math.random() * 900000);
         
-        var spawnRoom = spawn.room.name;
-        var newname = srole.charAt(0).toUpperCase() + srole.slice(1) + '-' + spawnRoom + '-' + Math.floor(100000 + Math.random() * 900000);
-        var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: location.home, work: location.work}})
-        if(result !== 0){
-            console.log('Cannot build ' + srole + '. Reason: ' + ERR_NAMES[result]);
-            return;
+        for(spawn of Game.rooms[roomName].find(FIND_MY_SPAWNS)){
+            if(spawn.spawning)  {
+                return
+            }
+            
+            var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: roomName, work: location}})
+            if(result !== 0){
+                console.log('Cannot build ' + srole + '. Reason: ' + ERR_NAMES[result]);
+                return;
+            }
+            console.log('Successfully spawned: ' + newname);
+            Memory.rooms[roomName].spawnQueue.shift();
         }
-        console.log('Successfully spawned: ' + newname);
         
     },
     buildBody: function(template, energy) {

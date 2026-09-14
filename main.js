@@ -1,6 +1,9 @@
 require('config');
 const ScreepRole = require("wrapper.screeprole");
 const SpawnManager = require("wrapper.spawnmanager");
+const spawnCreeps = require("function.spawncreep");
+
+const common = require('function.common');
 
 module.exports.loop = function () {
 
@@ -11,6 +14,18 @@ module.exports.loop = function () {
     if (!Memory.spawns['Spawn1']) {
         Memory.spawns['Spawn1'] = {};
     }
+    
+    //Set queue memory TODO: this needs to work of roompop
+    if(!Memory.rooms){
+        Memory.rooms = {};
+    }
+    if(!Memory.rooms['W38S4']){
+         Memory.rooms['W38S4'] = {};
+    }
+    if(!Memory.rooms['W38S4'].spawnQueue){
+        Memory.rooms['W38S4'].spawnQueue = [];
+    }
+    
 
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -19,23 +34,35 @@ module.exports.loop = function () {
         }
     }
     
-    var tower = Game.getObjectById('TOWER_ID');
-    if(tower) {
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax
+    const towers = Game.rooms['W38S4'].find(FIND_MY_STRUCTURES, {
+        filter: s => s.structureType === STRUCTURE_TOWER
+    });
+    
+    for (const tower of towers) {
+        const closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: structure => (structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL)
         });
-        if(closestDamagedStructure) {
+    
+        if (closestDamagedStructure) {
             tower.repair(closestDamagedStructure);
         }
-
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if(closestHostile) {
+    
+        const closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+    
+        if (closestHostile) {
             tower.attack(closestHostile);
         }
     }
     
-    const manager = new SpawnManager(Game.spawns['Spawn1']);
-    manager.run();
+    if(common.atTick(10)){
+        for(var roomName in Memory.rooms){
+            const manager = new SpawnManager(roomName);
+             manager.run();
+        }        
+    }
+    for(var roomName in Memory.rooms){
+        spawnCreeps.workercreep(roomName);
+    }
     
     if(Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS).length >= 2){
         if(!Memory.spawns['Spawn1'].hostilesDetected){
