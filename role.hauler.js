@@ -17,7 +17,8 @@ var roleHauler = {
         if(!creep.memory.working) {
             if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
-                    new RoomPosition(25, 25, creep.memory.work)
+                    new RoomPosition(25, 25, creep.memory.work),
+                    {reusePath: PATH_TICK_RECALC}
                 );
             }
             else {
@@ -28,7 +29,8 @@ var roleHauler = {
         else {
             if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){
                 creep.moveTo(
-                    new RoomPosition(25, 25, creep.memory.home)
+                    new RoomPosition(25, 25, creep.memory.home),
+                    {reusePath: PATH_TICK_RECALC}
                 );
             } 
             else if (creep.store[RESOURCE_ENERGY] > 0) {
@@ -58,7 +60,7 @@ var roleHauler = {
                     );
             
                     if (result == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.storage);
+                        creep.moveTo(creep.room.storage, {reusePath: PATH_TICK_RECALC});
                     }
                 }
             }

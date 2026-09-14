@@ -12,7 +12,7 @@ var roleDefender = {
         }
         if(creep.memory.squad){
             if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
-                var moveres = creep.moveTo(new RoomPosition(28, 32, creep.memory.work));
+                var moveres = creep.moveTo(new RoomPosition(28, 32, creep.memory.work),{reusePath: PATH_TICK_RECALC});
                 if(moveres != OK){
                     console.log(creep + ": can't move to room " + global.ERROR_MESSAGES[moveres]);
                 }
@@ -33,8 +33,8 @@ var roleDefender = {
         }
     }, 
     findSquad: function(home, work) {
-        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work).length;
-        return defenders >= 2;
+        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work && creep.pos.roomName === home).length;
+        return defenders >= 4;
     }
 };
 

@@ -86,6 +86,7 @@ var common = {
     },
     flushSpawnQueue: function(homeRoom = 'W38S4'){
         delete Memory.rooms[homeRoom].spawnQueue;
+        console.log("Queue for room " + homeRoom + " cleared.")
     }
 };
 

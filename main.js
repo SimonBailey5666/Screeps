@@ -9,10 +9,8 @@ const common = require('function.common');
 
 module.exports.loop = function () {
 
-    //Set queue memory TODO: this needs to work of roompop
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
-
 
     for(var roomName in Memory.rooms){
         
@@ -20,14 +18,14 @@ module.exports.loop = function () {
             const manager = new SpawnManager(roomName);
             manager.run();    
         }
-
         spawnCreeps.workercreep(roomName);
+
 
         const towers = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {
             filter: s => s.structureType === STRUCTURE_TOWER
         });
-
         tower.run(towers);
+        
         
         if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
             if(!Memory.rooms[roomName].hostilesDetected){
@@ -40,6 +38,7 @@ module.exports.loop = function () {
         else if (Memory.rooms[roomName].hostilesDetected){
             delete Memory.rooms[roomName].hostilesDetected;
         }
+        
         
         for(spawn of Game.rooms[roomName].find(FIND_MY_SPAWNS)){
             if(spawn.spawning){

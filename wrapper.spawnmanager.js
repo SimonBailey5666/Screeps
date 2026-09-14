@@ -54,43 +54,47 @@ class SpawnManager {
             ).length;
             
             //Check queue for any queued creeps
-            const qPopulation = _.filter(
+            var qPopulation = _.filter(
                Memory.rooms[this.roomName].spawnQueue,
                 creep =>
                     creep.role === role &&
                     creep.locations.home === this.home &&
                     creep.locations.work === workRoom
             ).length; 
-
-            if (population + qPopulation >= pop.max) {
-                continue;
+            
+            while(true){
+                if (population + qPopulation >= pop.max) {
+                    break;
+                }
+    
+                // Get the work room
+                const workRoomObject = Game.rooms[workRoom];
+                var sCreep = {role: role, locations: {home: this.home, work: workRoom}};
+    
+                if (pop.spawnIf) {
+    
+                    // Can't evaluate room-dependent conditions
+                    // without vision
+                    if (!workRoomObject) {
+                        break;
+                    }
+                    if(global.DEBUG_OUT){
+                        console.log(
+                            "Evaluating spawnIf:",
+                            workRoom,
+                            typeof pop.spawnIf
+                        );
+                    }
+                    if (!pop.spawnIf(sCreep)) {
+                        break;
+                    }
+                }
+                //Add to queue
+                qPopulation++;
+                
+                console.log("Adding " + role + " creep to " + this.home + " build queue.");
+                Memory.rooms[this.roomName].spawnQueue.push(sCreep);
             }
-
-            // Get the work room
-            const workRoomObject = Game.rooms[workRoom];
-
-            if (pop.spawnIf) {
-
-                // Can't evaluate room-dependent conditions
-                // without vision
-                if (!workRoomObject) {
-                    continue;
-                }
-                if(global.DEBUG_OUT){
-                    console.log(
-                        "Evaluating spawnIf:",
-                        workRoom,
-                        typeof pop.spawnIf
-                    );
-                }
-                if (!pop.spawnIf(workRoomObject)) {
-                    continue;
-                }
-            }
-            //Add to queue
-            var sCreep = {role: role, locations: {home: this.home, work: workRoom}};
-            console.log("Adding " + role + " creep to " + this.home + " build queue.");
-            Memory.rooms[this.roomName].spawnQueue.push(sCreep);
         }
         if(Memory.rooms[this.roomName].spawnQueue.length > 0){
             console.log("Finished checking population. Queue size: " + Memory.rooms[this.roomName].spawnQueue.length + " for room " + this.roomName + ".");

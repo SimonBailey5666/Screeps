@@ -1,5 +1,5 @@
 //Defines creep types and pop
-global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler", "capturer"];
+global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler", "capturer", "scout"];
 
 //weighted parts
 global.TEMPLATES = {
@@ -34,8 +34,14 @@ global.TEMPLATES = {
     capturer: {
         parts: [0, 1, 0, 0, 0, 0, 1, 0],
         priority: 4
+    },
+    scout: {
+        parts: [0, 1, 0, 0, 0, 0, 0, 0],
+        priority: 5
     }
 };
+
+//parts = [ WORK, MOVE, CARRY, ATTACK, RANGED_ATTACK, HEAL, CLAIM, TOUGH];
 
 global.ERROR_MESSAGES = {
     [OK]: 'Success',
@@ -56,9 +62,6 @@ global.ERROR_MESSAGES = {
     [ERR_GCL_NOT_ENOUGH]: 'Global controller level too low'
 };
 
-//parts = [ WORK, MOVE, CARRY, ATTACK, RANGED_ATTACK, HEAL, CLAIM, TOUGH];
-
-
 //Magic numbers
-global.PATH_TICK_RECALC = 5; //Ticks before recalculating path
+global.PATH_TICK_RECALC = 20; //Ticks before recalculating path
 global.DEBUG_OUT = false;
