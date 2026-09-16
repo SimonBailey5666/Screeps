@@ -168,14 +168,14 @@ const POPS = {
             healer: {
                 minCost: 700,
                 maximumCost: 700,
-                max: 6,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 250)
+                max: 0,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 450)
             },
             tank: {
                 minCost: 800,
                 maximumCost: 800,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 250)
+                max: 0,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 450)
             }
         },
         
@@ -201,14 +201,12 @@ const POPS = {
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 12,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 9, 150)
+                max: 6
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 150)
+                max: 2
             }
         }
     }

@@ -35,18 +35,31 @@ var roleHauler = {
                 );
             } 
             else if (creep.store[RESOURCE_ENERGY] > 0) {
-                var targets = creep.room.find(FIND_STRUCTURES, {
-                    filter: structure =>
-                        ((structure.structureType == STRUCTURE_EXTENSION ||
-                            structure.structureType == STRUCTURE_SPAWN ||
-                            structure.structureType == STRUCTURE_TOWER) &&
-                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) || 
-                        ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
-                        ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
-                });
+                
+                if(!creep.memory.target){
+                    var targets = creep.room.find(FIND_STRUCTURES, {
+                        filter: structure =>
+                            ((structure.structureType == STRUCTURE_EXTENSION ||
+                                structure.structureType == STRUCTURE_SPAWN ||
+                                structure.structureType == STRUCTURE_TOWER) &&
+                            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) || 
+                            ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
+                            ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
+                    });
+                    creep.memory.target = common.setTarget(creep,targets);
+                }
                 //TODO: needs to search once and store target in memory
-                if (targets.length > 0) {
-                    var target = common.setTarget(creep, targets);
+                if (creep.memory.target) {
+                    var target = Game.getObjectById(creep.memory.target);
+                    
+                    if(!target){
+                        delete creep.memory.target;
+                        return;
+                    }
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) === 0){
+                        delete creep.memory.target;
+                        return;
+                    }
             
                     var result = creep.transfer(target, RESOURCE_ENERGY);
             

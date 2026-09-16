@@ -56,7 +56,9 @@ const spawnRules = {
             towers.every(tower => tower.store[RESOURCE_ENERGY] === 0);
     },   
     enemiesPresent(tCreep, enemies = 1){
-        return Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS).length >= enemies;
+            const hostiles = Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS);
+
+            return hostiles.filter(enemy => enemy.body.length > 2).length >= enemies;
     },
     safeModeActive(tCreep){
         return Game.rooms[tCreep.locations.work].controller?.safeMode

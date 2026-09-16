@@ -23,7 +23,7 @@ global.TEMPLATES = {
     },
     distributer: {
         parts: [0, 3, 3, 0, 0, 0, 0, 0],
-        priority: 2
+        priority: 1
     },
     defender: {
         parts: [0, 1, 0, 0, 1, 0, 0, 0],

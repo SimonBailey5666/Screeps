@@ -25,7 +25,6 @@ var roleHealer = {
                     
                      if (leader.pos.roomName === creep.pos.roomName){
                         const result = creep.heal(leader);
-                        return;
                      }
                      
                 }  

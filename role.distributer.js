@@ -1,50 +1,4 @@
 var collect = require('function.collect');
-var roleUpgrader = require('role.upgrader');
-
-var roleDistributor = {
-    run: function(creep) {
-
-        if (creep.memory.working && creep.store.getUsedCapacity(RESOURCE_ENERGY) === 0) {
-            creep.memory.working = false;
-            creep.memory.target = false;
-        }
-
-        if (!creep.memory.working && creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-            creep.memory.working = true;
-            creep.memory.target = false;
-        }
-
-        if (!creep.memory.working) {
-            collect.fromStorage(creep);
-            return;
-        }
-
-        const targets = creep.room.find(FIND_STRUCTURES, {
-            filter: structure =>
-                (
-                    structure.structureType === STRUCTURE_EXTENSION ||
-                    structure.structureType === STRUCTURE_SPAWN ||
-                    structure.structureType === STRUCTURE_TOWER
-                ) &&
-                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
-        });
-
-        if (targets.length) {
-            const target = creep.pos.findClosestByRange(targets);
-
-            if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(target, {
-                    visualizePathStyle: { stroke: '#ffffff' },
-                    reusePath: PATH_TICK_RECALC
-                });
-            }
-        }
-    }
-};
-
-module.exports = roleDistributor;
-
-/*var collect = require('function.collect');
 var common = require('function.common');
 var roleUpgrader = require('role.upgrader');
 
@@ -74,12 +28,15 @@ var roleDistributor = {
                     ) &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
             });
-            creep.memory.target = common.setTarget(creep, targets);
+            creep.memory.target = common.setTarget(creep, targets, false);
         }
         
         var target = Game.getObjectById(creep.memory.target);
-        console.log(target);
-        if(target.store.getFreeCapacity() === 0){
+        if(!target){
+            delete creep.memory.target;
+            return;
+        }
+        if(target.store.getFreeCapacity(RESOURCE_ENERGY) === 0){
             delete creep.memory.target;
             return;
         }
@@ -95,4 +52,3 @@ var roleDistributor = {
 };
 
 module.exports = roleDistributor;
-*/

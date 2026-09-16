@@ -80,29 +80,32 @@ var common = {
             return false;
         }
     },
-    setTarget: function(tCreep, targets){
+    setTarget: function(tCreep, targets, selectSameIfNone = true){
         
-        if(targets.length === 1){
-            return targets[0];
+        if(targets.length === 0){
+            return;
         }
         
         targets.sort((a, b) => {return tCreep.pos.getRangeTo(a) - tCreep.pos.getRangeTo(b);});
     
         const sCreeps = _.filter( Game.creeps, creep => creep.memory.role === tCreep.memory.role && creep.memory.work === tCreep.memory.work);
         
-        for(const target of targets){
-            
-            for(const sCreep of sCreeps){
-                if(sCreep.memory.target === target){
-                    continue
-                }
-                
+        for (const target of targets) {
+
+            const taken = sCreeps.some(
+                creep => creep.memory.target === target.id
+            );
+            if (!taken) {
                 return target.id;
             }
-            
         }
-        
-        return targets[0].id;
+        //If there a no other targets just go to the first one
+        if(selectSameIfNone){
+            return targets[0].id;
+        }
+        else{
+            return;
+        }
     },
     hasEnergyStorage(room) {
       return room.find(FIND_STRUCTURES, {
