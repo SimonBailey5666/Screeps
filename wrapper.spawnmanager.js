@@ -6,7 +6,6 @@ class SpawnManager {
     constructor(roomName) {
         this.roomName = roomName;
         this.room = Game.rooms[roomName];
-        // All creeps currently belong to W38S4
         this.home = roomName;
     }
 
@@ -15,7 +14,6 @@ class SpawnManager {
         const candidates = [];
 
         for (const workRoom in POPS[this.roomName]) {
-
             const populations = POPS[this.roomName][workRoom];
 
             for (const role in populations) {
@@ -62,6 +60,7 @@ class SpawnManager {
                     creep.locations.work === workRoom
             ).length; 
             
+            //Loop to add multiple of same time if required
             while(true){
                 if (population + qPopulation >= pop.max) {
                     break;
@@ -92,7 +91,7 @@ class SpawnManager {
                 //Add to queue
                 qPopulation++;
                 
-                console.log("Adding " + role + " creep to " + this.home + " build queue.");
+                console.log("Adding " + role + " creep, with work room " + workRoom + ", to " + this.home + "'s build queue.");
                 Memory.rooms[this.roomName].spawnQueue.push(sCreep);
             }
         }

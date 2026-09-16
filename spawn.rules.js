@@ -29,7 +29,7 @@ const spawnRules = {
         }
         return false;
     },
-    needsReplacement(tCreep, minimumAlive = 1, tickCount = 100) {
+    needsReplacement(tCreep, minimumAlive = 1, tickCount = 120) {
         
         const creeps = Object.values(Game.creeps).filter(creep =>creep.memory.work === tCreep.locations.work &&creep.memory.role === tCreep.role);
         const qPopulation = _.filter(Memory.rooms[tCreep.locations.home].spawnQueue,creep => creep.role === tCreep.role && creep.locations.work === tCreep.locations.work).length;
@@ -44,8 +44,19 @@ const spawnRules = {
         return false;
         
     },
-    enemiesPresent(tCreep){
-        return Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS).length > 0;
+    enemyTowersAreEmpty(tCreep) {
+    
+        room = tCreep.memory.work;
+        const towers = room.find(FIND_HOSTILE_STRUCTURES, {
+            filter: structure => structure.structureType === STRUCTURE_TOWER
+        });
+    
+        // True if there is at least one enemy tower and ALL are empty
+        return towers.length > 0 &&
+            towers.every(tower => tower.store[RESOURCE_ENERGY] === 0);
+    },   
+    enemiesPresent(tCreep, enemies = 1){
+        return Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS).length >= enemies;
     },
     safeModeActive(tCreep){
         return Game.rooms[tCreep.locations.work].controller?.safeMode

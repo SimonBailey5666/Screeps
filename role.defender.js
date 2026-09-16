@@ -1,3 +1,4 @@
+require('config');
 var common = require('function.common');
 
 var roleDefender = {
@@ -5,14 +6,42 @@ var roleDefender = {
     run: function(creep) {
         
         if(!creep.memory.squad){
-            if(this.findSquad(creep.pos, creep.memory.work) || creep.memory.home === creep.memory.work){
-                creep.memory.squad = true;
-                creep.say('Moving!');
+            if(common.atTick(5))
+            {
+                if(this.findSquad(creep.memory.home, creep.memory.work) || creep.memory.home === creep.memory.work){
+                    creep.memory.squad = true;
+                    creep.say('Moving!');
+                }
+            }
+            else {
+                common.gotoRally(creep, creep.pos.roomName);
+                return;
             }
         }
         if(creep.memory.squad){
+            if(Game.flags['waypoint'] && (creep.memory.home !== creep.memory.work)){
+
+               if(!creep.memory.procced){
+
+                    if(!creep.memory.waypoint){
+                        
+                        if(common.gotoRally(creep, 'waypoint') == OK){
+                            creep.memory.waypoint = true;
+                        }
+                        return;
+                    }
+                
+                    var atWaypoint = _.filter( Game.creeps, creep => creep.memory.waypoint === true).length;
+                    if(atWaypoint >= SQUAD_SIZE){
+                        creep.memory.procced = true;
+                    }
+                    else{
+                        return;
+                    }
+                }
+            }
             if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
-                var moveres = creep.moveTo(new RoomPosition(28, 32, creep.memory.work),{reusePath: PATH_TICK_RECALC});
+                var moveres = creep.moveTo(new RoomPosition(28, 32, creep.memory.work));
                 if(moveres != OK){
                     console.log(creep + ": can't move to room " + global.ERROR_MESSAGES[moveres]);
                 }
@@ -21,20 +50,14 @@ var roleDefender = {
             
             if(!common.attackClosest(creep, FIND_HOSTILE_CREEPS)){
                 if(!common.attackClosest(creep, FIND_HOSTILE_STRUCTURES, {filter: structure => structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_CONTAINER && structure.structureType !== STRUCTURE_CONTROLLER})){
-                    
-                    var rallyPoint = Game.flags[creep.room.name];
-                    if(rallyPoint){
-                        if(!creep.pos.inRangeTo(rallyPoint, 2)) {
-                            creep.moveTo(rallyPoint);
-                        }
-                    }
+                    common.gotoRally(creep, creep.pos.roomName);
                 }
             }
         }
     }, 
     findSquad: function(home, work) {
-        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work && creep.pos.roomName === home).length;
-        return defenders >= 4;
+        const defenders = _.filter( Game.creeps, creep => creep.memory.role === 'defender' && creep.memory.work === work && creep.pos.roomName === home && creep.ticksToLive < 1470).length;
+        return defenders >= SQUAD_SIZE;
     }
 };
 

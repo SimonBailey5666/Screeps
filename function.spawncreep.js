@@ -3,7 +3,7 @@ var spawncreep = {
     workercreep: function(roomName){
         
         if(!Memory.rooms[roomName].spawnQueue[0]){
-            return;
+            return OK;
         }
         const srole = Memory.rooms[roomName].spawnQueue[0].role;
         const workRoom = Memory.rooms[roomName].spawnQueue[0].locations.work;
@@ -30,7 +30,7 @@ var spawncreep = {
             if(global.DEBUG_OUT){
                 console.log('Cannot build ' + srole + ' not enough resources.');
             }
-             return;
+             return ERR_NOT_ENOUGH_ENERGY;
         }
 
         //Only use all available energy if a maximum isnt specified in the pop settings
@@ -40,17 +40,13 @@ var spawncreep = {
 
         var body = this.buildBody(global.TEMPLATES[srole].parts, energy)
         if(!body.includes(MOVE)){
-            if(global.DEBUG_OUT){
-                console.log('Cannot build ' + srole + ' invalid body(no move). ' + body.toString());
-            }
-            return;
+            console.log('Cannot build ' + srole + ' invalid body(no move). ' + body.toString());
+            return ERR_INVALID_ARGS;
             
         } 
-        else if(!body.includes(CARRY) && (srole !== 'defender' && srole !== 'miner')){
-            if(global.DEBUG_OUT){
-                console.log('Cannot build ' + srole + ' invalid body(no carry). ' +  body.toString());
-            }
-            return;
+        else if(!body.includes(CARRY) && (srole !== 'defender' && srole !== 'miner' && srole !== 'scout' && srole !== 'healer' && srole !== 'tank')){
+            console.log('Cannot build ' + srole + ' invalid body(no carry). ' +  body.toString());
+            return ERR_INVALID_ARGS;
         }
         
         body.sort();
@@ -58,18 +54,20 @@ var spawncreep = {
        
         var newname = srole.charAt(0).toUpperCase() + srole.slice(1) + '-' + roomName + '-' + Math.floor(100000 + Math.random() * 900000);
         
-        for(spawn of Game.rooms[roomName].find(FIND_MY_SPAWNS)){
+        for(spawnName of Memory.rooms[roomName].spawns){
+            spawn = Game.spawns[spawnName];
             if(spawn.spawning)  {
-                return
+                return OK;
             }
             
             var result = spawn.spawnCreep(body, newname,{memory:{role: srole, home: roomName, work: workRoom}})
             if(result !== 0){
                 console.log('Cannot build ' + srole + '. Reason: ' + ERR_NAMES[result]);
-                return;
+                return ERR_NAMES[result];
             }
             console.log('Successfully spawned: ' + newname);
             Memory.rooms[roomName].spawnQueue.shift();
+            return result;
         }
         
     },

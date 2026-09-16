@@ -7,6 +7,11 @@ var roleScout = {
         }
         
         // Navigate to target room
+        if(Game.flags['waypoint']){
+            creep.moveTo(Game.flags['waypoint']);
+            return;
+        }
+        var enemyConstructionSites = _.filter
         if (creep.room.name !== creep.memory.target) {
             var exit = creep.room.findExitTo(creep.memory.target);
             creep.moveTo(creep.pos.findClosestByRange(exit));

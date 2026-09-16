@@ -7,6 +7,7 @@ var roleHauler = {
     
     /** @param {Creep} creep **/
     run: function(creep) {
+        
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
         }
@@ -43,9 +44,9 @@ var roleHauler = {
                         ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
                         ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
                 });
-            
+                //TODO: needs to search once and store target in memory
                 if (targets.length > 0) {
-                    var target = creep.pos.findClosestByRange(targets);
+                    var target = common.setTarget(creep, targets);
             
                     var result = creep.transfer(target, RESOURCE_ENERGY);
             

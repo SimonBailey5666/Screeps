@@ -1,5 +1,11 @@
+//Magic numbers
+global.PATH_TICK_RECALC = 5; //Ticks before recalculating path
+global.DEBUG_OUT = false;
+global.DEFAULT_HOME = 'W38S4';
+global.SQUAD_SIZE = 4;
+
 //Defines creep types and pop
-global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler", "capturer", "scout"];
+global.ROLES = ["harvester", "upgrader", "builder", "distributer", "defender", "miner", "hauler", "capturer", "scout", "tank", "healer"];
 
 //weighted parts
 global.TEMPLATES = {
@@ -12,7 +18,7 @@ global.TEMPLATES = {
         priority: 7
     },
     builder: {
-        parts: [1, 2, 2, 0, 0, 0, 0, 0],
+        parts: [1, 4, 3, 0, 0, 0, 0, 0],
         priority: 3
     },
     distributer: {
@@ -21,11 +27,11 @@ global.TEMPLATES = {
     },
     defender: {
         parts: [0, 1, 0, 0, 1, 0, 0, 0],
-        priority: 4
+        priority: 1
     },
     miner: {
         parts: [5, 2, 0, 0, 0, 0, 0, 0],
-        priority: 1
+        priority: 2
     },
     hauler: {
         parts: [0, 1, 2, 0, 0, 0, 0, 0],
@@ -37,6 +43,14 @@ global.TEMPLATES = {
     },
     scout: {
         parts: [0, 1, 0, 0, 0, 0, 0, 0],
+        priority: 5
+    },
+    tank: {
+        parts: [0, 5, 0, 1, 0, 0, 0, 4],
+        priority: 4
+    },
+    healer: {
+        parts: [0, 1, 0, 0, 0, 1, 0, 0],
         priority: 5
     }
 };
@@ -61,7 +75,3 @@ global.ERROR_MESSAGES = {
     [ERR_RCL_NOT_ENOUGH]: 'Room controller level too low',
     [ERR_GCL_NOT_ENOUGH]: 'Global controller level too low'
 };
-
-//Magic numbers
-global.PATH_TICK_RECALC = 20; //Ticks before recalculating path
-global.DEBUG_OUT = false;

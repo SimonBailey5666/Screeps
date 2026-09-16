@@ -1,3 +1,4 @@
+require('config');
 //Assortment of functions that are useful for a variety of creeps
 
 var common = {
@@ -31,8 +32,23 @@ var common = {
                 .map(([room, count]) => `${room} ${count}`)
                 .join(' ');
     
-            console.log(`${role}s {${rooms}}`);
+            return (`${role}s {${rooms}}`);
         }
+    },
+    gotoRally: function(creep, flagName){
+        var rallyPoint = Game.flags[flagName];
+        if(rallyPoint){
+            if(!creep.pos.inRangeTo(rallyPoint, 2)) {
+                creep.moveTo(rallyPoint);
+                return;
+            }
+            if(!creep.pos.inRangeTo(rallyPoint, 1)){
+                creep.moveTo(rallyPoint);
+            }
+            return OK;
+            
+        }
+        return ERR_NOT_FOUND;
     },
     attackClosest: function(creep, targets, filter){
         var closestTarget = creep.pos.findClosestByPath(targets, filter);
@@ -64,6 +80,30 @@ var common = {
             return false;
         }
     },
+    setTarget: function(tCreep, targets){
+        
+        if(targets.length === 1){
+            return targets[0];
+        }
+        
+        targets.sort((a, b) => {return tCreep.pos.getRangeTo(a) - tCreep.pos.getRangeTo(b);});
+    
+        const sCreeps = _.filter( Game.creeps, creep => creep.memory.role === tCreep.memory.role && creep.memory.work === tCreep.memory.work);
+        
+        for(const target of targets){
+            
+            for(const sCreep of sCreeps){
+                if(sCreep.memory.target === target){
+                    continue
+                }
+                
+                return target.id;
+            }
+            
+        }
+        
+        return targets[0].id;
+    },
     hasEnergyStorage(room) {
       return room.find(FIND_STRUCTURES, {
                     filter: s =>
@@ -81,12 +121,9 @@ var common = {
     inHomeRoom: function(creep){
         return creep.memory.home === creep.room.name;
     },
-    atTick: function(tick){
-        return Game.time % tick === 0;
-    },
-    flushSpawnQueue: function(homeRoom = 'W38S4'){
-        delete Memory.rooms[homeRoom].spawnQueue;
-        console.log("Queue for room " + homeRoom + " cleared.")
+    atTick: function(tick, offset = 0){
+        var time = Game.time;
+        return (time - offset) % tick === 0;
     }
 };
 

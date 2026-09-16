@@ -7,9 +7,9 @@ const POPS = {
     W38S4: {
         W38S4: {
             upgrader: {
-                minCost: 500,
-                maximumCost: 600,
-                max: 3
+                minCost: 800,
+                maximumCost: 800,
+                max: 2,
             },
     
             builder: {
@@ -22,8 +22,8 @@ const POPS = {
             distributer: {
                 minCost: 700,
                 maximumCost: 900,
-                max: 2,
-                spawnIf: spawnRules.needsReplacement
+                max: 3,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
             },
     
             defender: {
@@ -34,10 +34,10 @@ const POPS = {
             },
     
             miner: {
-                minCost: 500,
-                maximumCost: 600,
-                max: 3,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
+                minCost: 700,
+                maximumCost: 700,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
     
             hauler: {
@@ -64,12 +64,19 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
             },
             builder: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 2,
+                minCost: 700,
+                maximumCost: 700,
+                max: 1,
                 spawnIf: spawnRules.needsBuilder
+            },
+            defender: {
+                minCost: 400,
+                maximumCost: 600,
+                max: 5,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
             }
         },
+
         W37S4: {
             miner: {
                 minCost: 450,
@@ -84,12 +91,19 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
             },
             builder: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 2,
+                minCost: 700,
+                maximumCost: 700,
+                max: 1,
                 spawnIf: spawnRules.needsBuilder
+            },
+            defender: {
+                minCost: 400,
+                maximumCost: 600,
+                max: 5,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
             }
         },
+
         W39S5: {
             miner: {
                 minCost: 450,
@@ -104,24 +118,97 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4)
             },
             builder: {
-                minCost: 600,
-                maximumCost: 600,
-                max: 2,
-                spawnIf: spawnRules.needsBuilder
-            }
-        },
-        W37S5: {
-            defender: {
                 minCost: 700,
                 maximumCost: 700,
+                max: 1,
+                spawnIf: spawnRules.needsBuilder
+            },
+            defender: {
+                minCost: 400,
+                maximumCost: 600,
+                max: 5,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
+            }
+        },
+
+        W37S3: {
+            miner: {
+                minCost: 650,
+                maximumCost: 650,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
+            },
+            hauler: {
+                minCost: 800,
+                maximumCost: 800,
                 max: 4,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep) && !spawnRules.safeModeActive(tCreep)
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
+            },
+            builder: {
+                minCost: 800,
+                maximumCost: 800,
+                max: 2,
+                spawnIf: spawnRules.needsBuilder
+            },
+            defender: {
+                minCost: 400,
+                maximumCost: 600,
+                max: 5,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
+            }
+        },
+
+        W39S3: {    //ATTACK THIS ROOM
+            defender: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 0,
+                spawnIf: spawnRules.enemiesPresent
+            },
+            healer: {
+                minCost: 700,
+                maximumCost: 700,
+                max: 6,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 250)
+            },
+            tank: {
+                minCost: 800,
+                maximumCost: 800,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 250)
+            }
+        },
+        
+        W37S5: {    //ATTACK THIS ROOM
+            defender: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 8,
+                spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 1,
+                max: 0,
                 spawnif: !spawnRules.hasRoomVision
+            },
+            capturer: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 0,
+                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement
+            }, 
+            healer: {
+                minCost: 900,
+                maximumCost: 900,
+                max: 12,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 9, 150)
+            },
+            tank: {
+                minCost: 800,
+                maximumCost: 850,
+                max: 4,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 150)
             }
         }
     }

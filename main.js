@@ -7,40 +7,56 @@ const spawnCreeps = require("function.spawncreep");
 const tower = require('function.tower');
 const common = require('function.common');
 
+global.util = require('function.util');
+
 module.exports.loop = function () {
 
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
-
+    
+    var tickOffset = 0;
     for(var roomName in Memory.rooms){
         
-        if(common.atTick(30)){
+        if(common.atTick(15, tickOffset)){
             const manager = new SpawnManager(roomName);
-            manager.run();    
+            manager.run();
+        } 
+        var result = spawnCreeps.workercreep(roomName);
+        if(result !== OK && result !== ERR_NOT_ENOUGH_EXTENSIONS){
+            console.log("Spawn failed", ERROR_MESSAGES[result]);
         }
-        spawnCreeps.workercreep(roomName);
 
-
-        const towers = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {
-            filter: s => s.structureType === STRUCTURE_TOWER
-        });
+        const towerIds = Memory.rooms[roomName].towers;
+        const towers = [];
+        for(const towerId of towerIds){
+            const tower = Game.getObjectById(towerId);
+            if(tower){
+                towers.push(tower);
+            }
+        }
         tower.run(towers);
         
-        
-        if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
-            if(!Memory.rooms[roomName].hostilesDetected){
-                Memory.rooms[roomName].hostilesDetected = Game.time;
+        if(common.atTick(5) || Memory.rooms[roomName].hostilesDetected){
+            if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
+                if(!Memory.rooms[roomName].hostilesDetected){
+                    Memory.rooms[roomName].hostilesDetected = Game.time;
+                }
+                else if (Game.time - Memory.rooms[roomName].hostilesDetected >= 40){
+                    if(!Game.rooms[roomName].controller?.safeMode){
+                        Game.notify(roomName + " has entered safe mode!")
+                        Game.rooms[roomName].controller.activateSafeMode();
+                    }
+                }
             }
-            else if (Game.time - Memory.rooms[roomName].hostilesDetected >=50){
-                Game.rooms[roomName].controller.activateSafeMode();
+            else if (Memory.rooms[roomName].hostilesDetected){
+                delete Memory.rooms[roomName].hostilesDetected;
             }
         }
-        else if (Memory.rooms[roomName].hostilesDetected){
-            delete Memory.rooms[roomName].hostilesDetected;
-        }
         
         
-        for(spawn of Game.rooms[roomName].find(FIND_MY_SPAWNS)){
+        for(spawnName of Memory.rooms[roomName].spawns){
+            
+            spawn = Game.spawns[spawnName];
             if(spawn.spawning){
                 var spawningCreep = spawn.spawning.name;
                 spawn.room.visual.text(
@@ -50,6 +66,7 @@ module.exports.loop = function () {
                     {align: 'left', opacity: 0.8});
             }
         }
+        tickOffset += 5;
     }
 
     for(var name in Game.creeps) {
