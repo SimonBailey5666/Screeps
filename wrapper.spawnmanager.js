@@ -1,5 +1,6 @@
 const spawncreep = require("function.spawncreep");
 const POPS = require("roompop");
+const common = require('function.common');
 
 class SpawnManager {
 
@@ -7,6 +8,25 @@ class SpawnManager {
         this.roomName = roomName;
         this.room = Game.rooms[roomName];
         this.home = roomName;
+    }
+    run(tickOffset) {
+
+        if(common.atTick(15, tickOffset)){
+            const manager = new SpawnManager(roomName);
+            manager.updateSpawnQueue();
+            
+            //Queue is getting backlogged, sort it by creep priority so economy doesnt crash
+            if(Memory.rooms[this.roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[this.roomName].sortQueue > 100){
+                Memory.rooms[this.roomName].sortQueue = Game.time;
+                manager.sortQueue();
+            }
+        } 
+
+        let result = spawnCreeps.workercreep(this.roomName);
+        if(result !== OK && result !== ERR_NOT_ENOUGH_EXTENSIONS){
+            console.log("Spawn failed", ERROR_MESSAGES[result]);
+        }
+    
     }
     sortQueue(){
         const candidates = [];

@@ -15,23 +15,13 @@ module.exports.loop = function () {
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
     
+    
+    //Manage each spawn defined in roompop
     let tickOffset = 0;
     for(var roomName in Memory.rooms){
         
-        if(common.atTick(15, tickOffset)){
-            const manager = new SpawnManager(roomName);
-            manager.updateSpawnQueue();
-            
-            //Queue is getting backlogged, sort it by creep priority so economy doesnt crash
-            if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 100){
-                Memory.rooms[roomName].sortQueue = Game.time;
-                manager.sortQueue();
-            }
-        } 
-        let result = spawnCreeps.workercreep(roomName);
-        if(result !== OK && result !== ERR_NOT_ENOUGH_EXTENSIONS){
-            console.log("Spawn failed", ERROR_MESSAGES[result]);
-        }
+        const manager = new SpawnManager(roomName);
+        manager.run(tickOffset);
 
         const towerIds = Memory.rooms[roomName].towers;
         const towers = [];
@@ -42,6 +32,7 @@ module.exports.loop = function () {
             }
         }
         towerManager.run(towers);
+        
         
         if(common.atTick(5) || Memory.rooms[roomName].hostilesDetected){
             if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
