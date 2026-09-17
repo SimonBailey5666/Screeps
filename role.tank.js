@@ -115,8 +115,7 @@ var roleTank = {
     },
     isSquadAlive: function(sCreep){
         for(subordinate of sCreep.memory.subordinates){
-            creep = Game.creeps[subordinate];
-            if(!creep){
+            if(!Game.creeps[subordinate]){
                 delete sCreep.memory.subordinates[subordinate];
             }
         }
