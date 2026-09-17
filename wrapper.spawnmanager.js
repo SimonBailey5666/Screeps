@@ -1,4 +1,4 @@
-const spawncreep = require("function.spawncreep");
+const spawnCreeps = require("function.spawncreep");
 const POPS = require("roompop");
 const common = require('function.common');
 
