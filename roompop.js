@@ -73,7 +73,7 @@ const POPS = {
                 minCost: 400,
                 maximumCost: 600,
                 max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
             },
             capturer: {
                 minCost: 1000,
@@ -106,7 +106,7 @@ const POPS = {
                 minCost: 400,
                 maximumCost: 600,
                 max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
             },
             capturer: {
                 minCost: 1000,
@@ -165,8 +165,8 @@ const POPS = {
             defender: {
                 minCost: 400,
                 maximumCost: 600,
-                max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
+                max: 3,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
             }
         },
 
