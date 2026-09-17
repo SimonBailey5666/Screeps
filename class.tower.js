@@ -4,7 +4,7 @@ class TowerManager {
         
         this.towers = [];
         const towerIds = Memory.rooms[roomName].towers;
-        
+
 
         for(const towerId of towerIds){
             const tower = Game.getObjectById(towerId);
@@ -12,7 +12,8 @@ class TowerManager {
                 this.towers.push(tower);
             } 
             else {
-                delete Memory.rooms[roomName].towers[tower];
+                const index = Memory.rooms[roomName].towers.indexOf(towerId);
+                Memory.rooms[roomName].towers.splice(index,1);
             }
         }
     }
