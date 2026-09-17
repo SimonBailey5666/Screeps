@@ -9,7 +9,7 @@ class SpawnManager {
         this.home = roomName;
     }
 
-    run() {
+    updateSpawnQueue() {
         console.log("Checking room populations for room: " + this.roomName + ".");
         const candidates = [];
 

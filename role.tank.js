@@ -18,7 +18,7 @@ var roleTank = {
                 }
             }
             else {
-                common.gotoRally(creep, creep.pos.roomName);
+                common.gotoRally(creep, creep.memory.home);
             }
             
             return;

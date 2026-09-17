@@ -12,7 +12,7 @@ var roleDefender = {
             target = creep.room.controller
             if(target){
                 if(creep.pos.isNearTo(target)){
-                    creep.attackController(target);
+                    creep.reserveController(target);
                 }
                 else{
                     creep.moveTo(target);

@@ -4,7 +4,7 @@ const SpawnManager = require("wrapper.spawnmanager");
 const memoryManager = require('function.memory');
 const spawnCreeps = require("function.spawncreep");
 
-const tower = require('function.tower');
+const towerManager = require('function.tower');
 const common = require('function.common');
 
 global.util = require('function.util');
@@ -14,14 +14,14 @@ module.exports.loop = function () {
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
     
-    var tickOffset = 0;
+    let tickOffset = 0;
     for(var roomName in Memory.rooms){
         
         if(common.atTick(15, tickOffset)){
             const manager = new SpawnManager(roomName);
-            manager.run();
+            manager.updateSpawnQueue();
         } 
-        var result = spawnCreeps.workercreep(roomName);
+        let result = spawnCreeps.workercreep(roomName);
         if(result !== OK && result !== ERR_NOT_ENOUGH_EXTENSIONS){
             console.log("Spawn failed", ERROR_MESSAGES[result]);
         }
@@ -34,7 +34,7 @@ module.exports.loop = function () {
                 towers.push(tower);
             }
         }
-        tower.run(towers);
+        towerManager.run(towers);
         
         if(common.atTick(5) || Memory.rooms[roomName].hostilesDetected){
             if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
@@ -56,9 +56,9 @@ module.exports.loop = function () {
         
         for(spawnName of Memory.rooms[roomName].spawns){
             
-            spawn = Game.spawns[spawnName];
+            const spawn = Game.spawns[spawnName];
             if(spawn.spawning){
-                var spawningCreep = spawn.spawning.name;
+                let spawningCreep = spawn.spawning.name;
                 spawn.room.visual.text(
                     '🛠️' + spawningCreep,
                     spawn.pos.x + 1,
@@ -69,7 +69,7 @@ module.exports.loop = function () {
         tickOffset += 5;
     }
 
-    for(var name in Game.creeps) {
+    for(const name in Game.creeps) {
         const screep = new ScreepRole(Game.creeps[name]);
         screep.run();
     }

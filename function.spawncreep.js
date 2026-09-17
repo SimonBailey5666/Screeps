@@ -44,7 +44,7 @@ var spawncreep = {
             return ERR_INVALID_ARGS;
             
         } 
-        else if(!body.includes(CARRY) && (srole !== 'defender' && srole !== 'miner' && srole !== 'scout' && srole !== 'healer' && srole !== 'tank')){
+        else if(!body.includes(CARRY) && (srole !== 'defender' && srole !== 'miner' && srole !== 'scout' && srole !== 'healer' && srole !== 'tank' && srole !== 'capturer')){
             console.log('Cannot build ' + srole + ' invalid body(no carry). ' +  body.toString());
             return ERR_INVALID_ARGS;
         }

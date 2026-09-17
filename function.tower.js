@@ -1,4 +1,4 @@
-var tower = {
+var towerManager = {
         run: function(towers){
             for (const tower of towers) {
                 
@@ -31,4 +31,4 @@ var tower = {
         }
 }
 
-module.exports = tower;
+module.exports = towerManager;

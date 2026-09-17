@@ -26,8 +26,12 @@ var memoryManager = {
                 //console.log("Checking structures in memory");
                 this.checkSpawns(roomName);
                 this.checkTowers(roomName);
+                //this.buildRoads(roomName);
             }
         }
+    },
+    buildRoads: function(roomName){
+
     },
     checkSpawns: function(roomName){
         const spawns = Game.rooms[roomName].find(FIND_MY_SPAWNS);
