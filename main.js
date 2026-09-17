@@ -11,6 +11,8 @@ global.util = require('function.util');
 
 module.exports.loop = function () {
 
+    console.log("test");
+
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
     
