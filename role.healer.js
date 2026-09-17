@@ -66,7 +66,7 @@ var roleHealer = {
                 creep =>
                     creep.memory.squadLeader &&
                     creep.memory.work === sCreep.memory.work &&
-                    creep.pos.roomName === sCreep.pos.roomName &&
+                    creep.memory.home === sCreep.pos.roomName &&
                     creep.memory.subordinates.length < SQUAD_SIZE - 1
             );
 
