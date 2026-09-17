@@ -114,17 +114,8 @@ var roleTank = {
         
     },
     isSquadAlive: function(sCreep){
-        console.log("running check");
-        for(subordinate of sCreep.memory.subordinates){
-            console.log(subordinate);
-            let tCreep = Game.creeps[subordinate];
-            if(!tCreep){
-                delete sCreep.memory.subordinates[subordinate];
-            }
-            else{
-                console.log(tCreep);
-            }
-        }
+        sCreep.memory.subordinates =
+        sCreep.memory.subordinates.filter(name => Game.creeps[name]);
     },
     waitSquad: function(sCreep){
         //Don't wait on an exit
