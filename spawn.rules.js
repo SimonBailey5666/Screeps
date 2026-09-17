@@ -80,6 +80,12 @@ const spawnRules = {
     },   
     enemiesPresent(tCreep, enemies = 1){
         console.log(tCreep);
+        console.log(tCreep.work);
+        
+        console.log(tCreep.memory);
+
+        console.log(tCreep.locations);
+        
         if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
