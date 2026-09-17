@@ -24,7 +24,7 @@ class TowerManager {
         
             if (closestHostile) {
                 tower.attack(closestHostile);
-                return;
+                continue;
             }
             
             
@@ -33,7 +33,7 @@ class TowerManager {
             });
             if (damagedCreeps) {
                 tower.heal(damagedCreeps);
-                return;
+                continue;
             }
             
             const closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -42,7 +42,7 @@ class TowerManager {
         
             if (closestDamagedStructure) {
                 tower.repair(closestDamagedStructure);
-                return;
+                continue;
             }
 
             const closestDamagedFort = tower.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -50,7 +50,7 @@ class TowerManager {
             });
 
             tower.repair(closestDamagedFort);
-            return;
+            continue;
         
             
         }
