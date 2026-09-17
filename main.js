@@ -23,6 +23,7 @@ module.exports.loop = function () {
             manager.updateSpawnQueue();
             
             if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 60){
+                Memory.rooms[roomName].sortQueue = Game.time;
                 manager.sortQueue();
             }
         } 
