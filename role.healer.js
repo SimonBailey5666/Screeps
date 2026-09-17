@@ -49,27 +49,69 @@ var roleHealer = {
         creep.memory.subordinate = true;
     },
     findSquadLeader: function(sCreep) {
-        if(!sCreep.memory.leader){
-            const leaders = _.filter(Game.creeps, creep => creep.memory.squadLeader && creep.memory.work === sCreep.memory.work && creep.pos.roomName === sCreep.pos.roomName && !creep.memory.squadReady)
-            for(const leader of leaders){
-                if(leader.memory.subordinates.length < SQUAD_SIZE - 1){
-                    sCreep.memory.leader = leader.name;
-                    sCreep.memory.squadWait = Game.time;
-                    break;
-                } 
+
+        if (!sCreep.memory.leader) {
+
+            const leaders = _.filter(
+                Game.creeps,
+                creep =>
+                    creep.memory.squadLeader &&
+                    creep.memory.work === sCreep.memory.work &&
+                    creep.pos.roomName === sCreep.pos.roomName &&
+                    creep.memory.subordinates.length < SQUAD_SIZE - 1
+            );
+
+            let leader = leaders.find(
+                leader => !leader.memory.squadReady
+            );
+
+            
+            if (!leader) {
+                leader = leaders.find(
+                    leader => leader.memory.squadReady
+                );
+            }
+
+            if (leader) {
+                sCreep.memory.leader = leader.name;
+                sCreep.memory.squadWait = Game.time;
+
+                // If we joined a squad that is already ready,
+                // immediately mark ourselves ready.
+                if (leader.memory.squadReady) {
+                    if(!leader.memory.subordinates.includes(sCreep.name)){
+                        leader.memory.subordinates.push(sCreep.name)
+                    }
+                    sCreep.memory.squadReady = true;
+                }
             }
         }
+
         else {
+
             const leader = Game.creeps[sCreep.memory.leader];
-            if(leader.memory.squadReady && leader.memory.subordinates.includes(sCreep.name)){
-                sCreep.memory.squadReady = true
+
+            // Leader died / no longer exists
+            if (!leader) {
+                delete sCreep.memory.leader;
+                delete sCreep.memory.squadWait;
+                return;
             }
-            else if(Game.time - sCreep.memory.squadWait > 100){
+
+            if (
+                leader.memory.squadReady &&
+                leader.memory.subordinates.includes(sCreep.name)
+            ) {
+                sCreep.memory.squadReady = true;
+            }
+
+            else if (Game.time - sCreep.memory.squadWait > 100) {
                 delete sCreep.memory.leader;
                 delete sCreep.memory.squadWait;
             }
         }
     }
+
 };
 
 module.exports = roleHealer;
