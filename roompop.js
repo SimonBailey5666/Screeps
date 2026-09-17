@@ -193,7 +193,7 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 0,
+                max: 8,
                 spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
             },
             scout: {
@@ -211,12 +211,12 @@ const POPS = {
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 0
+                max: 3
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 0
+                max: 1
             }
         }
     }
