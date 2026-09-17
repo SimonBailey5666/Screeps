@@ -6,6 +6,14 @@ var roleTank = {
         
         this.initMemory(creep);
         if(!creep.memory.squadReady){
+
+            if(!creep.memory.rallyFirst){
+                let result = common.gotoRally(creep, creep.memory.home)
+                if(result === OK){
+                    creep.memory.rallyFirst = true;
+                }
+                return;
+            }
             
             //Offset the search so not everyone is looking at the same time
             digit = creep.name.slice(-1);
