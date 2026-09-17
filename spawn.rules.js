@@ -89,6 +89,10 @@ const spawnRules = {
         return hostiles.filter(enemy => enemy.body.length > 2).length >= enemies;
     },
     safeModeActive(tCreep){
+        if(!common.hasRoomVision(tCreep.locations.work)){
+            return true;
+        }
+
         return Game.rooms[tCreep.locations.work].controller?.safeMode
     },
     hasRoomVision(tCreep){
