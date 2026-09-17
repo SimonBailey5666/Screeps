@@ -117,11 +117,12 @@ var roleTank = {
         console.log("running check");
         for(subordinate of sCreep.memory.subordinates){
             console.log(subordinate);
-            if(!Game.creeps[subordinate]){
+            let tCreep = Game.creeps[subordinate];
+            if(!tCreep){
                 delete sCreep.memory.subordinates[subordinate];
             }
             else{
-                console.log(!Game.creeps[subordinate]);
+                console.log(tCreep);
             }
         }
     },
