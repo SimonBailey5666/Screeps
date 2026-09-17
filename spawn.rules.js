@@ -1,7 +1,7 @@
 const spawnRules = {
     
     noMiners(tCreep) {
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -11,7 +11,7 @@ const spawnRules = {
     },
 
     noCreepsWithRole(tCreep) {
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -21,7 +21,7 @@ const spawnRules = {
     },
 
     hasMiners(tCreep, count = 1) {
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -31,7 +31,7 @@ const spawnRules = {
     },
     needsBuilder(tCreep) {
 
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -63,7 +63,7 @@ const spawnRules = {
     },
     enemyTowersAreEmpty(tCreep) {
 
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -78,7 +78,7 @@ const spawnRules = {
     },   
     enemiesPresent(tCreep, enemies = 1){
 
-        if(!this.hasRoomVision(tCreep.locations.work)){
+        if(!hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
