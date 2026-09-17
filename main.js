@@ -24,7 +24,7 @@ module.exports.loop = function () {
         spawnManager.run(tickOffset);
 
         const towerManager = new TowerManager(roomName);
-        towerManager.run(towers);
+        towerManager.run();
         
 
         if(common.atTick(5) || Memory.rooms[roomName].hostilesDetected){
