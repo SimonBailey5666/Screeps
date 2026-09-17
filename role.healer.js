@@ -70,18 +70,15 @@ var roleHealer = {
                     creep.memory.subordinates.length < SQUAD_SIZE - 1
             );
 
-            console.log(leaders);
             let leader = leaders.find(
                 leader => !leader.memory.squadReady
             );
-            console.log(leader);
             
             if (!leader) {
                 leader = rLeaders.find(
                     leader => leader.memory.squadReady
                 );
             }
-            console.log(leader);
 
             if (leader) {
                 sCreep.memory.leader = leader.name;
