@@ -22,7 +22,8 @@ module.exports.loop = function () {
             const manager = new SpawnManager(roomName);
             manager.updateSpawnQueue();
             
-            if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 60){
+            //Queue is getting backlogged, sort it by creep priority so economy doesnt crash
+            if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 100){
                 Memory.rooms[roomName].sortQueue = Game.time;
                 manager.sortQueue();
             }
