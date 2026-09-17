@@ -1,5 +1,4 @@
 require('config');
-var common = require('function.common');
 
 var roleTank = {
 

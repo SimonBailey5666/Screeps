@@ -1,5 +1,4 @@
 var collect = require('function.collect');
-var common = require('function.common');
 
 //Only mine and drop stuff on the ground when the room is established
 

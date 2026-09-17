@@ -1,4 +1,3 @@
-var common = require('function.common');
 
 var roleDefender = {
 

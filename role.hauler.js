@@ -1,5 +1,4 @@
 var collect = require('function.collect');
-var common = require('function.common');
 
 //Pickup dropped energy and put it into storage
 

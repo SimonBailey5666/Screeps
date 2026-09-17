@@ -4,10 +4,9 @@ const SpawnManager = require("wrapper.spawnmanager");
 const memoryManager = require('function.memory');
 
 const TowerManager = require('class.tower');
-const common = require('function.common');
 
 global.util = require('function.util');
-global.util = require('function.common');
+global.common = require('function.common');
 
 module.exports.loop = function () {
 

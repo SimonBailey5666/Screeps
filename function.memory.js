@@ -1,7 +1,5 @@
 require('config');
 
-var common = require('function.common');
-
 var memoryManager = {
 
     initializeRoomMemory: function() {

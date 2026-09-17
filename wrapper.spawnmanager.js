@@ -1,6 +1,5 @@
 const spawnCreeps = require("function.spawncreep");
 const POPS = require("roompop");
-const common = require('function.common');
 
 class SpawnManager {
 

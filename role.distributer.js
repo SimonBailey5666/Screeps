@@ -1,6 +1,4 @@
 var collect = require('function.collect');
-var common = require('function.common');
-var roleUpgrader = require('role.upgrader');
 
 var roleDistributor = {
     run: function(creep) {
