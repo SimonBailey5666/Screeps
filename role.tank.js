@@ -120,6 +120,9 @@ var roleTank = {
             if(!Game.creeps[subordinate]){
                 delete sCreep.memory.subordinates[subordinate];
             }
+            else{
+                console.log(!Game.creeps[subordinate]);
+            }
         }
     },
     waitSquad: function(sCreep){
