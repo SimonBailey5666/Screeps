@@ -21,6 +21,9 @@ var memoryManager = {
             Memory.rooms[roomName].spawnQueue ??= [];
             Memory.rooms[roomName].spawns ??= [];
             Memory.rooms[roomName].towers ??= [];
+            if(!Memory.rooms[roomName].sortQueue) {
+                Memory.rooms[roomName].sortQueue = Game.time;
+            }
             
             if(common.atTick(100)){
                 //console.log("Checking structures in memory");

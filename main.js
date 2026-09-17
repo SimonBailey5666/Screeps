@@ -11,6 +11,7 @@ global.util = require('function.util');
 
 module.exports.loop = function () {
 
+
     memoryManager.initializeRoomMemory();
     memoryManager.removeDeadCreeps();
     
@@ -20,6 +21,10 @@ module.exports.loop = function () {
         if(common.atTick(15, tickOffset)){
             const manager = new SpawnManager(roomName);
             manager.updateSpawnQueue();
+            
+            if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 60){
+                manager.sortQueue();
+            }
         } 
         let result = spawnCreeps.workercreep(roomName);
         if(result !== OK && result !== ERR_NOT_ENOUGH_EXTENSIONS){
