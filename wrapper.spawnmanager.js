@@ -12,13 +12,12 @@ class SpawnManager {
     run(tickOffset) {
 
         if(common.atTick(15, tickOffset)){
-            const manager = new SpawnManager(roomName);
-            manager.updateSpawnQueue();
+            updateSpawnQueue();
             
             //Queue is getting backlogged, sort it by creep priority so economy doesnt crash
             if(Memory.rooms[this.roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[this.roomName].sortQueue > 100){
                 Memory.rooms[this.roomName].sortQueue = Game.time;
-                manager.sortQueue();
+                sortQueue();
             }
         } 
 
