@@ -79,7 +79,7 @@ const spawnRules = {
             towers.every(tower => tower.store[RESOURCE_ENERGY] === 0);
     },   
     enemiesPresent(tCreep, enemies = 1){
-
+        console.log(tCreep);
         if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
