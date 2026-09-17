@@ -4,7 +4,7 @@ const SpawnManager = require("wrapper.spawnmanager");
 const memoryManager = require('function.memory');
 const spawnCreeps = require("function.spawncreep");
 
-const towerManager = require('function.tower');
+const TowerManager = require('class.tower');
 const common = require('function.common');
 
 global.util = require('function.util');
@@ -20,20 +20,13 @@ module.exports.loop = function () {
     let tickOffset = 0;
     for(var roomName in Memory.rooms){
         
-        const manager = new SpawnManager(roomName);
-        manager.run(tickOffset);
+        const spawnManager = new SpawnManager(roomName);
+        spawnManager.run(tickOffset);
 
-        const towerIds = Memory.rooms[roomName].towers;
-        const towers = [];
-        for(const towerId of towerIds){
-            const tower = Game.getObjectById(towerId);
-            if(tower){
-                towers.push(tower);
-            }
-        }
+        const towerManager = new TowerManager(roomName);
         towerManager.run(towers);
         
-        
+
         if(common.atTick(5) || Memory.rooms[roomName].hostilesDetected){
             if(Game.rooms[roomName].find(FIND_HOSTILE_CREEPS).length >= 2){
                 if(!Memory.rooms[roomName].hostilesDetected){
