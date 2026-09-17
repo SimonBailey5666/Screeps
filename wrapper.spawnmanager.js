@@ -14,7 +14,7 @@ class SpawnManager {
             this.updateSpawnQueue();
             
             //Queue is getting backlogged, sort it by creep priority so economy doesnt crash
-            if(Memory.rooms[this.roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[this.roomName].sortQueue > 100){
+            if(Memory.rooms[this.roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[this.roomName].sortQueue > 300){
                 Memory.rooms[this.roomName].sortQueue = Game.time;
                 this.sortQueue();
             }
@@ -27,26 +27,14 @@ class SpawnManager {
     
     }
     sortQueue(){
-        const candidates = [];
-        for(const sCreep of Memory.rooms[this.roomName].spawnQueue){
-            
-            const template = TEMPLATES[sCreep.role];
-            
-            candidates.push({
-                    workRoom: sCreep.locations.work,
-                    role: sCreep.role,
-                    home: sCreep.locations.home,
-                    priority: template.priority
-                });
-        }
-        candidates.sort((a, b) => a.priority - b.priority);
-        
-        util.flushSpawnQueue();
-        for(const candidate of candidates){
-            console.log(candidate);
-            Memory.rooms[this.roomName].spawnQueue.push({role: candidate.role, locations: {home: candidate.home, work: candidate.work}});
-        }
-        
+        const queue = Memory.rooms[this.roomName].spawnQueue;
+
+        queue.sort((a, b) => {
+            const priorityA = TEMPLATES[a.role]?.priority ?? Infinity;
+            const priorityB = TEMPLATES[b.role]?.priority ?? Infinity;
+
+            return priorityA - priorityB;
+        }); 
     }
     updateSpawnQueue() {
         console.log("Checking room populations for room: " + this.roomName + ".");
@@ -100,13 +88,8 @@ class SpawnManager {
             ).length; 
             
             //Loop to add multiple of same time if required
-            while(true){
-                if (population + qPopulation >= pop.max) {
-                    break;
-                }
+            while(population + qPopulation < pop.max){
     
-                // Get the work room
-                const workRoomObject = Game.rooms[workRoom];
                 var sCreep = {role: role, locations: {home: this.roomName, work: workRoom}};
     
                 if (pop.spawnIf) {
