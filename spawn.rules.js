@@ -1,17 +1,17 @@
 const spawnRules = {
     
     noMiners(tCreep) {
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
-        
+
         return !Game.rooms[tCreep.locations.work].find(FIND_MY_CREEPS, {
             filter: creep => creep.memory.role === "miner"
         }).length;
     },
 
     noCreepsWithRole(tCreep) {
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -21,7 +21,7 @@ const spawnRules = {
     },
 
     hasMiners(tCreep, count = 1) {
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -31,7 +31,7 @@ const spawnRules = {
     },
     needsBuilder(tCreep) {
 
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -63,11 +63,11 @@ const spawnRules = {
     },
     enemyTowersAreEmpty(tCreep) {
 
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
-        room = Game.rooms[tCreep.memory.work];
+        room = Game.rooms[tCreep.locations.work];
         const towers = room.find(FIND_HOSTILE_STRUCTURES, {
             filter: structure => structure.structureType === STRUCTURE_TOWER
         });
@@ -78,7 +78,7 @@ const spawnRules = {
     },   
     enemiesPresent(tCreep, enemies = 1){
 
-        if(!this.hasRoomVision(tCreep.memory.work)){
+        if(!this.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
