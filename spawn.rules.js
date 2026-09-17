@@ -84,7 +84,8 @@ const spawnRules = {
         
         console.log(tCreep.memory);
 
-        console.log(tCreep.locations);
+        console.log(tCreep.locations.work);
+        console.log(tCreep.locations.workRoom);
         
         if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
