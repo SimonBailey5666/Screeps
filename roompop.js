@@ -79,7 +79,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 1,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep)
+                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement(tCreep)
             }
         },
 
@@ -112,7 +112,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 1,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep)
+                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement(tCreep)
             }
         },
 
