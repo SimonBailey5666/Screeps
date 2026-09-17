@@ -19,7 +19,7 @@ class TowerManager {
 
     run(){
         for (const tower of this.towers) {
-            
+            console.log(tower);
             const closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         
             if (closestHostile) {
