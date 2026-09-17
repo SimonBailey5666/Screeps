@@ -8,7 +8,27 @@ class SpawnManager {
         this.room = Game.rooms[roomName];
         this.home = roomName;
     }
-
+    sortQueue(){
+        const candidates = [];
+        for(const sCreep of Memory.rooms[this.roomName].spawnQueue){
+            
+            const template = TEMPLATES[sCreep.role];
+            
+            candidates.push({
+                    workRoom: sCreep.locations.work,
+                    role: sCreep.role,
+                    home: sCreep.locations.home,
+                    priority: template.priority
+                });
+        }
+        candidates.sort((a, b) => a.priority - b.priority);
+        
+        util.flushSpawnQueue();
+        for(const candidate of candidates){
+            Memory.rooms[this.roomName].spawnQueue.push({role: candidate.role, locations: {home: candidate.home, work: candidate.work}});
+        }
+        
+    }
     updateSpawnQueue() {
         console.log("Checking room populations for room: " + this.roomName + ".");
         const candidates = [];
