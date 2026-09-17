@@ -2,39 +2,7 @@ require('config');
 //Assortment of functions that are useful for a variety of creeps
 
 var common = {
-    countCreeps: function() {
-        const populations = {};
-        for (const name in Game.creeps) {
-    
-            const creep = Game.creeps[name];
-    
-            const role = creep.memory.role;
-            const workRoom = creep.memory.work;
-    
-            if (!role || !workRoom) {
-                continue;
-            }
-    
-            if (!populations[role]) {
-                populations[role] = {};
-            }
-    
-            if (!populations[role][workRoom]) {
-                populations[role][workRoom] = 0;
-            }
-    
-            populations[role][workRoom]++;
-        }
-    
-        for (const role in populations) {
-    
-            const rooms = Object.entries(populations[role])
-                .map(([room, count]) => `${room} ${count}`)
-                .join(' ');
-    
-            return (`${role}s {${rooms}}`);
-        }
-    },
+
     hasRoomVision(room){
         return Game.rooms[room];
     },
