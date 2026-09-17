@@ -75,6 +75,10 @@ var roleTank = {
     initMemory(creep){
         creep.memory.squadLeader = true;
         creep.memory.subordinates ??= [];
+        if(!creep.memory.notifyDisabled){
+            creep.notifyWhenAttacked(false);
+            creep.memory.notifyDisabled= true;
+        }
         
         if(!creep.memory.rallypoint){
             
