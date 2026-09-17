@@ -1,8 +1,10 @@
 class TowerManager {
 
     constructor(roomName) {
+        
+        this.towers = [];
         const towerIds = Memory.rooms[roomName].towers;
-        const towers = [];
+        
 
         for(const towerId of towerIds){
             const tower = Game.getObjectById(towerId);
@@ -15,8 +17,8 @@ class TowerManager {
         }
     }
 
-    run(towers){
-        for (const tower of towers) {
+    run(){
+        for (const tower of this.towers) {
             
             const closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         
