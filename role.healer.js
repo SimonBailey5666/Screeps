@@ -60,6 +60,16 @@ var roleHealer = {
                     creep.pos.roomName === sCreep.pos.roomName &&
                     creep.memory.subordinates.length < SQUAD_SIZE - 1
             );
+
+            const rLeaders = _.filter(
+                Game.creeps,
+                creep =>
+                    creep.memory.squadLeader &&
+                    creep.memory.work === sCreep.memory.work &&
+                    creep.pos.roomName === sCreep.pos.roomName &&
+                    creep.memory.subordinates.length < SQUAD_SIZE - 1
+            );
+
             console.log(leaders);
             let leader = leaders.find(
                 leader => !leader.memory.squadReady
@@ -67,7 +77,7 @@ var roleHealer = {
             console.log(leader);
             
             if (!leader) {
-                leader = leaders.find(
+                leader = rLeaders.find(
                     leader => leader.memory.squadReady
                 );
             }
@@ -81,7 +91,7 @@ var roleHealer = {
                 // immediately mark ourselves ready.
                 if (leader.memory.squadReady) {
                     if(!leader.memory.subordinates.includes(sCreep.name)){
-                        leader.memory.subordinates.push(sCreep.name)
+                        leader.memory.subordinates.push(sCreep.name);
                     }
                     sCreep.memory.squadReady = true;
                 }
