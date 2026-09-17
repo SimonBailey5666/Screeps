@@ -2,7 +2,6 @@ require('config');
 const ScreepRole = require("wrapper.screeprole");
 const SpawnManager = require("wrapper.spawnmanager");
 const memoryManager = require('function.memory');
-const spawnCreeps = require("function.spawncreep");
 
 const TowerManager = require('class.tower');
 const common = require('function.common');
@@ -16,7 +15,7 @@ module.exports.loop = function () {
     memoryManager.removeDeadCreeps();
     
     
-    //Manage each spawn defined in roompop
+    //Manage each room with a spawn defined in roompop
     let tickOffset = 0;
     for(var roomName in Memory.rooms){
         

@@ -7,7 +7,6 @@ class SpawnManager {
     constructor(roomName) {
         this.roomName = roomName;
         this.room = Game.rooms[roomName];
-        this.home = roomName;
     }
     run(tickOffset) {
 
@@ -87,7 +86,7 @@ class SpawnManager {
                 Game.creeps,
                 creep =>
                     creep.memory.role === role &&
-                    creep.memory.home === this.home &&
+                    creep.memory.home === this.roomName &&
                     creep.memory.work === workRoom
             ).length;
             
@@ -96,7 +95,7 @@ class SpawnManager {
                Memory.rooms[this.roomName].spawnQueue,
                 creep =>
                     creep.role === role &&
-                    creep.locations.home === this.home &&
+                    creep.locations.home === this.roomName &&
                     creep.locations.work === workRoom
             ).length; 
             
@@ -108,7 +107,7 @@ class SpawnManager {
     
                 // Get the work room
                 const workRoomObject = Game.rooms[workRoom];
-                var sCreep = {role: role, locations: {home: this.home, work: workRoom}};
+                var sCreep = {role: role, locations: {home: this.roomName, work: workRoom}};
     
                 if (pop.spawnIf) {
     
@@ -127,11 +126,12 @@ class SpawnManager {
                     if (!pop.spawnIf(sCreep)) {
                         break;
                     }
+                    
                 }
+
                 //Add to queue
                 qPopulation++;
-                
-                console.log("Adding " + role + " creep, with work room " + workRoom + ", to " + this.home + "'s build queue.");
+                console.log("Adding " + role + " creep, with work room " + workRoom + ", to " + this.roomName + "'s build queue.");
                 Memory.rooms[this.roomName].spawnQueue.push(sCreep);
             }
         }

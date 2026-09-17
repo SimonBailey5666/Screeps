@@ -24,11 +24,22 @@ var memoryManager = {
             if(!Memory.rooms[roomName].sortQueue) {
                 Memory.rooms[roomName].sortQueue = Game.time;
             }
+            if(!Memory.rooms[roomName].rcl){
+                Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
+            }
             
             if(common.atTick(100)){
                 //console.log("Checking structures in memory");
                 this.checkSpawns(roomName);
                 this.checkTowers(roomName);
+                if(Memory.rooms[roomName].rcl < Game.rooms[roomName].controller.level){
+                    Game.notify("Room " + roomName + " has increased it's control level!")
+                    Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
+                }
+                else if(Memory.rooms[roomName].rcl > Game.rooms[roomName].controller.level){
+                    Game.notify("Room " + roomName + " has decreased it's control level!")
+                    Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
+                }
                 //this.buildRoads(roomName);
             }
         }
