@@ -9,7 +9,7 @@ class TowerManager {
         for(const towerId of towerIds){
             const tower = Game.getObjectById(towerId);
             if(tower){
-                towers.push(tower);
+                this.towers.push(tower);
             } 
             else {
                 delete Memory.rooms[roomName].towers[tower];
