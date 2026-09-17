@@ -28,7 +28,10 @@ var roleBuilder = {
                 }
                 else
                 {
-                    var targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax && object.structureType !== STRUCTURE_WALL});
+                    var targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax && object.structureType !== STRUCTURE_WALL && object.structureType !== STRUCTURE_RAMPART});
+                    if(!targets){
+                        targets = creep.room.find(FIND_STRUCTURES, {filter: structure => (structure.hits < 100000 && structure.structureType === STRUCTURE_WALL && structure.structureType === STRUCTURE_RAMPART)})
+                    }
                     targets.sort((a, b) => (a.hits / a.hitsMax) - (b.hits / b.hitsMax));
                     if(targets.length > 0) {
                         var result = creep.repair(targets[0]) 
