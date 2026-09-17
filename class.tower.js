@@ -47,4 +47,4 @@ class TowerManager {
     }
 }
 
-module.exports = towerManager;
+module.exports = TowerManager;
