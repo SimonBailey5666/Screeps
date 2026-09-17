@@ -23,7 +23,9 @@ var roleTank = {
             return;
         }
         if(creep.memory.squadReady){
-
+            if(common.atTick(10)){
+                this.isSquadAlive(creep);
+            }
             //If not at max health go to rallypoint
             if(creep.memory.rallypoint && Game.flags[creep.memory.rallypoint] && !creep.memory.procced){
                 if(creep.hits === creep.hitsMax){
@@ -110,6 +112,14 @@ var roleTank = {
             }
         }
         
+    },
+    isSquadAlive: function(sCreep){
+        for(subordinate of sCreep.memory.subordinates){
+            creep = Game.creeps[subordinate];
+            if(!creep){
+                delete sCreep.memory.subordinates[subordinate];
+            }
+        }
     },
     waitSquad: function(sCreep){
         //Don't wait on an exit
