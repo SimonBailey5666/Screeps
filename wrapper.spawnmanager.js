@@ -25,6 +25,7 @@ class SpawnManager {
         
         util.flushSpawnQueue();
         for(const candidate of candidates){
+            console.log(candidate);
             Memory.rooms[this.roomName].spawnQueue.push({role: candidate.role, locations: {home: candidate.home, work: candidate.work}});
         }
         

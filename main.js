@@ -22,7 +22,7 @@ module.exports.loop = function () {
             const manager = new SpawnManager(roomName);
             manager.updateSpawnQueue();
             
-            if(true){
+            if(Memory.rooms[roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[roomName].sortQueue > 60){
                 manager.sortQueue();
             }
         } 
