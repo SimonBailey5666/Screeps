@@ -35,8 +35,8 @@ var common = {
             return (`${role}s {${rooms}}`);
         }
     },
-    hasRoomVision(tCreep){
-        return Game.rooms[tCreep.locations.work];
+    hasRoomVision(room){
+        return Game.rooms[room];
     },
     gotoRally: function(creep, flagName){
         var rallyPoint = Game.flags[flagName];
