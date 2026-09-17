@@ -1,7 +1,9 @@
+const common = require("./function.common");
+
 const spawnRules = {
     
     noMiners(tCreep) {
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -11,7 +13,7 @@ const spawnRules = {
     },
 
     noCreepsWithRole(tCreep) {
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -21,7 +23,7 @@ const spawnRules = {
     },
 
     hasMiners(tCreep, count = 1) {
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -31,7 +33,7 @@ const spawnRules = {
     },
     needsBuilder(tCreep) {
 
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -63,7 +65,7 @@ const spawnRules = {
     },
     enemyTowersAreEmpty(tCreep) {
 
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -78,7 +80,7 @@ const spawnRules = {
     },   
     enemiesPresent(tCreep, enemies = 1){
 
-        if(!hasRoomVision(tCreep.locations.work)){
+        if(!common.hasRoomVision(tCreep.locations.work)){
             return false;
         }
 
@@ -90,8 +92,8 @@ const spawnRules = {
         return Game.rooms[tCreep.locations.work].controller?.safeMode
     },
     hasRoomVision(tCreep){
-        return Gamep.rooms[tCreep.locations.work];
-    },
+        return common.hasRoomVision(tCreep);
+    }
 };
 
 module.exports = spawnRules;
