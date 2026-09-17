@@ -113,9 +113,9 @@ class SpawnManager {
     
                     // Can't evaluate room-dependent conditions
                     // without vision
-                    if (!workRoomObject) {
-                        break;
-                    }
+                    //if (!workRoomObject) {
+                    //    break;
+                    //} This is managed by spawnIf conditions now
                     if(global.DEBUG_OUT){
                         console.log(
                             "Evaluating spawnIf:",
@@ -126,7 +126,7 @@ class SpawnManager {
                     if (!pop.spawnIf(sCreep)) {
                         break;
                     }
-                    
+
                 }
 
                 //Add to queue

@@ -1,23 +1,40 @@
 const spawnRules = {
     
     noMiners(tCreep) {
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+        
         return !Game.rooms[tCreep.locations.work].find(FIND_MY_CREEPS, {
             filter: creep => creep.memory.role === "miner"
         }).length;
     },
 
     noCreepsWithRole(tCreep) {
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+
         return !Game.rooms[tCreep.locations.work].find(FIND_MY_CREEPS, {
             filter: creep => creep.memory.role === tCreep.role
         }).length;
     },
 
     hasMiners(tCreep, count = 1) {
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+
         return Game.rooms[tCreep.locations.work].find(FIND_MY_CREEPS, {
             filter: creep => creep.memory.role === "miner"
         }).length >= count;
     },
     needsBuilder(tCreep) {
+
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+
         if (Game.rooms[tCreep.locations.work].find(FIND_MY_CONSTRUCTION_SITES).length > 0) {
             return true;
         }
@@ -45,8 +62,12 @@ const spawnRules = {
         
     },
     enemyTowersAreEmpty(tCreep) {
-    
-        room = tCreep.memory.work;
+
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+
+        room = Game.rooms[tCreep.memory.work];
         const towers = room.find(FIND_HOSTILE_STRUCTURES, {
             filter: structure => structure.structureType === STRUCTURE_TOWER
         });
@@ -56,16 +77,21 @@ const spawnRules = {
             towers.every(tower => tower.store[RESOURCE_ENERGY] === 0);
     },   
     enemiesPresent(tCreep, enemies = 1){
-            const hostiles = Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS);
 
-            return hostiles.filter(enemy => enemy.body.length > 2).length >= enemies;
+        if(!this.hasRoomVision(tCreep.memory.work)){
+            return false;
+        }
+
+        const hostiles = Game.rooms[tCreep.locations.work].find(FIND_HOSTILE_CREEPS);
+
+        return hostiles.filter(enemy => enemy.body.length > 2).length >= enemies;
     },
     safeModeActive(tCreep){
         return Game.rooms[tCreep.locations.work].controller?.safeMode
     },
     hasRoomVision(tCreep){
         return Gamep.rooms[tCreep.locations.work];
-    }
+    },
 };
 
 module.exports = spawnRules;
