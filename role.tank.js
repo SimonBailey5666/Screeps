@@ -114,7 +114,9 @@ var roleTank = {
         
     },
     isSquadAlive: function(sCreep){
+        console.log("running check");
         for(subordinate of sCreep.memory.subordinates){
+            console.log(subordinate);
             if(!Game.creeps[subordinate]){
                 delete sCreep.memory.subordinates[subordinate];
             }
