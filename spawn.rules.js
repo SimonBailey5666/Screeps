@@ -99,7 +99,7 @@ const spawnRules = {
         if(!common.hasRoomVision(tCreep.locations.work)){
             return true;
         }
-        controller = Game.rooms[tCreep.memory.work].controller;
+        controller = Game.rooms[tCreep.locations.work].controller;
         if(controller.owner){
             return true;
         }
