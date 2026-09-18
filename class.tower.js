@@ -53,7 +53,7 @@ class TowerManager {
             if(room.energyCapacityAvailable - room.energyAvailable < 300){
                 const fortification = tower.room.find(FIND_STRUCTURES, {
                     filter: structure =>
-                        structure.hits < 100000 &&
+                        structure.hits / structure.hitsMax < 0.01 &&
                         (
                             structure.structureType === STRUCTURE_WALL ||
                             structure.structureType === STRUCTURE_RAMPART
