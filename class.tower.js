@@ -3,6 +3,7 @@ class TowerManager {
     constructor(roomName) {
         
         this.towers = [];
+        this.roomName = roomName;
         const towerIds = Memory.rooms[roomName].towers;
 
 
@@ -45,14 +46,15 @@ class TowerManager {
                 continue;
             }
 
-            const closestDamagedFort = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: structure => (structure.hits < 100000 && (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART))
-            });
-
-            tower.repair(closestDamagedFort);
-            continue;
-        
             
+            //Repair fortifications if it doesn't hold up spawn
+            room = Game.rooms[this.roomName];
+            if(room.energyCapacityAvailable - room.energyAvailable < 300){
+                const closestDamagedFort = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: structure => (structure.hits % structure.hitsMax < 0.1 && (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART))});
+            
+                tower.repair(closestDamagedFort);
+            }         
         }
     }
 }
