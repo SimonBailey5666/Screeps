@@ -249,6 +249,7 @@ const POPS = {
                 max: 1,
                 spawnif: !spawnRules.hasRoomVision
             }
+        }
     }
     //Add new home rooms here
 };
