@@ -47,7 +47,7 @@ class TowerManager {
                 tower.repair(closestDamagedStructure);
                 continue;
             }
-            //test
+            
             //Repair fortifications if it doesn't hold up spawn
             const room = Game.rooms[this.roomName];
             if(room.energyCapacityAvailable - room.energyAvailable < 300){
@@ -60,7 +60,7 @@ class TowerManager {
                         )
                 }).sort((a, b) => a.hits - b.hits)[0];
             
-                tower.repair(closestDamagedFort);
+                tower.repair(fortification);
             }         
         }
     }
