@@ -174,31 +174,31 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 8,
+                max: 0,
                 spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 0,
-                spawnif: !spawnRules.hasRoomVision
+                max: 1,
+                spawnIf: !spawnRules.hasRoomVision
             },
             capturer: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement
-            }, 
+                max: 1,
+                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
+            },
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 6,
+                max: 0,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 200)
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 2,
+                max: 0,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 270)
             }
 
@@ -253,7 +253,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 1,
-                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep, 1, 250)
+                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
             }
         }
     }
