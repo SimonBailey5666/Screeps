@@ -48,7 +48,6 @@ class TowerManager {
                 continue;
             }
 
-            console.log(this.roomName);
             //Repair fortifications if it doesn't hold up spawn
             const room = Game.rooms[this.roomName];
             if(room.energyCapacityAvailable - room.energyAvailable < 300){
