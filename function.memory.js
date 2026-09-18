@@ -19,6 +19,14 @@ var memoryManager = {
             Memory.rooms[roomName].spawnQueue ??= [];
             Memory.rooms[roomName].spawns ??= [];
             Memory.rooms[roomName].towers ??= [];
+
+            if(!Memory.rooms[roomName].energyMonitor && Memory.rooms[roomName].rcl >= 4){
+                const storage = Game.rooms[roomName].storage;
+                if(storage){
+                    energyMonitor = {energy: storage.store[RESOURCE_ENERGY], at: Game.time};
+                }
+            }
+            
             if(!Memory.rooms[roomName].sortQueue) {
                 Memory.rooms[roomName].sortQueue = Game.time;
             }
