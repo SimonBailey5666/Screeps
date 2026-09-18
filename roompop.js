@@ -247,13 +247,13 @@ const POPS = {
                 minCost: 50,
                 maximumCost: 50,
                 max: 1,
-                spawnif: !spawnRules.hasRoomVision
+                spawnIf: !spawnRules.hasRoomVision
             },
             capturer: {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 1,
-                spawnIf: tCreep =>  spawnRules.roomControlledByEnemy(tCreep, 1, 250)
+                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep, 1, 250)
             }
         }
     }
