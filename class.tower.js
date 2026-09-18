@@ -6,6 +6,8 @@ class TowerManager {
         this.roomName = roomName;
         const towerIds = Memory.rooms[roomName].towers;
 
+        
+
 
         for(const towerId of towerIds){
             const tower = Game.getObjectById(towerId);
@@ -46,7 +48,7 @@ class TowerManager {
                 continue;
             }
 
-            
+            console.log(this.roomName);
             //Repair fortifications if it doesn't hold up spawn
             room = Game.rooms[this.roomName];
             if(room.energyCapacityAvailable - room.energyAvailable < 300){
