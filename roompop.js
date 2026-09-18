@@ -235,7 +235,20 @@ const POPS = {
                 max: 0,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 270)
             }
-        }
+        },
+         W38S2: {    //ATTACK THIS ROOM
+            defender: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 4,
+                spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
+            },
+            scout: {
+                minCost: 50,
+                maximumCost: 50,
+                max: 1,
+                spawnif: !spawnRules.hasRoomVision
+            }
     }
     //Add new home rooms here
 };
