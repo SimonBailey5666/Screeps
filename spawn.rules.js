@@ -76,7 +76,7 @@ const spawnRules = {
     
         // True if there is at least one enemy tower and ALL are empty
         return towers.length > 0 &&
-            towers.every(tower => tower.store[RESOURCE_ENERGY] === 0);
+            towers.every(tower => tower.store[RESOURCE_ENERGY] < 10);
     },   
     enemiesPresent(tCreep, enemies = 1){
         
