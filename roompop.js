@@ -246,7 +246,7 @@ const POPS = {
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 1,
+                max: 0,
                 spawnif: !spawnRules.hasRoomVision
             },
             capturer: {
