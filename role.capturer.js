@@ -11,6 +11,14 @@ var roleDefender = {
             target = creep.room.controller
             if(target){
                 if(creep.pos.isNearTo(target)){
+                    if(conrtoller.owner){
+                        creep.attackController(target)
+                        return;
+                    } 
+                    else if(Game.flag['claim'].pos.roomName === creep.memory.work){
+                        creep.claimController(target)
+                        return;
+                    }
                     creep.reserveController(target);
                 }
                 else{
