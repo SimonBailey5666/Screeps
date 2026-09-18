@@ -22,9 +22,8 @@ var memoryManager = {
 
             if(!Memory.rooms[roomName].energyMonitor && Memory.rooms[roomName].rcl >= 4){
                 const storage = Game.rooms[roomName].storage;
-                console.log(storage);
                 if(storage){
-                    energyMonitor = {energy: storage.store[RESOURCE_ENERGY], at: Game.time, threshold: 0};
+                    Memory.rooms[roomName].energyMonitor = {energy: storage.store[RESOURCE_ENERGY], at: Game.time, threshold: 0};
                 }
             }
 
