@@ -51,8 +51,13 @@ class TowerManager {
             //Repair fortifications if it doesn't hold up spawn
             const room = Game.rooms[this.roomName];
             if(room.energyCapacityAvailable - room.energyAvailable < 300){
-                const closestDamagedFort = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: structure => (structure.hits / structure.hitsMax < 0.1 && (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART))
+                const fortification = tower.room.find(FIND_STRUCTURES, {
+                    filter: structure =>
+                        structure.hits / structure.hitsMax < 0.1 &&
+                        (
+                            structure.structureType === STRUCTURE_WALL ||
+                            structure.structureType === STRUCTURE_RAMPART
+                        )
                 }).sort((a, b) => a.hits - b.hits)[0];
             
                 tower.repair(closestDamagedFort);
