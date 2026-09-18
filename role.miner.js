@@ -17,9 +17,20 @@ var roleMiner = {
         });
             return;
         }
+        if(!creep.memory.target){
+            target = common.findTargets(creep.room.find(FIND_SOURCES));
+            if(!target){
+                console.log("Creep " + creep.name + " cannot find a source to mine");
+                return;
+            }
 
-        // We are in the work room
-        collect.mine(creep);
+            creep.memory.target = target;
+        }
+        
+        source = Game.getObjectById(creep.memory.target);
+        if(creep.mine(source) ===  ERR_NOT_IN_RANGE){
+            creep.moveTo(source);
+        }
     },
 };
 
