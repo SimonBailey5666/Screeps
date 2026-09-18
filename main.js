@@ -19,6 +19,8 @@ module.exports.loop = function () {
     let tickOffset = 0;
     for(var roomName in Memory.rooms){
         
+        memoryManager.energyAlert(roomName);
+        
         const spawnManager = new SpawnManager(roomName);
         spawnManager.run(tickOffset);
 

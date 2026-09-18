@@ -91,6 +91,25 @@ var memoryManager = {
             }
         }
     },
+    energyAlert: function(roomName){
+        if(common.atTick(1000)){
+            const storage = Game.rooms[roomName].storage;
+            if(storage){
+                if(Memory.rooms[roomName].energyMonitor.energy - storage.store[RESOURCE_ENERGY] > 5000){
+                    Memory.rooms[roomName].energyMonitor.threshold++;
+                } else {
+                    Memory.rooms[roomName].energyMonitor.threshold = 0;
+                }
+
+                if(Memory.rooms[roomName].energyMonitor.threshold >= 3){
+                    Game.notify("Room " + roomName + " has been in a sigificant energy deficit for approximately three hours!")
+                }
+
+                Memory.rooms[roomName].energyMonitor.energy = storage.store[RESOURCE_ENERGY];
+                Memory.rooms[roomName].energyMonitor.at = Game.time;
+            }
+        }
+    },
     removeDeadCreeps: function(){
         for(var name in Memory.creeps) {
             if(!Game.creeps[name]) {
