@@ -241,7 +241,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 8,
-                spawnIf: tCreep => spawnRules.needsReplacement(tcreep, 4, 400)
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4, 400)
             },
             scout: {
                 minCost: 50,
