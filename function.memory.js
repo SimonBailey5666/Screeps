@@ -24,7 +24,7 @@ var memoryManager = {
                 const storage = Game.rooms[roomName].storage;
                 console.log(storage);
                 if(storage){
-                    energyMonitor = {energy: storage.store[RESOURCE_ENERGY], at: Game.time};
+                    energyMonitor = {energy: storage.store[RESOURCE_ENERGY], at: Game.time, threshold: 0};
                 }
             }
 
