@@ -15,7 +15,7 @@ var roleDefender = {
                         creep.attackController(target)
                         return;
                     } 
-                    else if(Game.flag['claim']?.pos.roomName === creep.memory.work){
+                    else if(Game.flags['claim']?.pos.roomName === creep.memory.work){
                         creep.claimController(target)
                         return;
                     }
