@@ -11,7 +11,7 @@ var roleDefender = {
             target = creep.room.controller
             if(target){
                 if(creep.pos.isNearTo(target)){
-                    if(conrtoller.owner){
+                    if(target.owner){
                         creep.attackController(target)
                         return;
                     } 
