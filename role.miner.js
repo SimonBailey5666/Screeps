@@ -28,7 +28,7 @@ var roleMiner = {
         }
         
         source = Game.getObjectById(creep.memory.target);
-        if(creep.mine(source) ===  ERR_NOT_IN_RANGE){
+        if(creep.harvest(source) ===  ERR_NOT_IN_RANGE){
             creep.moveTo(source);
         }
     },
