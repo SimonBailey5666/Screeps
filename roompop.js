@@ -252,7 +252,7 @@ const POPS = {
             capturer: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 1,
+                max: 2,
                 spawnIf: tCreep =>  spawnRules.needsReplacement(tCreep, 1, 300)
             }
         }
