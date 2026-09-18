@@ -241,7 +241,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 4,
-                spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
+                spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
             scout: {
                 minCost: 50,
