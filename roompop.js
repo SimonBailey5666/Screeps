@@ -240,20 +240,20 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 8,
+                max: 0,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4, 400)
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 0,
+                max: 1,
                 spawnif: !spawnRules.hasRoomVision
             },
             capturer: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 2,
-                spawnIf: tCreep =>  spawnRules.needsReplacement(tCreep, 1, 250)
+                max: 1,
+                spawnIf: tCreep =>  spawnRules.roomControlledByEnemy(tCreep, 1, 250)
             }
         }
     }

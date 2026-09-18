@@ -95,6 +95,16 @@ const spawnRules = {
 
         return Game.rooms[tCreep.locations.work].controller?.safeMode
     },
+    roomControlledByEnemy(tCreep){
+        if(!common.hasRoomVision(tCreep.locations.work)){
+            return true;
+        }
+        controller = Game.rooms[tCreep.memory.work].controller;
+        if(controller.owner){
+            return true;
+        }
+        return false;
+    },
     hasRoomVision(tCreep){
         return common.hasRoomVision(tCreep);
     }
