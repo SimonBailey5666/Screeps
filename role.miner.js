@@ -29,6 +29,29 @@ var roleMiner = {
         }
         
         source = Game.getObjectById(creep.memory.target);
+        if(!creep.memory.storage){
+            let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                filter: (structure) => (structure.structureType === STRUCTURE_CONTAINER
+                || structure.structureType === STRUCTURE_LINK)
+            });
+            if(container){
+                creep.memory.storage = container[0].id;
+            }
+            else {
+                 creep.memory.storage = 'none';
+            }
+        }
+
+        if(creep.memory.storage === 'none' && common.atTick(1000)){
+            delete creep.memory.storage;
+        }
+
+        if(creep.memory.storage && creep.memory.storage !== 'none'){
+            if(creep.carry.energy > 0){
+                storage = Game.getObjectById(creep.memory.storage);
+                creep.transfer(storage, RESOURCE_ENERGY);
+            }
+        }
         if(creep.harvest(source) ===  ERR_NOT_IN_RANGE){
             creep.moveTo(source);
         }
