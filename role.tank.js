@@ -37,13 +37,13 @@ var roleTank = {
             }
             //If not at max health go to rallypoint
             if(creep.memory.rallypoint && Game.flags[creep.memory.rallypoint] && !creep.memory.procced){
-                if(creep.hits === creep.hitsMax && !rallyFirst){
+                if(creep.hits === creep.hitsMax && !creep.memory.rallyFirst){
                     creep.memory.procced = true;
                 }
 
                 creep.moveTo(Game.flags[creep.memory.rallypoint])
                 if(creep.pos.inRangeTo(Game.flags[creep.memory.rallypoint]),1){
-                    rallyFirst = true;
+                    creep.memory.rallyFirst = true;
                 }
                 return;
             }
