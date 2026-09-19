@@ -32,6 +32,7 @@ var roleHauler = {
                     }
                 }
                 let storage = Game.getObjectById(creep.memory.storage)
+                console.log(creep.memory.storage + " " + storage);
                 if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
                     if(creep.withdraw(storage) === ERR_NOT_IN_RANGE){
                         creep.moveTo(storage);
