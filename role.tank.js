@@ -22,12 +22,13 @@ var roleTank = {
                 this.findSquad(creep)
                 if(creep.memory.subordinates.length >= SQUAD_SIZE-1){
                     creep.memory.squadReady = true;
+                    creep.memory.rallyFirst = false;
                 }
             }
             else {
                 common.gotoRally(creep, creep.memory.home);
             }
-            
+
             return;
         }
         if(creep.memory.squadReady){
@@ -36,11 +37,14 @@ var roleTank = {
             }
             //If not at max health go to rallypoint
             if(creep.memory.rallypoint && Game.flags[creep.memory.rallypoint] && !creep.memory.procced){
-                if(creep.hits === creep.hitsMax){
+                if(creep.hits === creep.hitsMax && !rallyFirst){
                     creep.memory.procced = true;
                 }
 
                 creep.moveTo(Game.flags[creep.memory.rallypoint])
+                if(creep.pos.inRangeTo(Game.flags[creep.memory.rallypoint]),1){
+                    rallyFirst = true;
+                }
                 return;
             }
             if((!common.inWorkRoom(creep) || common.atExit(creep.pos))){
