@@ -30,7 +30,7 @@ var roleMiner = {
         
         source = Game.getObjectById(creep.memory.target);
         if(!creep.memory.storage){
-            console.log("here");
+            console.log(creep.name + " here");
             let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: (structure) => (structure.structureType === STRUCTURE_CONTAINER
                 || structure.structureType === STRUCTURE_LINK)
