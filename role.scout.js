@@ -18,7 +18,9 @@ var roleScout = {
         } else {
             // Inside target room: gather and store data
             // Move to controller or wander around
-            creep.moveTo(creep.room.controller);
+            if(creep.pos.inRangeTo(creep.room.controller, 2)){
+                creep.moveTo(creep.room.controller);
+            }
         }
     }
 }
