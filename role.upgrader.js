@@ -23,23 +23,29 @@ var roleUpgrader = {
             }
         }
         else {
-            
-            //console.log(struct);
-            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+            if(!common.inWorkRoom(creep) || common.atExit(creep.pos)){
+                creep.moveTo(
+                    new RoomPosition(25, 25, creep.memory.work),
+                    {reusePath: PATH_TICK_RECALC}
+                );
             }
             else{
-                var struct = creep.room.lookForAt(LOOK_STRUCTURES, creep.pos.x+1, creep.pos.y);
-                struct = struct.toString();
-                if(struct.indexOf('controller') != -1){
-                    creep.move(LEFT);
+                if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(creep.room.controller);
                 }
-                struct =  creep.room.lookForAt(LOOK_STRUCTURES, creep.pos.x-1, creep.pos.y);
-                struct = struct.toString();
-                if(struct.indexOf('controller') != -1){
-                    creep.move(RIGHT);
+                else{
+                    var struct = creep.room.lookForAt(LOOK_STRUCTURES, creep.pos.x+1, creep.pos.y);
+                    struct = struct.toString();
+                    if(struct.indexOf('controller') != -1){
+                        creep.move(LEFT);
+                    }
+                    struct =  creep.room.lookForAt(LOOK_STRUCTURES, creep.pos.x-1, creep.pos.y);
+                    struct = struct.toString();
+                    if(struct.indexOf('controller') != -1){
+                        creep.move(RIGHT);
+                    }
+
                 }
-                
             }
         }
     }
