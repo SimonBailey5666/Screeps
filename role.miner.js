@@ -35,8 +35,7 @@ var roleMiner = {
                 || structure.structureType === STRUCTURE_LINK)
             });
             if(container){
-                console.log(creep.name + " here " + container);
-                creep.memory.storage = container.id;
+                creep.memory.storage = container[0].id;
             }
             else {
                  creep.memory.storage = 'none';
