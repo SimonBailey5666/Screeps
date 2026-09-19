@@ -18,7 +18,8 @@ var roleMiner = {
             return;
         }
         if(!creep.memory.target){
-            target = common.setTarget(creep.room.find(FIND_SOURCES));
+            sources = creep.room.find(FIND_SOURCES)
+            target = common.setTarget(sources);
             if(!target){
                 console.log("Creep " + creep.name + " cannot find a source to mine");
                 return;
