@@ -16,6 +16,9 @@ class SpawnManager {
             if(Memory.rooms[this.roomName].spawnQueue.length > 10 && Game.time - Memory.rooms[this.roomName].sortQueue > 300){
                 Memory.rooms[this.roomName].sortQueue = Game.time;
                 this.sortQueue();
+                if(Memory.rooms[this.roomName].spawnQueue.length > 20){
+                    Game.notify(this.roomName +"'s spawn queue is over 20 creeps long!", 60);
+                }
             }
         } 
 
