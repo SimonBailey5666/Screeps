@@ -51,8 +51,8 @@ const POPS = {
     
         W38S5: {
             miner: {
-                minCost: 550,
-                maximumCost: 550,
+                minCost: 600,
+                maximumCost: 600,
                 max: 2,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 130)
             },
@@ -85,8 +85,8 @@ const POPS = {
 
         W37S4: {
             miner: {
-               minCost: 550,
-                maximumCost: 550,
+               minCost: 600,
+                maximumCost: 600,
                 max: 2,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep)
             },
@@ -118,8 +118,8 @@ const POPS = {
 
         W39S5: {
             miner: {
-                minCost: 350,
-                maximumCost: 350,
+                minCost: 400,
+                maximumCost: 400,
                 max: 2,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
             },
@@ -145,8 +145,8 @@ const POPS = {
 
         W37S3: {
             miner: {
-                minCost: 350,
-                maximumCost: 350,
+                minCost: 400,
+                maximumCost: 400,
                 max: 2,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
             },

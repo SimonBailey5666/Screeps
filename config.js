@@ -30,7 +30,7 @@ global.TEMPLATES = {
         priority: 1
     },
     miner: {
-        parts: [5, 1, 0, 0, 0, 0, 0, 0],
+        parts: [5, 1, 1, 0, 0, 0, 0, 0],
         priority: 2
     },
     hauler: {
