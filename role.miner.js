@@ -34,7 +34,7 @@ var roleMiner = {
                 filter: (structure) => (structure.structureType === STRUCTURE_CONTAINER
                 || structure.structureType === STRUCTURE_LINK)
             });
-            if(container){
+            if(container.length > 0){
                 creep.memory.storage = container[0].id;
             }
             else {
