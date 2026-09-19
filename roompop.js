@@ -208,7 +208,7 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 8,
+                max: 4,
                 spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
             },
             scout: {
