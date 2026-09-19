@@ -20,7 +20,7 @@ const POPS = {
             },
     
             distributer: {
-                minCost: 700,
+                minCost: 200,
                 maximumCost: 900,
                 max: 3,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
@@ -209,13 +209,13 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 4,
-                spawnIf: tCreep => !spawnRules.safeModeActive && spawnRules.enemyTowersAreEmpty
+                spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 0,
-                spawnif: !spawnRules.hasRoomVision
+                max: 1,
+                spawnIf: !spawnRules.hasRoomVision
             },
             capturer: {
                 minCost: 1000,
@@ -226,12 +226,14 @@ const POPS = {
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 9
+                max: 9,
+                spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 3
+                max: 3,
+                spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
             }
         },
          W38S2: {    //ATTACK THIS ROOM
