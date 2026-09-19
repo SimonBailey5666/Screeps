@@ -53,7 +53,7 @@ var common = {
     },
     setTarget: function(tCreep, targets, selectSameIfNone = true){
         
-        if(targets.length === 0){
+        if(targets?.length === 0){
             return;
         }
         
