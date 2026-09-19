@@ -46,7 +46,7 @@ var roleTank = {
             if((!common.inWorkRoom(creep) || common.atExit(creep.pos))){
                 if(creep.memory.waypoint){
                     //TODO: max moveto relative to exit
-                    var moveres = creep.moveTo(new RoomPosition(11, 48, creep.memory.work));
+                    var moveres = creep.moveTo(new RoomPosition(25, 25, creep.memory.work));
                     if(moveres != OK){
                         //console.log(creep + ": can't move to room " + global.ERROR_MESSAGES[moveres]);
                     }
