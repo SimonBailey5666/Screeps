@@ -226,14 +226,12 @@ const POPS = {
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 200)
+                max: 9
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 270)
+                max: 3
             }
         },
          W38S2: {    //ATTACK THIS ROOM
