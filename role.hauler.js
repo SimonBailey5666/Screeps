@@ -22,6 +22,22 @@ var roleHauler = {
                 );
             }
             else {
+                if(!creep.memory.storage){
+
+                    let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                                    filter: (structure) => structure.structureType === STRUCTURE_CONTAINER});
+
+                    if(container){
+                        creep.memory.storage = container.id;
+                    }
+                }
+                let storage = Game.getObjectById(creep.memory.storage)
+                if(storage.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
+                    if(creep.withdraw(storage) === ERR_NOT_IN_RANGE){
+                        creep.moveTo(storage);
+                        return;
+                    }
+                }
                 collect.pickupEnergy(creep);
             }
             
