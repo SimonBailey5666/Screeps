@@ -34,8 +34,8 @@ const POPS = {
             },
     
             miner: {
-                minCost: 550,
-                maximumCost: 550,
+                minCost: 600,
+                maximumCost: 600,
                 max: 2,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
