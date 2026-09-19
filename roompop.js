@@ -41,10 +41,10 @@ const POPS = {
             },
     
             hauler: {
-                minCost: 500,
-                maximumCost: 600,
-                max: 3,
-                spawnIf:  tCreep => spawnRules.needsReplacement(tCreep, 2)
+                minCost: 700,
+                maximumCost: 700,
+                max: 2,
+                spawnIf:  tCreep => spawnRules.needsReplacement(tCreep, 1)
                 
             }
         },
