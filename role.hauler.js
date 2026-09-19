@@ -31,17 +31,17 @@ var roleHauler = {
                         creep.memory.storage = container.id;
                     }
                 }
-                let storage = Game.getObjectById(creep.memory.storage)
+                if(!collect.pickupEnergy(creep)){
+                    let storage = Game.getObjectById(creep.memory.storage)
 
-                if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
-                    if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
-                        creep.moveTo(storage);
+                    if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
+                        if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                            creep.moveTo(storage);
+                        }
+                        return;
                     }
-                    return;
                 }
-                collect.pickupEnergy(creep);
             }
-            
         } 
         else {
             if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){

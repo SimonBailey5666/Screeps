@@ -81,6 +81,7 @@ var collect = {
                 visualizePathStyle: { stroke: '#ffaa00' }
             });
         }
+        return true;
 
     },
     mine: function(creep) {
