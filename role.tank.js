@@ -43,7 +43,7 @@ var roleTank = {
                 }
 
                 creep.moveTo(Game.flags[creep.memory.rallypoint])
-                if(creep.pos.inRangeTo(Game.flags[creep.memory.rallypoint]),1){
+                if(creep.pos.inRangeTo(Game.flags[creep.memory.rallypoint],1){
                     creep.memory.rallyFirst = true;
                 }
                 return;
