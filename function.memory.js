@@ -53,6 +53,9 @@ var memoryManager = {
     buildRoads: function(roomName){
 
     },
+    checkContainers: function(roomName){
+
+    },
     checkSpawns: function(roomName){
         const spawns = Game.rooms[roomName].find(FIND_MY_SPAWNS);
         
@@ -66,7 +69,8 @@ var memoryManager = {
         const storedSpawns = Memory.rooms[roomName].spawns;
         for(spawn of storedSpawns){
             if(!Game.spawns[spawn]){
-                delete Memory.rooms[roomName].spawns[spawn];
+                const index = Memory.rooms[roomName].spawns.indexOf(spawn)
+                Memory.rooms[roomName].spawns.splice(index, 1)
             }
         }
             
@@ -87,7 +91,8 @@ var memoryManager = {
         for(towerId of storedTowers){
             tower = Game.getObjectById(towerId);
             if(!tower){
-                delete  Memory.rooms[roomName].towers[towerId];
+                const index = Memory.rooms[roomName].towers.indexOf(towerId);
+                Memory.rooms[roomName].towers.splice(index, 1);
             }
         }
     },
