@@ -221,7 +221,7 @@ const POPS = {
                 minCost: 1000,
                 maximumCost: 1000,
                 max: 0,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement
+                spawnIf: tCreep => !spawnRules.roomControlledByEnemy(tCreep)
             }, 
             healer: {
                 minCost: 900,
