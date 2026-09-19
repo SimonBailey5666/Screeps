@@ -24,7 +24,7 @@ var roleHauler = {
             else {
                 if(!creep.memory.storage){
 
-                    let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                    let container = creep.pos.findInRange(FIND_STRUCTURES, {
                                     filter: (structure) => structure.structureType === STRUCTURE_CONTAINER});
 
                     if(container){
