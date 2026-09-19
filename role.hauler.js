@@ -36,8 +36,8 @@ var roleHauler = {
                 if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
                     if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
                         creep.moveTo(storage);
-                        return;
                     }
+                    return;
                 }
                 collect.pickupEnergy(creep);
             }
