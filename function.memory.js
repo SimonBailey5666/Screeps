@@ -18,6 +18,9 @@ var memoryManager = {
             Memory.rooms[roomName] ??= {};
             Memory.rooms[roomName].spawnQueue ??= [];
             Memory.rooms[roomName].spawns ??= [];
+            Memory.rooms[roomName].containers ??= [];
+            Memory.rooms[roomName].links ??= [];
+            Memory.rooms[roomName].storage ??= [];
             Memory.rooms[roomName].towers ??= [];
 
             if(!Memory.rooms[roomName].energyMonitor && Memory.rooms[roomName].rcl >= 4){
@@ -55,6 +58,43 @@ var memoryManager = {
     },
     checkContainers: function(roomName){
 
+        //TODO: Finish this, needs to work rooms that belong to roomName... maybe?
+        /*
+        const room = Game.rooms[roomName];
+        const containers = room.find(FIND_MY_STRUCTURES, {filter: structure => (STRUCTURE_CONTAINER)});
+        for(const container of containers){
+            if(!Memory.rooms[roomName].containers.includes(container.id)){
+                Memory.rooms[roomName].containers.push(container.id);
+            }
+        }
+
+        for(const container of containers){
+            container = 
+        }
+
+        const links = room.find(FIND_MY_STRUCTURES, {filter: structure => (STRUCTURE_LINK)});
+        for(const link of links){
+            if(!Memory.rooms[roomName].links.includes(link.id)){
+                Memory.rooms[roomName].links.push(link.id);
+            }
+        }
+
+        const storages = room.find(FIND_MY_STRUCTURES, {filter: structure => (STRUCTURE_STORAGE)});
+        for(const storage of storages){
+            if(!Memory.rooms[roomName].storage.includes(storage.id)){
+                Memory.rooms[roomName].storage.push(storage.id);
+            }
+        }
+
+        creep.room.find(FIND_STRUCTURES, {
+                        filter: structure =>
+                            ((structure.structureType == STRUCTURE_EXTENSION ||
+                                structure.structureType == STRUCTURE_SPAWN ||
+                                structure.structureType == STRUCTURE_TOWER) &&
+                            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) || 
+                            ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
+                            ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
+                    });*/
     },
     checkSpawns: function(roomName){
         const spawns = Game.rooms[roomName].find(FIND_MY_SPAWNS);
