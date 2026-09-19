@@ -26,6 +26,7 @@ class SpawnManager {
     
     }
     sortQueue(){
+        console.log("Sorting " + this.roomName + " queue.")
         const queue = Memory.rooms[this.roomName].spawnQueue;
 
         queue.sort((a, b) => {
