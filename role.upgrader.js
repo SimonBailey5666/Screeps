@@ -15,11 +15,19 @@ var roleUpgrader = {
         
         if(!creep.memory.working) {
                 
-            if(common.hasEnergyStorage(creep.room)){
-                collect.fromStorage(creep);
-            } 
+            if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){
+                creep.moveTo(
+                    new RoomPosition(25, 25, creep.memory.home),
+                    {reusePath: PATH_TICK_RECALC}
+                );
+            }
             else{
-                collect.run(creep);
+                if(common.hasEnergyStorage(creep.room)){
+                    collect.fromStorage(creep);
+                } 
+                else{
+                    collect.run(creep);
+                }
             }
         }
         else {
