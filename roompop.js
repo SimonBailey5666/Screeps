@@ -182,6 +182,11 @@ const POPS = {
                 maximumCost: 1000,
                 max: 2,
             },
+            builder: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 2,
+            },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
