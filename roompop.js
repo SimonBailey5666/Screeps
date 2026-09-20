@@ -272,19 +272,19 @@ const POPS = {
             builder: {
                 minCost: 300,
                 maximumCost: 300,
-                max: 1,
+                max: 1
 
             },
             miner: {
                 minCost: 400,
                 maximumCost: 600,
-                max: 1,
+                max: 1
 
             },
             hauler: {
                 minCost: 200,
                 maximumCost: 300,
-                max: 1,
+                max: 1
 
             }
         }
