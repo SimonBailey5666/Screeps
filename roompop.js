@@ -170,7 +170,7 @@ const POPS = {
             }
         },
 
-        W39S3: {    //ATTACK THIS ROOM
+        W39S3: {    //SUPPLY THIS ROOM
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
@@ -266,7 +266,17 @@ const POPS = {
                 spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
             }
         }
-    }
+    },
+    W39S3: {  //new room
+        W39S3: { 
+            harvester: {
+                minCost: 300,
+                maximumCost: 300,
+                max: 1,
+
+            },
+        }
+    },
     //Add new home rooms here
 };
 
