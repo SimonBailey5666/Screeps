@@ -269,7 +269,7 @@ const POPS = {
     },
     W39S3: {  //new room
         W39S3: { 
-            harvester: {
+            builder: {
                 minCost: 300,
                 maximumCost: 300,
                 max: 1,
