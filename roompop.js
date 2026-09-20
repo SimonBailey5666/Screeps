@@ -237,8 +237,8 @@ const POPS = {
         W39S3: { 
             builder: {
                 minCost: 300,
-                maximumCost: 300,
-                max: 1
+                maximumCost: 400,
+                max: 2
 
             },
             miner: {
