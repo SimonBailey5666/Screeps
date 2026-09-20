@@ -1,4 +1,5 @@
 var roleBuilder = require('role.builder');
+var collect = require('function.collect');
 
 var roleHarvester = {
     
