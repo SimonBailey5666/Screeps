@@ -184,13 +184,13 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 4,
+                max: 0,
                 spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 1,
+                max: 0,
                 spawnIf: !spawnRules.hasRoomVision
             },
             capturer: {
