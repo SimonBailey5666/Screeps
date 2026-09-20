@@ -14,7 +14,7 @@ let spawncreep = {
         if(global.DEBUG_OUT){
             console.log('Attempting to spawn ' + sRole + ' with ' + energy + ' energy');
         }
-        //console.log("debug " + roomName + " " + sRole + " " + workRoomPop + " " + popSettings);
+        console.log("debug " + roomName + " " + sRole + " " + workRoomPop + " " + popSettings);
         if(popSettings.minCost > energy){
             if(global.DEBUG_OUT){
                 console.log('Cannot build ' + sRole + ' not enough resources.');
