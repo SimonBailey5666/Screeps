@@ -22,7 +22,7 @@ module.exports.loop = function () {
         memoryManager.energyAlert(roomName);
         
         const spawnManager = new SpawnManager(roomName);
-        //spawnManager.run(tickOffset);
+        spawnManager.run(tickOffset);
 
         const towerManager = new TowerManager(roomName);
         towerManager.run();
