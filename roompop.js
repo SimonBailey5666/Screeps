@@ -177,6 +177,11 @@ const POPS = {
                 max: 0,
                 spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
+            upgrader: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 2,
+            },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
