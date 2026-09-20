@@ -288,7 +288,7 @@ const POPS = {
 
             }
         }
-    },
+    }
     //Add new home rooms here
 };
 
