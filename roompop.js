@@ -275,6 +275,18 @@ const POPS = {
                 max: 1,
 
             },
+            miner: {
+                minCost: 400,
+                maximumCost: 600,
+                max: 1,
+
+            },
+            hauler: {
+                minCost: 200,
+                maximumCost: 300,
+                max: 1,
+
+            }
         }
     },
     //Add new home rooms here
