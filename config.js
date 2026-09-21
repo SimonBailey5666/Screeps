@@ -14,7 +14,7 @@ global.TEMPLATES = {
         priority: 5
     },
     upgrader: {
-        parts: [2, 3, 3, 0, 0, 0, 0, 0],
+        parts: [3, 2, 2, 0, 0, 0, 0, 0],
         priority: 7
     },
     builder: {

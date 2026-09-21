@@ -243,18 +243,20 @@ const POPS = {
             miner: {
                 minCost: 400,
                 maximumCost: 600,
-                max: 2
+                max: 4,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
 
             },
             hauler: {
                 minCost: 200,
                 maximumCost: 400,
-                max: 2
+                max: 4,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
 
             },
             upgrader: {
-                minCost: 400,
-                maximumCost: 500,
+                minCost: 600,
+                maximumCost: 800,
                 max: 4
             }
         }
