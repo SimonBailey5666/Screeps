@@ -12,8 +12,8 @@ var roleHauler = {
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
-            if(creep.memory.storage){
-                delete creep.memory.storage;
+            if(creep.memory.target){
+                delete creep.memory.target;
             }
         }
         
@@ -25,7 +25,7 @@ var roleHauler = {
                 );
             }
             else {
-                if(!creep.memory.storage){
+                if(!creep.memory.target){
 
                     let containers = creep.room.find(FIND_STRUCTURES, {
                                     filter: (structure) => structure.structureType === STRUCTURE_CONTAINER});
@@ -37,11 +37,11 @@ var roleHauler = {
 
                         target = common.setTarget(creep, containers)
                         
-                        creep.memory.storage = target;
+                        creep.memory.target = target;
                     }
                 } 
-                if(creep.memory.storage) {
-                    let storage = Game.getObjectById(creep.memory.storage)
+                if(creep.memory.target) {
+                    let storage = Game.getObjectById(creep.memory.target)
 
                     if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
                         if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
