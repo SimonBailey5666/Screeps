@@ -90,7 +90,7 @@ var roleHauler = {
 
     findEnergy: function(creep){
         //If there is no storage targets set and there is no energy to pickup
-        if(!common.pickupEnergy(creep) && !creep.memory.storage){
+        if(!collect.pickupEnergy(creep) && !creep.memory.storage){
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure => (structure.structureType == STRUCTURE_STORAGE) &&  
                 (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0)
