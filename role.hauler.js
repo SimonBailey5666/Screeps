@@ -37,7 +37,7 @@ var roleHauler = {
                         creep.memory.storage = target;
                     }
                 } 
-                else if(creep.memory.storage) {
+                if(creep.memory.storage) {
                     let storage = Game.getObjectById(creep.memory.storage)
 
                     if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
@@ -45,8 +45,6 @@ var roleHauler = {
                             creep.moveTo(storage);
                             return;
                         }
-                        delete creep.memory.storage;
-                        return;
                     }
                 }
                 collect.pickupEnergy(creep)
