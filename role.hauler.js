@@ -24,14 +24,18 @@ var roleHauler = {
             else {
                 if(!creep.memory.storage){
 
-                    let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    let containers = creep.room.find(FIND_STRUCTURES, {
                                     filter: (structure) => structure.structureType === STRUCTURE_CONTAINER});
-
-                    if(container){
+                    
+                    if(containers){
+                        
+                        target = common.setTargetcontainer(tCreep, containers)
+                        
                         creep.memory.storage = container.id;
                     }
-                }
-                if(!collect.pickupEnergy(creep)){
+                    return
+                } 
+                else{
                     let storage = Game.getObjectById(creep.memory.storage)
 
                     if(storage?.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
@@ -43,6 +47,7 @@ var roleHauler = {
                         return;
                     }
                 }
+                collect.pickupEnergy(creep)
             }
         } 
         else {
