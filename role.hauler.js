@@ -9,9 +9,15 @@ var roleHauler = {
 
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
+            if(creep.memory.storage){
+                delete creep.memory.storage;
+            }
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
+            if(creep.memory.target){
+                delete creep.memory.target;
+            }
         }
 
         if(!creep.memory.working) {
@@ -22,7 +28,7 @@ var roleHauler = {
                 );
             }
             else {
-                collect.pickupEnergy(creep);
+                this.findEnergy(creep);
             }
 
         }
@@ -34,51 +40,78 @@ var roleHauler = {
                 );
             }
             else if (creep.store[RESOURCE_ENERGY] > 0) {
+                this.storeEnergy(creep)
+            }
+        }
+    },
 
-                if(!creep.memory.target){
-                    var targets = creep.room.find(FIND_STRUCTURES, {
-                        filter: structure =>
-                            ((structure.structureType == STRUCTURE_EXTENSION ||
-                                structure.structureType == STRUCTURE_SPAWN ||
-                                structure.structureType == STRUCTURE_TOWER) &&
-                            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
-                            ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity)) ||
-                            ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
-                    });
-                    creep.memory.target = common.setTarget(creep,targets);
-                }
-                //TODO: needs to search once and store target in memory
-                if (creep.memory.target) {
-                    var target = Game.getObjectById(creep.memory.target);
+    storeEnergy: function(creep){
+        if(!creep.memory.target){
+            let targets = creep.room.find(FIND_STRUCTURES, {
+                filter: structure =>
+                    ((structure.structureType == STRUCTURE_EXTENSION ||
+                        structure.structureType == STRUCTURE_SPAWN ||
+                        structure.structureType == STRUCTURE_TOWER) &&
+                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
+                    ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
+            });
+            creep.memory.target = common.setTarget(creep,targets);
+        }
+        //TODO: needs to search once and store target in memory
+        if (creep.memory.target) {
+            var target = Game.getObjectById(creep.memory.target);
 
-                    if(!target){
-                        delete creep.memory.target;
-                        return;
-                    }
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) === 0){
-                        delete creep.memory.target;
-                        return;
-                    }
+            if(!target){
+                delete creep.memory.target;
+                return;
+            }
+            if(target.store.getFreeCapacity(RESOURCE_ENERGY) === 0){
+                delete creep.memory.target;
+                return;
+            }
 
-                    var result = creep.transfer(target, RESOURCE_ENERGY);
+            var result = creep.transfer(target, RESOURCE_ENERGY);
 
-                    if (result == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target);
-                    }
-                }
-                else if (creep.room.storage) {
-                    var result = creep.transfer(
-                        creep.room.storage,
-                        RESOURCE_ENERGY
-                    );
+            if (result == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
+            }
+        }
+        else if (creep.room.storage) {
+            var result = creep.transfer(
+                creep.room.storage,
+                RESOURCE_ENERGY
+            );
 
-                    if (result == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.storage, {reusePath: PATH_TICK_RECALC});
-                    }
-                }
+            if (result == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.storage, {reusePath: PATH_TICK_RECALC});
+            }
+        }       
+    },
+
+    findEnergy: function(creep){
+        //If there is no storage targets set and there is no energy to pickup
+        if(!pickupEnergy && !creep.memory.storage){
+            let targets = creep.room.find(FIND_STRUCTURES, {
+                filter: structure => (structure.structureType == STRUCTURE_STORAGE) &&  
+                (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0)
+            });
+
+            creep.memory.storage = common.setTarget(targets);
+        }
+
+        //If we have a storage target
+        if(creep.memory.storage){
+            storage = Game.getObjectById(creep.memory.storage);
+            if(!storage.getFreeCapacity > 0){
+                delete creep.memory.storage;
+            }
+
+            if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                creep.moveTo(storage);
             }
         }
     }
+
 };
 
 module.exports = roleHauler;
