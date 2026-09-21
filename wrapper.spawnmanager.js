@@ -41,8 +41,8 @@ class SpawnManager {
     }
     updateSpawnQueue() {
         console.log();
-        console.log("-------------------------------------------------------");
-        console.log("Checking room populations for room: " + this.roomName + ".");
+        console.log("*-------------------------------------------------------------");
+        console.log("*Checking room populations for room: " + this.roomName + ".");
         const candidates = [];
 
         for (const workRoom in POPS[this.roomName]) {
@@ -119,17 +119,17 @@ class SpawnManager {
 
                 //Add to queue
                 qPopulation++;
-                console.log("Adding " + role + " creep, with work room " + workRoom + ", to " + this.roomName + "'s build queue.");
+                console.log("*Adding " + role + " creep, with work room " + workRoom + ", to " + this.roomName + "'s build queue.");
                 Memory.rooms[this.roomName].spawnQueue.push(sCreep);
             }
         }
         if(Memory.rooms[this.roomName].spawnQueue.length > 0){
-            console.log("Finished checking population. Queue size: " + Memory.rooms[this.roomName].spawnQueue.length + " for room " + this.roomName + ".");
+            console.log("*Finished checking population. Queue size: " + Memory.rooms[this.roomName].spawnQueue.length + " for room " + this.roomName + ".");
         } 
         else{
-            console.log("Finished checking population. No creeps queued for room " + this.roomName + ".");
+            console.log("*Finished checking population. No creeps queued for room " + this.roomName + ".");
         }
-        console.log("-------------------------------------------------------");
+        console.log("*-------------------------------------------------------------");
         console.log();
     }
 
