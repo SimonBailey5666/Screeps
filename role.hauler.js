@@ -31,7 +31,10 @@ var roleHauler = {
                                     filter: (structure) => structure.structureType === STRUCTURE_CONTAINER});
                     
                     if(containers){
-                        
+                        if(creep.memory.home === 'W39S3'){
+                            console.log(containers);
+                        }
+
                         target = common.setTarget(creep, containers)
                         
                         creep.memory.storage = target;
