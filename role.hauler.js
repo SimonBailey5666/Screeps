@@ -46,6 +46,7 @@ var roleHauler = {
                             return;
                         }
                     }
+                    return;
                 }
                 collect.pickupEnergy(creep)
             }
