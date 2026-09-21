@@ -73,6 +73,9 @@ var collect = {
         if (!target) {
             return false;
         }
+        if(target.amount <= 10){
+            return false;
+        }
     
         const result = creep.pickup(target);
     
