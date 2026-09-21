@@ -31,7 +31,7 @@ var roleHauler = {
                         
                         target = common.setTarget(creep, containers)
                         
-                        creep.memory.storage = container.id;
+                        creep.memory.storage = target;
                     }
                     return
                 } 
