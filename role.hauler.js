@@ -95,7 +95,7 @@ var roleHauler = {
                 filter: structure => (structure.structureType == STRUCTURE_STORAGE) &&  
                 (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0)
             });
-            if(targets){
+            if(targets.length>0){
                 console.log("targets: " +targets);
                 creep.memory.storage = common.setTarget(targets);
             }
