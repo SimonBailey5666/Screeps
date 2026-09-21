@@ -40,6 +40,7 @@ class SpawnManager {
         }); 
     }
     updateSpawnQueue() {
+        console.log("-------------------------------------------------------");
         console.log("Checking room populations for room: " + this.roomName + ".");
         const candidates = [];
 
@@ -127,6 +128,7 @@ class SpawnManager {
         else{
             console.log("Finished checking population. No creeps queued for room " + this.roomName + ".");
         }
+        console.log("-------------------------------------------------------");
     }
 
 }
