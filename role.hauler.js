@@ -19,15 +19,19 @@ var roleHauler = {
          */
 
         // Finished delivering -> go collect again
-        if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
+        if (
+            creep.memory.working &&
+            creep.store[RESOURCE_ENERGY] === 0
+        ) {
             creep.memory.working = false;
             delete creep.memory.target;
         }
 
         // Finished collecting -> go deliver
-        if (!creep.memory.working &&
-            creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-
+        if (
+            !creep.memory.working &&
+            creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0
+        ) {
             creep.memory.working = true;
             delete creep.memory.target;
         }
@@ -41,8 +45,18 @@ var roleHauler = {
 
         if (!creep.memory.working) {
 
-            // Go to work room
-            if (!common.inWorkRoom(creep) || common.atExit(creep.pos)) {
+            /*
+             * IMPORTANT:
+             *
+             * Only check whether we're actually in
+             * the work room.
+             *
+             * Do NOT use atExit() here. A creep can
+             * legitimately be standing on the room
+             * edge after crossing into the work room.
+             */
+
+            if (creep.room.name !== creep.memory.work) {
 
                 creep.moveTo(
                     new RoomPosition(
@@ -60,16 +74,22 @@ var roleHauler = {
 
 
             /*
-             * Find a container if we don't
-             * already have one selected.
+             * We're now definitely in the work room.
+             *
+             * Find a container containing energy.
              */
             if (!creep.memory.target) {
 
-                var containers = creep.room.find(FIND_STRUCTURES, {
-                    filter: structure =>
-                        structure.structureType === STRUCTURE_CONTAINER &&
-                        structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0
-                });
+                var containers = creep.room.find(
+                    FIND_STRUCTURES,
+                    {
+                        filter: structure =>
+                            structure.structureType === STRUCTURE_CONTAINER &&
+                            structure.store.getUsedCapacity(
+                                RESOURCE_ENERGY
+                            ) > 0
+                    }
+                );
 
                 if (containers.length > 0) {
 
@@ -100,7 +120,7 @@ var roleHauler = {
                     return;
                 }
 
-                // Container is empty
+                // Target is empty
                 if (
                     container.store.getUsedCapacity(
                         RESOURCE_ENERGY
@@ -116,6 +136,7 @@ var roleHauler = {
                 );
 
                 if (result === ERR_NOT_IN_RANGE) {
+
                     creep.moveTo(container, {
                         reusePath: PATH_TICK_RECALC
                     });
@@ -126,7 +147,7 @@ var roleHauler = {
 
 
             /*
-             * No suitable container.
+             * No container available.
              * Fall back to dropped energy.
              */
             collect.pickupEnergy(creep);
@@ -141,8 +162,16 @@ var roleHauler = {
          * =========================
          */
 
-        // Go back to home room
-        if (!common.inHomeRoom(creep) || common.atExit(creep.pos)) {
+        /*
+         * Same important fix here:
+         *
+         * Only travel toward the home room if
+         * we're actually outside the home room.
+         *
+         * Don't use atExit() as a reason to
+         * change rooms.
+         */
+        if (creep.room.name !== creep.memory.home) {
 
             creep.moveTo(
                 new RoomPosition(
@@ -159,43 +188,83 @@ var roleHauler = {
         }
 
 
-        // Nothing to deliver
+        /*
+         * Nothing to deliver.
+         */
         if (creep.store[RESOURCE_ENERGY] === 0) {
+
             creep.memory.working = false;
             delete creep.memory.target;
+
             return;
         }
 
 
         /*
-         * Find a delivery target.
+         * =========================
+         * FIND DELIVERY TARGET
+         * =========================
          */
+
         if (!creep.memory.target) {
 
-            var targets = creep.room.find(FIND_STRUCTURES, {
-                filter: structure => {
+            var targets = creep.room.find(
+                FIND_STRUCTURES,
+                {
+                    filter: structure => {
 
-                    if (
-                        structure.structureType === STRUCTURE_EXTENSION ||
-                        structure.structureType === STRUCTURE_SPAWN ||
-                        structure.structureType === STRUCTURE_TOWER
-                    ) {
-                        return structure.store.getFreeCapacity(
-                            RESOURCE_ENERGY
-                        ) > 0;
+                        /*
+                         * Extensions
+                         */
+                        if (
+                            structure.structureType ===
+                                STRUCTURE_EXTENSION
+                        ) {
+                            return structure.store.getFreeCapacity(
+                                RESOURCE_ENERGY
+                            ) > 0;
+                        }
+
+                        /*
+                         * Spawns
+                         */
+                        if (
+                            structure.structureType ===
+                                STRUCTURE_SPAWN
+                        ) {
+                            return structure.store.getFreeCapacity(
+                                RESOURCE_ENERGY
+                            ) > 0;
+                        }
+
+                        /*
+                         * Towers
+                         */
+                        if (
+                            structure.structureType ===
+                                STRUCTURE_TOWER
+                        ) {
+                            return structure.store.getFreeCapacity(
+                                RESOURCE_ENERGY
+                            ) > 0;
+                        }
+
+                        /*
+                         * Storage
+                         */
+                        if (
+                            structure.structureType ===
+                                STRUCTURE_STORAGE
+                        ) {
+                            return structure.store.getFreeCapacity(
+                                RESOURCE_ENERGY
+                            ) > 0;
+                        }
+
+                        return false;
                     }
-
-                    if (
-                        structure.structureType === STRUCTURE_STORAGE
-                    ) {
-                        return structure.store.getFreeCapacity(
-                            RESOURCE_ENERGY
-                        ) > 0;
-                    }
-
-                    return false;
                 }
-            });
+            );
 
             if (targets.length > 0) {
 
@@ -212,29 +281,40 @@ var roleHauler = {
 
 
         /*
-         * Transfer to selected target.
+         * =========================
+         * DELIVER
+         * =========================
          */
+
         if (creep.memory.target) {
 
             var targetStructure = Game.getObjectById(
                 creep.memory.target
             );
 
-            // Target disappeared
+            /*
+             * Target disappeared.
+             */
             if (!targetStructure) {
+
                 delete creep.memory.target;
                 return;
             }
 
-            // Target became full
+
+            /*
+             * Target became full.
+             */
             if (
                 targetStructure.store.getFreeCapacity(
                     RESOURCE_ENERGY
                 ) === 0
             ) {
+
                 delete creep.memory.target;
                 return;
             }
+
 
             var result = creep.transfer(
                 targetStructure,
@@ -242,6 +322,7 @@ var roleHauler = {
             );
 
             if (result === ERR_NOT_IN_RANGE) {
+
                 creep.moveTo(targetStructure, {
                     reusePath: PATH_TICK_RECALC
                 });
@@ -252,10 +333,11 @@ var roleHauler = {
 
 
         /*
-         * No extension/spawn/tower/storage target.
-         *
-         * If storage exists, use it as a fallback.
+         * =========================
+         * STORAGE FALLBACK
+         * =========================
          */
+
         if (creep.room.storage) {
 
             var result = creep.transfer(
@@ -264,6 +346,7 @@ var roleHauler = {
             );
 
             if (result === ERR_NOT_IN_RANGE) {
+
                 creep.moveTo(
                     creep.room.storage,
                     {
