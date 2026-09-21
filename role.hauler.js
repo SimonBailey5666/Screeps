@@ -12,6 +12,9 @@ var roleHauler = {
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
             creep.memory.working = true;
+            if(creep.memory.storage){
+                delete creep.memory.storage;
+            }
         }
         
         if(!creep.memory.working) {
