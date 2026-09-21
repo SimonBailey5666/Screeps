@@ -9,9 +9,8 @@ const POPS = {
             upgrader: {
                 minCost: 800,
                 maximumCost: 800,
-                max: 2,
+                max: 2
             },
-    
             builder: {
                 minCost: 500,
                 maximumCost: 600,
@@ -174,42 +173,8 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
-            },
-            upgrader: {
-                minCost: 300,
-                maximumCost: 300,
-                max: 1,
-            },
-            builder: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 2,
-            },
-            scout: {
-                minCost: 50,
-                maximumCost: 50,
-                max: 1,
-                spawnIf: !spawnRules.hasRoomVision
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
-            },
-            healer: {
-                minCost: 900,
-                maximumCost: 900,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 200)
-            },
-            tank: {
-                minCost: 800,
-                maximumCost: 850,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 270)
+                max: 8,
+                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep)
             }
 
         },
@@ -218,13 +183,13 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 4,
+                max: 0,
                 spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
             },
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 1,
+                max: 0,
                 spawnIf: !spawnRules.hasRoomVision
             },
             capturer: {
@@ -236,13 +201,13 @@ const POPS = {
             healer: {
                 minCost: 900,
                 maximumCost: 900,
-                max: 9,
+                max: 0,
                 spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
             },
             tank: {
                 minCost: 800,
                 maximumCost: 850,
-                max: 3,
+                max: 0,
                 spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
             }
         },
@@ -269,26 +234,31 @@ const POPS = {
     },
     W39S3: {  //new room
         W39S3: { 
-            harvester: {
+            builder: {
                 minCost: 300,
-                maximumCost: 300,
-                max: 1,
+                maximumCost: 400,
+                max: 2
 
             },
             miner: {
                 minCost: 400,
                 maximumCost: 600,
-                max: 1,
+                max: 1
 
             },
             hauler: {
                 minCost: 200,
                 maximumCost: 300,
-                max: 1,
+                max: 1
 
+            },
+            upgrader: {
+                minCost: 400,
+                maximumCost: 500,
+                max: 1
             }
         }
-    },
+    }
     //Add new home rooms here
 };
 
