@@ -73,7 +73,7 @@ var collect = {
         if (!target) {
             return false;
         }
-        if(target.amount <= 10){
+        if(target.amount <= 20){
             return false;
         }
     
