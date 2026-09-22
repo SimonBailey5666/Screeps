@@ -94,7 +94,7 @@ var roleHauler = {
         if(!collect.pickupEnergy(creep) && !creep.memory.target){
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure => (structure.structureType === STRUCTURE_CONTAINER) &&
-                (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0)
+                (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 20)
             });
 
             if(targets.length>0){
@@ -105,7 +105,7 @@ var roleHauler = {
         //If we have a storage target
         if(creep.memory.target){
             let storage = Game.getObjectById(creep.memory.target);
-            if(!storage.getUsedCapacity(RESOURCE_ENERGY) === 0){
+            if(!storage.getUsedCapacity(RESOURCE_ENERGY) <= 20){
                 delete creep.memory.target;
             }
 
