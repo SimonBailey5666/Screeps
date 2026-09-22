@@ -28,18 +28,31 @@ var roleBuilder = {
                 }
                 else
                 {
-                    var targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax && object.structureType !== STRUCTURE_WALL && object.structureType !== STRUCTURE_RAMPART});
-                    if(!targets){
-                        targets = creep.room.find(FIND_STRUCTURES, {filter: structure => (structure.hits < 100000 && structure.structureType === STRUCTURE_WALL && structure.structureType === STRUCTURE_RAMPART)})
-                    }
-                    targets.sort((a, b) => (a.hits / a.hitsMax) - (b.hits / b.hitsMax));
-                    if(targets.length > 0) {
-                        var result = creep.repair(targets[0]) 
-                        if(result == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(targets[0]);
+                    if(!creep.memory.repairTarget){
+                        let targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax && object.structureType !== STRUCTURE_WALL && object.structureType !== STRUCTURE_RAMPART});
+                        if(!targets){
+                            targets = creep.room.find(FIND_STRUCTURES, {filter: structure => (structure.hits < 100000 && (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART))})
                         }
-                        else if(result !== OK){
-                            console.log(creep.name, "Can't repair: " + ERROR_MESSAGES[result]);
+                        targets.sort((a, b) => (a.hits / a.hitsMax) - (b.hits / b.hitsMax));
+                        creep.memory.repairTarget = common.setTarget(creep, targets);
+                    }
+                    
+                    let repairTarget = Game.getObjectById(creep.memory.repairTarget)
+                    if(repairTarget){
+                        if(repairTarget.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART && structure.hits < 100000) {
+                            let result = creep.repair(repairTarget) 
+                            if(result == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(repairTarget);
+                            }
+                        }
+                        if(repairTarget.hits < repairTarget.hitsMax){
+                            let result = creep.repair(repairTarget) 
+                            if(result == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(repairTarget);
+                            }
+                        }
+                        else {
+                            delete creep.memory.repairTarget;
                         }
                     }
                     else
