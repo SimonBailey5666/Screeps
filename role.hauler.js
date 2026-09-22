@@ -13,7 +13,7 @@ var roleHauler = {
                 delete creep.memory.target;
             }
         }
-        if(!creep.memory.working && creep.carry.energy === creep.carryCapacity) {
+        if(creep.memory.working && creep.carry.energy === creep.carryCapacity) {
             creep.memory.working = true;
             if(creep.memory.target){
                 delete creep.memory.target;
