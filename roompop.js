@@ -215,8 +215,7 @@ const POPS = {
             defender: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4, 400)
+                max: 4
             },
             scout: {
                 minCost: 50,
@@ -227,8 +226,7 @@ const POPS = {
             capturer: {
                 minCost: 1000,
                 maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
+                max: 1
             }
         },
         W38S3: {    //ATTACK THIS ROOM
@@ -263,27 +261,32 @@ const POPS = {
     W39S3: {  //new room
         W39S3: { 
             builder: {
-                minCost: 300,
-                maximumCost: 400,
-                max: 2
+                minCost: 500,
+                maximumCost: 700,
+                max: 3
 
+            },
+            distributer: {
+                minCost: 500, 
+                maximumCost: 800,
+                max: 1
             },
             miner: {
                 minCost: 400,
                 maximumCost: 600,
-                max: 2
+                max: 2,
+                spawnIf: spawnRules.needsBuilder
             },
             hauler: {
-                minCost: 400,
-                maximumCost: 800,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
+                minCost: 800,
+                maximumCost: 1000,
+                max: 3
 
             },
             upgrader: {
                 minCost: 600,
                 maximumCost: 800,
-                max: 4
+                max: 2
             }
         }
     }
