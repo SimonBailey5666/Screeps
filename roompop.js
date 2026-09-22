@@ -283,7 +283,7 @@ const POPS = {
             upgrader: {
                 minCost: 600,
                 maximumCost: 800,
-                max: 4
+                max: 5
             }
         }
     }
