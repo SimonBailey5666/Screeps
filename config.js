@@ -18,7 +18,7 @@ global.TEMPLATES = {
         priority: 7
     },
     builder: {
-        parts: [1, 4, 3, 0, 0, 0, 0, 0],
+        parts: [2, 4, 3, 0, 0, 0, 0, 0],
         priority: 3
     },
     distributer: {

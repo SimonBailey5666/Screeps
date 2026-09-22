@@ -61,6 +61,13 @@ module.exports.loop = function () {
         tickOffset += 5;
     }
 
+     if(common.atTick(100)){
+        if(Game.cpu.bucket === 10000){
+            console.log("Generating Pixels...");
+            Game.cpu.generatePixel()
+        }
+    }
+
     for(const name in Game.creeps) {
         const screep = new ScreepRole(Game.creeps[name]);
         screep.run();
