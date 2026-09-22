@@ -7,13 +7,13 @@ var roleHauler = {
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        if(creep.memory.working && creep.carry.energy == 0) {
+        if(creep.memory.working && creep.carry.energy === 0) {
             creep.memory.working = false;
             if(creep.memory.target){
                 delete creep.memory.target;
             }
         }
-        if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+        if(!creep.memory.working && creep.carry.energy === creep.carryCapacity) {
             creep.memory.working = true;
             if(creep.memory.target){
                 delete creep.memory.target;
@@ -50,11 +50,11 @@ var roleHauler = {
         if(!creep.memory.target){
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure =>
-                    ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN ||
-                        structure.structureType == STRUCTURE_TOWER) &&
+                    ((structure.structureType === STRUCTURE_EXTENSION ||
+                        structure.structureType === STRUCTURE_SPAWN ||
+                        structure.structureType === STRUCTURE_TOWER) &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
-                    ((structure.structureType == STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
+                    ((structure.structureType === STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
             });
             creep.memory.target = common.setTarget(creep,targets);
         }
@@ -105,7 +105,7 @@ var roleHauler = {
         //If we have a storage target
         if(creep.memory.target){
             let storage = Game.getObjectById(creep.memory.target);
-            if(!storage.getFreeCapacity > 0){
+            if(!storage.getUsedCapacity(RESOURCE_ENERGY) === 0){
                 delete creep.memory.target;
             }
 
