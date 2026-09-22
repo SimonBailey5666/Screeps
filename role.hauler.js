@@ -40,7 +40,9 @@ var roleHauler = {
                     {reusePath: PATH_TICK_RECALC}
                 );
             }
-            this.storeEnergy(creep)
+            else if (creep.store[RESOURCE_ENERGY] > 0) {
+                this.storeEnergy(creep)
+            }
         }
     },
 
@@ -103,7 +105,7 @@ var roleHauler = {
         //If we have a storage target
         if(creep.memory.target){
             let storage = Game.getObjectById(creep.memory.target);
-            if(!storage.store.getUsedCapacity(RESOURCE_ENERGY) <= 20){
+            if(storage.store.getUsedCapacity(RESOURCE_ENERGY) <= 20){
                 delete creep.memory.target;
             }
 
