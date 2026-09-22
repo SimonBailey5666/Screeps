@@ -19,6 +19,7 @@ let spawncreep = {
             console.log("Pop settings missing for: " +  sRole + " - " +roomName+ " - " + workRoom);
             console.log("Removing from queue...");
             Memory.rooms[roomName].spawnQueue.shift();
+            return ERR_NOT_ENOUGH_ENERGY;
         }
         if(popSettings.minCost > energy){
             if(global.DEBUG_OUT){
