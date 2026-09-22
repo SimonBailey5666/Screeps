@@ -16,7 +16,7 @@ let spawncreep = {
         }
         //console.log("debug " + roomName + " " + sRole + " " + workRoomPop + " " + popSettings);
         if(!popSettings){
-            console.log("Pop settings missing for: " +  role + " - " +roomName+ " - " + workRoom);
+            console.log("Pop settings missing for: " +  sRole + " - " +roomName+ " - " + workRoom);
             console.log("Removing from queue...");
             Memory.rooms[roomName].spawnQueue.shift();
         }
