@@ -45,7 +45,7 @@ var roleBuilder = {
                                 creep.moveTo(repairTarget);
                             }
                         }
-                        if(repairTarget.hits < repairTarget.hitsMax){
+                        else if(repairTarget.hits < repairTarget.hitsMax){
                             let result = creep.repair(repairTarget) 
                             if(result == ERR_NOT_IN_RANGE) {
                                 creep.moveTo(repairTarget);
