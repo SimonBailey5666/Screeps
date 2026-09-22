@@ -15,6 +15,11 @@ let spawncreep = {
             console.log('Attempting to spawn ' + sRole + ' with ' + energy + ' energy');
         }
         //console.log("debug " + roomName + " " + sRole + " " + workRoomPop + " " + popSettings);
+        if(!popSettings.minCost){
+            console.log("Min cost missing for: " +  role + " - " +roomName+ " - " + workRoom);
+            console.log("Removing from queue...");
+            Memory.rooms[roomName].spawnQueue.shift();
+        }
         if(popSettings.minCost > energy){
             if(global.DEBUG_OUT){
                 console.log('Cannot build ' + sRole + ' not enough resources.');
