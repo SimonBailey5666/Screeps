@@ -9,8 +9,8 @@ var roleHauler = {
 
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
-            if(creep.memory.storage){
-                delete creep.memory.storage;
+            if(creep.memory.target){
+                delete creep.memory.target;
             }
         }
         if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
@@ -18,6 +18,7 @@ var roleHauler = {
             if(creep.memory.target){
                 delete creep.memory.target;
             }
+
         }
 
         if(!creep.memory.working) {
@@ -90,22 +91,22 @@ var roleHauler = {
 
     findEnergy: function(creep){
         //If there is no storage targets set and there is no energy to pickup
-        if(!collect.pickupEnergy(creep) && !creep.memory.storage){
+        if(!collect.pickupEnergy(creep) && !creep.memory.target){
             let targets = creep.room.find(FIND_STRUCTURES, {
-                filter: structure => (structure.structureType == STRUCTURE_CONTAINER) &&  
+                filter: structure => (structure.structureType === STRUCTURE_CONTAINER) &&
                 (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0)
             });
 
             if(targets.length>0){
-                creep.memory.storage = common.setTarget(creep, targets);
+                creep.memory.target = common.setTarget(creep, targets);
             }
         }
 
         //If we have a storage target
-        if(creep.memory.storage){
-            storage = Game.getObjectById(creep.memory.storage);
+        if(creep.memory.target){
+            let storage = Game.getObjectById(creep.memory.target);
             if(!storage.getFreeCapacity > 0){
-                delete creep.memory.storage;
+                delete creep.memory.target;
             }
 
             if(creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
