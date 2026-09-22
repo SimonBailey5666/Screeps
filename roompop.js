@@ -258,6 +258,20 @@ const POPS = {
                 max: 1,
                 spawnIf: !spawnRules.hasRoomVision
             }
+        },
+        W39S4: {    //ATTACK THIS ROOM
+            defender: {
+                minCost: 800,
+                maximumCost: 800,
+                max: 4,
+                spawnIf: spawnRules.enemiesPresent
+            },
+            scout: {
+                minCost: 50,
+                maximumCost: 50,
+                max: 1,
+                spawnIf: !spawnRules.hasRoomVision
+            }
         }
     },
     W39S3: {  //new room
