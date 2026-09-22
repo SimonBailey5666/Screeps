@@ -39,7 +39,7 @@ var roleBuilder = {
                     
                     let repairTarget = Game.getObjectById(creep.memory.repairTarget)
                     if(repairTarget){
-                        if(repairTarget.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART && structure.hits < 100000) {
+                        if((repairTarget.structureType === STRUCTURE_WALL || repairTarget.structureType === STRUCTURE_RAMPART) && repairTarget.hits < 100000) {
                             let result = creep.repair(repairTarget) 
                             if(result == ERR_NOT_IN_RANGE) {
                                 creep.moveTo(repairTarget);
