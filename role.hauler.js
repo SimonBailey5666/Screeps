@@ -105,7 +105,7 @@ var roleHauler = {
         //If we have a storage target
         if(creep.memory.target){
             let storage = Game.getObjectById(creep.memory.target);
-            if(!storage.getUsedCapacity(RESOURCE_ENERGY) <= 20){
+            if(!storage.store.getUsedCapacity(RESOURCE_ENERGY) <= 20){
                 delete creep.memory.target;
             }
 
