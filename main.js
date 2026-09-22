@@ -63,8 +63,8 @@ module.exports.loop = function () {
 
      if(common.atTick(100)){
         if(Game.cpu.bucket === 10000){
-            console.log("Generating Pixels");
-            Game.cpu.generatePixel();
+            console.log("Generating Pixels...");
+            Game.cpu.generatePixel()
         }
     }
 
