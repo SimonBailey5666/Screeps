@@ -98,8 +98,8 @@ const POPS = {
             builder: {
                 minCost: 700,
                 maximumCost: 700,
-                max: 1,
-                spawnIf: spawnRules.needsBuilder
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsBuilder(tCreep)
             },
             defender: {
                 minCost: 400,
