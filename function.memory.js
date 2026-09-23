@@ -62,12 +62,12 @@ var memoryManager = {
             let sourcePos = Game.getObjectById('5bbcaae69099fc012e63265a').pos;
             let roadPath = PathFinder.search( spawnPos, {pos: sourcePos, range: 1});
 
-            console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effcient.')
+            console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effecient.')
             for(pathStep of roadPath.path){
                 const roads = pathStep.lookFor(LOOK_STRUCTURES)
                 const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
                 if(!hasRoad){
-                    //Game.rooms[pathStep.roomName].createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
+                    Game.rooms[pathStep.roomName].createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
                 }
             }
         }
