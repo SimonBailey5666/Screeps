@@ -49,7 +49,7 @@ var memoryManager = {
                     Game.notify("Room " + roomName + " has decreased it's control level!")
                     Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
                 }
-                this.buildRoads(roomName);
+                //this.buildRoads(roomName);
             }
         }
     },
