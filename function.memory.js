@@ -22,6 +22,7 @@ var memoryManager = {
             Memory.rooms[roomName].links ??= [];
             Memory.rooms[roomName].storage ??= [];
             Memory.rooms[roomName].towers ??= [];
+            Memory.rooms[roomName].sources ??= [];
 
             if(!Memory.rooms[roomName].energyMonitor && Memory.rooms[roomName].rcl >= 4){
                 const storage = Game.rooms[roomName].storage;
@@ -48,6 +49,9 @@ var memoryManager = {
                 else if(Memory.rooms[roomName].rcl > Game.rooms[roomName].controller.level){
                     Game.notify("Room " + roomName + " has decreased it's control level!")
                     Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
+                }
+                for(workRoom of POPS[roomName]){
+                    console.log(roomName + " has room " + workRoom + " as a work room")
                 }
                 //this.buildRoads(roomName);
             }
