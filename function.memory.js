@@ -55,21 +55,18 @@ var memoryManager = {
                 //this.buildRoads(roomName);
             }
 
-            if(common.atTick(2000)){
-                console.log();
-                console.log();
-                console.log("Running Road build...");
-                console.log();
-                console.log();
-                const sources = Memory.rooms[roomName].sources;
-                const spawn = Game.spawns[Memory.rooms[roomName].spawns[0]];
-                for(const sourceId of sources){
+            const sources = Memory.rooms[roomName].sources;
+            const spawn = Game.spawns[Memory.rooms[roomName].spawns[0]];
+            let offset = 0;
+            for(const sourceId of sources){
+                if(common.atTick(2000, offset) ){
                     const source = Game.getObjectById(sourceId);
-                    if(source){
+                    if (source) {
                         console.log("Attempting to build rood from " + roomName + " to " + source.pos.roomName)
                         this.buildRoads(spawn.pos, source.pos);
                     }
                 }
+                offset+=10;
             }
         }
     },
