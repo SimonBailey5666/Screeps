@@ -18,8 +18,8 @@ var roleMiner = {
             return;
         }
         if(!creep.memory.target){
-            sources = creep.room.find(FIND_SOURCES)
-            target = common.setTarget(creep, sources);
+            const sources = creep.room.find(FIND_SOURCES)
+            const target = common.setTarget(creep, sources);
             if(!target){
                 console.log("Creep " + creep.name + " cannot find a source to mine");
                 return;
@@ -28,7 +28,7 @@ var roleMiner = {
             creep.memory.target = target;
         }
         
-        source = Game.getObjectById(creep.memory.target);
+        const source = Game.getObjectById(creep.memory.target);
         if(!creep.memory.storage){
             let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: (structure) => (structure.structureType === STRUCTURE_CONTAINER
@@ -38,7 +38,13 @@ var roleMiner = {
                 creep.memory.storage = container[0].id;
             }
             else {
-                 creep.memory.storage = 'none';
+                creep.memory.storage = 'none';
+                let containerUnderConstruction = source.pos.findInRange(FIND_CONSTRUCTION_SITES, 2, {
+                    filter: (site) => site.structureType === STRUCTURE_CONTAINER
+                });
+                if(containerUnderConstruction.length ===0 ) {
+                    creep.room.createConstructionSite(creep.pos.x, creep.pos.y, STRUCTURE_CONTAINER)
+                }
             }
         }
 
