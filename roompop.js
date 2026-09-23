@@ -270,6 +270,14 @@ const POPS = {
                 max: 2
             }
         },
+        W38S2: {
+            builder: {
+                minCost: 500,
+                maximumCost: 700,
+                max: 2,
+                spawnIf: spawnRules.needsBuilder
+            }
+        },
         W38S2: {    //Double source room
             defender: {
                 minCost: 1000,
@@ -286,7 +294,7 @@ const POPS = {
             builder: {
                 minCost: 500,
                 maximumCost: 700,
-                max: 3,
+                max: 2,
                 spawnIf: spawnRules.needsBuilder
             },
             capturer: {
