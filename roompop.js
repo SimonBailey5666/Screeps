@@ -7,8 +7,8 @@ const POPS = {
     W38S4: {
         W38S4: {
             upgrader: {
-                minCost: 800,
-                maximumCost: 800,
+                minCost: 1000,
+                maximumCost: 1300,
                 max: 1
             },
             builder: {
@@ -265,9 +265,9 @@ const POPS = {
 
             },
             upgrader: {
-                minCost: 600,
-                maximumCost: 800,
-                max: 2
+                minCost: 1000,
+                maximumCost: 1300,
+                max: 1
             }
         },
         W38S2: {
