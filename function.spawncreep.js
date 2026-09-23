@@ -48,7 +48,8 @@ let spawncreep = {
         body.reverse();
        
         let newName = sRole.charAt(0).toUpperCase() + sRole.slice(1) + '-' + roomName + '-' + Math.floor(100000 + Math.random() * 900000);
-        
+
+        //TODO: should not return when iterating through spawns, should check the next spawn
         for(spawnName of Memory.rooms[roomName].spawns){
             spawn = Game.spawns[spawnName];
             if(spawn.spawning)  {

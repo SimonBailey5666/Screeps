@@ -49,11 +49,21 @@ var memoryManager = {
                     Game.notify("Room " + roomName + " has decreased it's control level!")
                     Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
                 }
-                //this.buildRoads(roomName);
+                this.buildRoads(roomName);
             }
         }
     },
     buildRoads: function(roomName){
+        //Hard coded for testing
+        if(roomName === 'W37S3'){
+            console.log('Testing road pathing..')
+
+            let spawnPos = Game.spawns[Memory.rooms[roomName].spawns[0]].pos;
+            let sourcePos = Game.getObjectById('5bbcaae69099fc012e63265a').pos;
+            let roadPath = PathFinder.search( spawnPos, {pos: sourcePos, range: 1});
+
+            console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effcient.')
+        }
 
     },
     checkContainers: function(roomName){
