@@ -258,7 +258,7 @@ const POPS = {
                 max: 2,
             },
             hauler: {
-                minCost: 1000,
+                minCost: 500,
                 maximumCost: 1600,
                 max: 1
 
