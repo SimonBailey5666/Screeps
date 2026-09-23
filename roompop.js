@@ -245,8 +245,8 @@ const POPS = {
             builder: {
                 minCost: 500,
                 maximumCost: 700,
-                max: 3
-
+                max: 3,
+                spawnIf: spawnRules.needsBuilder
             },
             distributer: {
                 minCost: 500, 
@@ -257,7 +257,6 @@ const POPS = {
                 minCost: 400,
                 maximumCost: 600,
                 max: 2,
-                spawnIf: spawnRules.needsBuilder
             },
             hauler: {
                 minCost: 800,
@@ -283,6 +282,12 @@ const POPS = {
                 maximumCost: 50,
                 max: 1,
                 spawnIf: !spawnRules.hasRoomVision
+            },
+            builder: {
+                minCost: 500,
+                maximumCost: 700,
+                max: 3,
+                spawnIf: spawnRules.needsBuilder
             },
             capturer: {
                 minCost: 1000,
