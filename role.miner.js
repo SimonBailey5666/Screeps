@@ -43,8 +43,8 @@ var roleMiner = {
                     filter: (site) => site.structureType === STRUCTURE_CONTAINER
                 });
                 if(containerUnderConstruction.length ===0 ) {
-                    creep.room.createConstructionSite(creep.pos.x, creep.pos.y, STRUCTURE_CONTAINER)
-                }
+                    //creep.room.createConstructionSite(creep.pos.x, creep.pos.y, STRUCTURE_CONTAINER)
+                }//not right
             }
         }
 
