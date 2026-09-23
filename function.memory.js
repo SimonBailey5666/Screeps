@@ -62,7 +62,7 @@ var memoryManager = {
                 console.log();
                 console.log();
                 const sources = Memory.rooms[roomName].sources;
-                const spawn = Game.spawns(Memory.rooms[roomName].spawns[0]);
+                const spawn = Game.spawns[Memory.rooms[roomName].spawns[0]];
                 for(const sourceId of sources){
                     const source = Game.getObjectById(sourceId);
                     if(source){
