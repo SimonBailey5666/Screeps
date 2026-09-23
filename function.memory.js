@@ -59,9 +59,12 @@ var memoryManager = {
     findSources: function(roomName){
         for(const workRoom in POPS[roomName]){
             const populations = POPS[roomName][workRoom];
-            const hasMiners = populations.some(pop => pop.role === 'miner')
+            const hasMiners = Object.hasOwn(populations, 'miner');
+
             if(hasMiners){
                 const room = Game.rooms[workRoom];
+
+                //can't see the room so skip it
                 if(!room){
                     continue;
                 }
@@ -89,6 +92,7 @@ var memoryManager = {
                 const roads = pathStep.lookFor(LOOK_STRUCTURES)
                 const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
                 if(!hasRoad){
+                    //const room =
                     //Game.rooms[pathStep.roomName].createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
                 }
             }
