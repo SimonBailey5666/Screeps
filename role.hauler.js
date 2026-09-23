@@ -7,18 +7,14 @@ var roleHauler = {
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        if(creep.memory.working && creep.carry.energy === 0) {
+        if (creep.memory.working && creep.carry.energy === 0) {
             creep.memory.working = false;
-            if(creep.memory.target){
-                delete creep.memory.target;
-            }
+            delete creep.memory.target;
         }
-        if(creep.memory.working && creep.carry.energy === creep.carryCapacity) {
-            creep.memory.working = true;
-            if(creep.memory.target){
-                delete creep.memory.target;
-            }
 
+        if (!creep.memory.working && creep.carry.energy === creep.carryCapacity) {
+            creep.memory.working = true;
+            delete creep.memory.target;
         }
 
         if(!creep.memory.working) {
@@ -51,9 +47,9 @@ var roleHauler = {
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure =>
                     ((structure.structureType === STRUCTURE_EXTENSION ||
-                        structure.structureType === STRUCTURE_SPAWN ||
-                        structure.structureType === STRUCTURE_TOWER) &&
-                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
+                            structure.structureType === STRUCTURE_SPAWN ||
+                            structure.structureType === STRUCTURE_TOWER) &&
+                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                     ((structure.structureType === STRUCTURE_STORAGE) && (_.sum(structure.store) < structure.storeCapacity))
             });
             creep.memory.target = common.setTarget(creep,targets);
@@ -86,7 +82,7 @@ var roleHauler = {
             if (result == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.storage, {reusePath: PATH_TICK_RECALC});
             }
-        }       
+        }
     },
 
     findEnergy: function(creep){
@@ -94,7 +90,7 @@ var roleHauler = {
         if(!collect.pickupEnergy(creep) && !creep.memory.target){
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure => (structure.structureType === STRUCTURE_CONTAINER) &&
-                (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 20)
+                    (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 20)
             });
 
             if(targets.length>0){
