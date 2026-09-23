@@ -248,8 +248,8 @@ const POPS = {
                 spawnIf: spawnRules.needsBuilder
             },
             distributer: {
-                minCost: 500, 
-                maximumCost: 800,
+                minCost: 200,
+                maximumCost: 1200,
                 max: 1
             },
             miner: {
