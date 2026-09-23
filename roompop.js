@@ -211,24 +211,6 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
             }
         },
-         W38S2: {    //ATTACK THIS ROOM
-            defender: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 4
-            },
-            scout: {
-                minCost: 50,
-                maximumCost: 50,
-                max: 1,
-                spawnIf: !spawnRules.hasRoomVision
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1
-            }
-        },
         W38S3: {    //ATTACK THIS ROOM
             defender: {
                 minCost: 800,
@@ -288,6 +270,38 @@ const POPS = {
                 maximumCost: 800,
                 max: 2
             }
+        },
+        W38S2: {    //Double source room
+            defender: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 4,
+                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
+            },
+            scout: {
+                minCost: 50,
+                maximumCost: 50,
+                max: 1,
+                spawnIf: !spawnRules.hasRoomVision
+            },
+            capturer: {
+                minCost: 1000,
+                maximumCost: 1000,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
+            },
+            miner: {
+                minCost: 400,
+                maximumCost: 400,
+                max: 3,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2, 70)
+            },
+            hauler: {
+                minCost: 800,
+                maximumCost: 800,
+                max: 5,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4)
+            },
         }
     }
     //Add new home rooms here
