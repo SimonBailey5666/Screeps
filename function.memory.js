@@ -96,46 +96,45 @@ var memoryManager = {
     },
     buildRoads: function(fromPos, toPos){
         //Hard coded for testing
-        if(roomName === 'W39S3'){
-            console.log('Testing road pathing..')
+        console.log('Testing road pathing..')
 
-            let roadPath = PathFinder.search(fromPos, { pos: toPos, range: 1 }, {
-                maxRooms: 16,
-                roomCallback: function(roomName) {
-                    let room = Game.rooms[roomName];
-                    if (!room) return;
+        let roadPath = PathFinder.search(fromPos, { pos: toPos, range: 1 }, {
+            maxRooms: 16,
+            roomCallback: function(roomName) {
+                let room = Game.rooms[roomName];
+                if (!room) return;
 
-                    let costs = new PathFinder.CostMatrix;
+                let costs = new PathFinder.CostMatrix;
 
-                    room.find(FIND_STRUCTURES).forEach(function(struct) {
-                        if (struct.structureType === STRUCTURE_ROAD) {
-                            costs.set(struct.pos.x, struct.pos.y, 1);
-                        }
-                        else if (struct.structureType === STRUCTURE_WALL) {
-                            costs.set(struct.pos.x, struct.pos.y, 255);
-                        }
-                        else if (OBSTACLE_OBJECT_TYPES.includes(struct.structureType)) {
-                            costs.set(struct.pos.x, struct.pos.y, 255);
-                        }
-                    });
-
-                    return costs;
-                }
-            });
-
-            console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effecient.')
-            for(const pathStep of roadPath.path){
-                const roads = pathStep.lookFor(LOOK_STRUCTURES)
-                const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
-                if(!hasRoad){
-                    const room = Game.room[pathStep.roomName];
-                    if(!room){
-                        continue;
+                room.find(FIND_STRUCTURES).forEach(function(struct) {
+                    if (struct.structureType === STRUCTURE_ROAD) {
+                        costs.set(struct.pos.x, struct.pos.y, 1);
                     }
-                    room.createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
+                    else if (struct.structureType === STRUCTURE_WALL) {
+                        costs.set(struct.pos.x, struct.pos.y, 255);
+                    }
+                    else if (OBSTACLE_OBJECT_TYPES.includes(struct.structureType)) {
+                        costs.set(struct.pos.x, struct.pos.y, 255);
+                    }
+                });
+
+                return costs;
+            }
+        });
+
+        console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effecient.')
+        for(const pathStep of roadPath.path){
+            const roads = pathStep.lookFor(LOOK_STRUCTURES)
+            const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
+            if(!hasRoad){
+                const room = Game.room[pathStep.roomName];
+                if(!room){
+                    continue;
                 }
+                room.createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
             }
         }
+
 
     },
     checkContainers: function(roomName){
