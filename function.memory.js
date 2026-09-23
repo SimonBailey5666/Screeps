@@ -127,7 +127,7 @@ var memoryManager = {
             const roads = pathStep.lookFor(LOOK_STRUCTURES)
             const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
             if(!hasRoad){
-                const room = Game.room[pathStep.roomName];
+                const room = Game.rooms[pathStep.roomName];
                 if(!room){
                     continue;
                 }
