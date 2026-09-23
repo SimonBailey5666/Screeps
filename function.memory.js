@@ -55,10 +55,10 @@ var memoryManager = {
                 //this.buildRoads(roomName);
             }
 
-            if(common.atTick(50)){
+            if(common.atTick(2000)){
                 console.log();
                 console.log();
-                console.log("Testing road building...");
+                console.log("Running Road build...");
                 console.log();
                 console.log();
                 const sources = Memory.rooms[roomName].sources;
@@ -95,8 +95,6 @@ var memoryManager = {
         }
     },
     buildRoads: function(fromPos, toPos){
-        //Hard coded for testing
-        console.log('Testing road pathing..')
 
         let roadPath = PathFinder.search(fromPos, { pos: toPos, range: 1 }, {
             maxRooms: 16,
