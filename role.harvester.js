@@ -1,298 +1,64 @@
-const spawnRules = require("spawn.rules");
+var roleBuilder = require('role.builder');
+var collect = require('function.collect');
 
-//Room population settings
-//Home Room -> Work Room -> Room population
-
-const POPS = {
-    W38S4: {
-        W38S4: {
-            upgrader: {
-                minCost: 800,
-                maximumCost: 800,
-                max: 1,
-            },
+var roleHarvester = {
     
-            builder: {
-                minCost: 500,
-                maximumCost: 600,
-                max: 1,
-                spawnIf: spawnRules.needsBuilder
-            },
-    
-            distributer: {
-                minCost: 200,
-                maximumCost: 900,
-                max: 3,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2)
-            },
-    
-            defender: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 5,
-                spawnIf: spawnRules.enemiesPresent
-            },
-    
-            miner: {
-                minCost: 600,
-                maximumCost: 600,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
-            },
-    
-            hauler: {
-                minCost: 1300,
-                maximumCost: 1300,
-                max: 2,
-                spawnIf:  tCreep => spawnRules.needsReplacement(tCreep, 1)
-                
-            }
-        },
-    
-        W38S5: {
-            miner: {
-                minCost: 600,
-                maximumCost: 600,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 130)
-            },
-    
-            hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
-            },
-            builder: {
-                minCost: 700,
-                maximumCost: 700,
-                max: 1,
-                spawnIf: spawnRules.needsBuilder
-            },
-            defender: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement(tCreep)
-            }
-        },
-
-        W37S4: {
-            miner: {
-               minCost: 600,
-                maximumCost: 600,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep)
-            },
-            hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
-            },
-            builder: {
-                minCost: 700,
-                maximumCost: 700,
-                max: 1,
-                spawnIf: spawnRules.needsBuilder
-            },
-            defender: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep => !spawnRules.enemiesPresent(tCreep) && spawnRules.needsReplacement(tCreep)
-            }
-        },
-
-        W39S5: {
-            miner: {
-                minCost: 400,
-                maximumCost: 400,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
-            },
-            hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
-            },
-            builder: {
-                minCost: 700,
-                maximumCost: 700,
-                max: 1,
-                spawnIf: spawnRules.needsBuilder
-            },
-            defender: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 5,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep, 2)
-            }
-        },
-
-        W37S3: {
-            miner: {
-                minCost: 400,
-                maximumCost: 400,
-                max: 2,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
-            },
-            hauler: {
-                minCost: 800,
-                maximumCost: 800,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
-            },
-            builder: {
-                minCost: 800,
-                maximumCost: 800,
-                max: 2,
-                spawnIf: spawnRules.needsBuilder
-            },
-            defender: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 3,
-                spawnIf: tCreep => spawnRules.enemiesPresent(tCreep)
-            }
-        },
-
-        W39S3: {    //SUPPLY THIS ROOM
-            defender: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
-            },
-            upgrader: {
-                minCost: 300,
-                maximumCost: 300,
-                max: 1,
-            },
-            builder: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 2,
-            },
-            scout: {
-                minCost: 50,
-                maximumCost: 50,
-                max: 1,
-                spawnIf: !spawnRules.hasRoomVision
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
-            },
-            healer: {
-                minCost: 900,
-                maximumCost: 900,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3, 200)
-            },
-            tank: {
-                minCost: 800,
-                maximumCost: 850,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 270)
-            }
-
-        },
+    /** @param {Creep} creep **/
+    run: function(creep) {
         
-        W37S5: {    //ATTACK THIS ROOM
-            defender: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 4,
-                spawnIf: tCreep => !spawnRules.safeModeActive(tCreep) && spawnRules.enemyTowersAreEmpty(tCreep)
-            },
-            scout: {
-                minCost: 50,
-                maximumCost: 50,
-                max: 1,
-                spawnIf: !spawnRules.hasRoomVision
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => !spawnRules.roomControlledByEnemy(tCreep)
-            }, 
-            healer: {
-                minCost: 900,
-                maximumCost: 900,
-                max: 9,
-                spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
-            },
-            tank: {
-                minCost: 800,
-                maximumCost: 850,
-                max: 3,
-                spawnIf: tCreep => spawnRules.enemyTowersAreEmpty(tCreep)
+        if(creep.memory.working && creep.carry.energy == 0) {
+            creep.memory.working = false;
+        }
+        if(!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.working = true;
+        }
+        
+        if (!creep.memory.working) {
+            collect.mine(creep);
+        }
+        else {
+            if (creep.room.name !== creep.memory.home) {
+                creep.moveTo(
+                    new RoomPosition(25, 25, creep.memory.home)
+                );
             }
-        },
-         W38S2: {    //ATTACK THIS ROOM
-            defender: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 0,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 4, 400)
-            },
-            scout: {
-                minCost: 50,
-                maximumCost: 50,
-                max: 1,
-                spawnIf: !spawnRules.hasRoomVision
-            },
-            capturer: {
-                minCost: 1000,
-                maximumCost: 1000,
-                max: 1,
-                spawnIf: tCreep =>  !spawnRules.roomControlledByEnemy(tCreep)
+            else {
+                if (creep.store[RESOURCE_ENERGY] > 0) {
+                    var targets = creep.room.find(FIND_STRUCTURES, {
+                        filter: structure =>
+                            ((structure.structureType == STRUCTURE_EXTENSION ||
+                             structure.structureType == STRUCTURE_SPAWN ||
+                             structure.structureType == STRUCTURE_TOWER) &&
+                            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) || 
+                            ((structure.structureType == STRUCTURE_CONTAINER) && (_.sum(structure.store) < structure.storeCapacity))
+                    });
+                
+                    if (targets.length > 0) {
+                        var target = creep.pos.findClosestByRange(targets);
+                
+                        var result = creep.transfer(target, RESOURCE_ENERGY);
+                
+                        if (result == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target);
+                        }
+                    }
+                    else if (creep.room.storage) {
+                        var result = creep.transfer(
+                            creep.room.storage,
+                            RESOURCE_ENERGY
+                        );
+                
+                        if (result == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.storage);
+                        }
+                    }
+                    else {
+                        roleBuilder.run(creep);
+                    }
+                }
             }
         }
-    },
-    W39S3: {  //new room
-        W39S3: { 
-            builder: {
-                minCost: 300,
-                maximumCost: 300,
-                max: 0,
-
-            },
-            miner: {
-                minCost: 400,
-                maximumCost: 600,
-                max: 1,
-
-            },
-            hauler: {
-                minCost: 200,
-                maximumCost: 300,
-                max: 1,
-
-            }
-        }
-    },
-    //Add new home rooms here
+    }
 };
 
-global.ROOMS = Object.keys(POPS);
-global.POPS = POPS;
-
-module.exports = POPS;
+module.exports = roleHarvester;
