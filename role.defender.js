@@ -13,6 +13,13 @@ var roleDefender = {
                 }
             }
             else {
+                if(!common.inHomeRoom(creep) || common.atExit(creep.pos)){
+                    const moveres= creep.moveTo(new RoomPosition(28, 32, creep.memory.home));
+                    if(moveres !== OK){
+                        console.log(creep + ": can't move to room " + global.ERROR_MESSAGES[moveres]);
+                    }
+                    return;
+                }
                 common.gotoRally(creep, creep.pos.roomName);
                 return;
             }
