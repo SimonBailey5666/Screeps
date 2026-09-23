@@ -242,9 +242,9 @@ const POPS = {
     W39S3: {  //new room
         W39S3: { 
             builder: {
-                minCost: 500,
-                maximumCost: 700,
-                max: 3,
+                minCost: 600,
+                maximumCost: 1000,
+                max: 1,
                 spawnIf: spawnRules.needsBuilder
             },
             distributer: {
@@ -253,7 +253,7 @@ const POPS = {
                 max: 1
             },
             miner: {
-                minCost: 400,
+                minCost: 600,
                 maximumCost: 600,
                 max: 2,
             },
@@ -269,10 +269,10 @@ const POPS = {
                 max: 1
             }
         },
-        W38S2: {
+        W38S3: {
             builder: {
-                minCost: 500,
-                maximumCost: 700,
+                minCost: 700,
+                maximumCost: 1000,
                 max: 2,
                 spawnIf: spawnRules.needsBuilder
             }
@@ -291,8 +291,8 @@ const POPS = {
                 spawnIf: !spawnRules.hasRoomVision
             },
             builder: {
-                minCost: 500,
-                maximumCost: 700,
+                minCost: 700,
+                maximumCost: 1000,
                 max: 2,
                 spawnIf: spawnRules.needsBuilder
             },
