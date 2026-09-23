@@ -50,11 +50,25 @@ var memoryManager = {
                     Game.notify("Room " + roomName + " has decreased it's control level!")
                     Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
                 }
-                for(const workRoom in POPS[roomName]){
-                    console.log(roomName + " has room " + workRoom + " as a work room")
-                }
+
+                this.findSources(roomName)
                 //this.buildRoads(roomName);
             }
+        }
+    },
+    findSources: function(roomName){
+        for(const workRoom in POPS[roomName]){
+            const populations = POPS[roomName][workRoom];
+            const hasMiners = populations.some(pop => pop.role === 'miner')
+            if(hasMiners){
+                sources = Game.rooms[workRoom].find(FIND_SOURCES);
+                for(const source of sources){
+                    if(!Memory.rooms[roomName]?.sources.includes(source.id)){
+                        Memory.rooms[roomName].sources.push(source.id)
+                    }
+                }
+            }
+            console.log(roomName + " has room " + workRoom + " as a work room")
         }
     },
     buildRoads: function(roomName){
@@ -67,7 +81,7 @@ var memoryManager = {
             let roadPath = PathFinder.search( spawnPos, {pos: sourcePos, range: 1});
 
             console.log('roadPath is ' + roadPath.path.length  + ' tiles long -- ideally it would take a creep with ' + roadPath.path.length * 2 / 5 + ' carry parts to be effecient.')
-            for(pathStep of roadPath.path){
+            for(const pathStep of roadPath.path){
                 const roads = pathStep.lookFor(LOOK_STRUCTURES)
                 const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
                 if(!hasRoad){
