@@ -57,10 +57,10 @@ const POPS = {
             },
     
             hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
+                minCost: 1000,
+                maximumCost: 1300,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
             builder: {
                 minCost: 700,
@@ -90,10 +90,10 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep)
             },
             hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
+                minCost: 1000,
+                maximumCost: 1300,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
             builder: {
                 minCost: 700,
@@ -123,10 +123,10 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
             },
             hauler: {
-                minCost: 450,
-                maximumCost: 600,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
+                minCost: 1000,
+                maximumCost: 1300,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
             builder: {
                 minCost: 700,
@@ -150,10 +150,10 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1, 200)
             },
             hauler: {
-                minCost: 800,
-                maximumCost: 800,
-                max: 4,
-                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 3)
+                minCost: 1000,
+                maximumCost: 1300,
+                max: 2,
+                spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
             builder: {
                 minCost: 800,
@@ -221,7 +221,7 @@ const POPS = {
             scout: {
                 minCost: 50,
                 maximumCost: 50,
-                max: 1,
+                max: 0,
                 spawnIf: !spawnRules.hasRoomVision
             }
         },
