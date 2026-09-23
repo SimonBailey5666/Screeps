@@ -17,7 +17,6 @@ const POPS = {
                 max: 1,
                 spawnIf: spawnRules.needsBuilder
             },
-    
             distributer: {
                 minCost: 200,
                 maximumCost: 900,
@@ -304,8 +303,8 @@ const POPS = {
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 1)
             },
             miner: {
-                minCost: 400,
-                maximumCost: 400,
+                minCost: 600,
+                maximumCost: 600,
                 max: 3,
                 spawnIf: tCreep => spawnRules.needsReplacement(tCreep, 2, 70)
             },
