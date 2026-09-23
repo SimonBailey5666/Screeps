@@ -61,7 +61,11 @@ var memoryManager = {
             const populations = POPS[roomName][workRoom];
             const hasMiners = populations.some(pop => pop.role === 'miner')
             if(hasMiners){
-                sources = Game.rooms[workRoom].find(FIND_SOURCES);
+                const room = Game.rooms[workRoom];
+                if(!room){
+                    continue;
+                }
+                const sources = room.find(FIND_SOURCES);
                 for(const source of sources){
                     if(!Memory.rooms[roomName]?.sources.includes(source.id)){
                         Memory.rooms[roomName].sources.push(source.id)
