@@ -67,7 +67,7 @@ var memoryManager = {
                 const roads = pathStep.lookFor(LOOK_STRUCTURES)
                 const hasRoad = roads.some(struct => struct.structureType === STRUCTURE_ROAD)
                 if(!hasRoad){
-                    Game.rooms[pathStep.roomName].createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
+                    //Game.rooms[pathStep.roomName].createConstructionSite(pathStep.x, pathStep.y, STRUCTURE_ROAD)
                 }
             }
         }
