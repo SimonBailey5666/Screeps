@@ -50,7 +50,7 @@ var memoryManager = {
                     Game.notify("Room " + roomName + " has decreased it's control level!")
                     Memory.rooms[roomName].rcl = Game.rooms[roomName].controller.level;
                 }
-                for(workRoom in POPS[roomName]){
+                for(const workRoom in POPS[roomName]){
                     console.log(roomName + " has room " + workRoom + " as a work room")
                 }
                 //this.buildRoads(roomName);
